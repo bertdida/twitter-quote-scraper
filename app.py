@@ -7,7 +7,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 SERVICE_ACCOUNT_FILE = 'google_service_account.json'
 SPREADSHEET_ID = '1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4'
 INPUT_OPTION = 'USER_ENTERED'
-SAVED_WISDOMS_RANGE = 'A2:C'
+SAVED_WISDOMS_RANGE = 'B2:B'
 SAVED_ID_RANGE = 'D2'
 SCOPES = ['https://spreadsheets.google.com/feeds']
 
@@ -40,15 +40,14 @@ def main():
     sheet_name = google_sheet.sheet1.title
     saved_wisdoms_range = '{}!{}'.format(sheet_name, SAVED_WISDOMS_RANGE)
 
-    saved_wisdoms = google_sheet.values_get(saved_wisdoms_range).get('values')
-    saved_wisdoms = \
-        {w for _, w, _ in saved_wisdoms} if saved_wisdoms else set()
-
     saved_id = google_sheet.sheet1.acell(SAVED_ID_RANGE).value or None
+    saved_wisdoms = \
+        {w for [w] in
+         google_sheet.values_get(saved_wisdoms_range).get('values')}
 
+    latest_tweet_id = None
     new_wisdoms = set()
     sheet_body_data = []
-    latest_tweet_id = None
 
     for status in tweepy.Cursor(twitter_api.user_timeline,
                                 user_id=CODEWISDOM_ID,
@@ -85,15 +84,15 @@ def main():
                 new_wisdoms.add(wisdom)
                 sheet_body_data.insert(0, [author, wisdom, url])
 
-    google_sheet.values_append(
-        sheet_name,
-        params={'valueInputOption': INPUT_OPTION},
-        body={'values': sheet_body_data})
+    # google_sheet.values_append(
+    #     sheet_name,
+    #     params={'valueInputOption': INPUT_OPTION},
+    #     body={'values': sheet_body_data})
 
-    google_sheet.values_update(
-        '{}!{}'.format(sheet_name, SAVED_ID_RANGE),
-        params={'valueInputOption': INPUT_OPTION},
-        body={'values': [[latest_tweet_id]]})
+    # google_sheet.values_update(
+    #     '{}!{}'.format(sheet_name, SAVED_ID_RANGE),
+    #     params={'valueInputOption': INPUT_OPTION},
+    #     body={'values': [[latest_tweet_id]]})
 
 
 if __name__ == '__main__':
