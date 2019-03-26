@@ -4,13 +4,6 @@ import tweepy
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-SERVICE_ACCOUNT_FILE = 'google_service_account.json'
-SPREADSHEET_ID = '1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4'
-INPUT_OPTION = 'USER_ENTERED'
-SAVED_WISDOMS_RANGE = 'B2:B'
-SAVED_ID_RANGE = 'D2'
-SCOPES = ['https://spreadsheets.google.com/feeds']
-
 with open('twitter_creds.json', 'r') as creds_file:
     twitter_creds = json.load(creds_file)
 
@@ -22,32 +15,41 @@ ACCESS_TOKEN_SECRET = twitter_creds.get('access_token_secret')
 CODEWISDOM_ID = '396238794'
 MIN_LIKE_COUNT = 1000
 
+SERVICE_ACCOUNT_FILE = 'google_service_account.json'
+SPREADSHEET_ID = '1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4'
+INPUT_OPTION = 'USER_ENTERED'
+SAVED_WISDOMS_RANGE = 'B2:B'
+SAVED_ID_RANGE = 'D2'
+SCOPES = ['https://spreadsheets.google.com/feeds']
+
+
 WISDOM_AUTHOR_RE = re.compile(
     r'^[\"“](?P<wisdom>.*)[\"”]\s*?[\-–―]\s*(?P<author>.*)$')
 
 
 def main():
 
+    twitter_auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_KEY_SECRET)
+    twitter_auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+    twitter_api = tweepy.API(twitter_auth)
+
     google_creds = ServiceAccountCredentials.from_json_keyfile_name(
         SERVICE_ACCOUNT_FILE, SCOPES)
     google_client = gspread.authorize(google_creds)
     google_sheet = google_client.open_by_key(SPREADSHEET_ID)
 
-    twitter_auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_KEY_SECRET)
-    twitter_auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-    twitter_api = tweepy.API(twitter_auth)
+    worksheet = google_sheet.sheet1
+    worksheet_name = worksheet.title
 
-    sheet_name = google_sheet.sheet1.title
-    saved_wisdoms_range = '{}!{}'.format(sheet_name, SAVED_WISDOMS_RANGE)
+    saved_wisdoms_range = '{}!{}'.format(worksheet_name, SAVED_WISDOMS_RANGE)
+    saved_wisdoms = google_sheet.values_get(saved_wisdoms_range).get('values')
+    saved_wisdoms = {w for [w] in saved_wisdoms} if saved_wisdoms else set()
 
-    saved_id = google_sheet.sheet1.acell(SAVED_ID_RANGE).value or None
-    saved_wisdoms = \
-        {w for [w] in
-         google_sheet.values_get(saved_wisdoms_range).get('values')}
+    saved_id = worksheet.acell(SAVED_ID_RANGE).value or None
 
-    latest_tweet_id = None
     new_wisdoms = set()
-    sheet_body_data = []
+    request_body = []
+    latest_tweet_id = None
 
     for status in tweepy.Cursor(twitter_api.user_timeline,
                                 user_id=CODEWISDOM_ID,
@@ -82,17 +84,17 @@ def main():
                     latest_tweet_id = tweet_id
 
                 new_wisdoms.add(wisdom)
-                sheet_body_data.insert(0, [author, wisdom, url])
+                request_body.insert(0, [author, wisdom, url])
 
-    # google_sheet.values_append(
-    #     sheet_name,
-    #     params={'valueInputOption': INPUT_OPTION},
-    #     body={'values': sheet_body_data})
+    google_sheet.values_append(
+        worksheet_name,
+        params={'valueInputOption': INPUT_OPTION},
+        body={'values': request_body})
 
-    # google_sheet.values_update(
-    #     '{}!{}'.format(sheet_name, SAVED_ID_RANGE),
-    #     params={'valueInputOption': INPUT_OPTION},
-    #     body={'values': [[latest_tweet_id]]})
+    google_sheet.values_update(
+        '{}!{}'.format(worksheet_name, SAVED_ID_RANGE),
+        params={'valueInputOption': INPUT_OPTION},
+        body={'values': [[latest_tweet_id]]})
 
 
 if __name__ == '__main__':
