@@ -45,8 +45,7 @@ def main():
     saved_wisdoms = \
         {w for _, w, _ in saved_wisdoms} if saved_wisdoms else set()
 
-    saved_id = google_sheet.values_get(saved_id_range).get('values')
-    saved_id = saved_id[0][0] if saved_id else None
+    saved_id = google_sheet.sheet1.acell(SAVED_ID_RANGE).value or None
 
     new_wisdoms = set()
     sheet_body_data = []
