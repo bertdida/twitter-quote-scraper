@@ -39,7 +39,6 @@ def main():
 
     sheet_name = google_sheet.sheet1.title
     saved_wisdoms_range = '{}!{}'.format(sheet_name, SAVED_WISDOMS_RANGE)
-    saved_id_range = '{}!{}'.format(sheet_name, SAVED_ID_RANGE)
 
     saved_wisdoms = google_sheet.values_get(saved_wisdoms_range).get('values')
     saved_wisdoms = \
@@ -92,7 +91,7 @@ def main():
         body={'values': sheet_body_data})
 
     google_sheet.values_update(
-        saved_id_range,
+        '{}!{}'.format(sheet_name, SAVED_ID_RANGE),
         params={'valueInputOption': INPUT_OPTION},
         body={'values': [[latest_tweet_id]]})
 
