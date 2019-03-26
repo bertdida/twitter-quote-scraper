@@ -24,7 +24,7 @@ SCOPES = ['https://spreadsheets.google.com/feeds']
 
 
 WISDOM_AUTHOR_RE = re.compile(
-    r'^[\"“](?P<wisdom>.*)[\"”]\s*?[\-–―]\s*(?P<author>.*)$')
+    r'^[\"“](?P<wisdom>.*)[\"”]\s*?[\-–―]\s*?(?P<author>.*)$')
 
 
 def main():
