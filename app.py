@@ -1,6 +1,7 @@
 import re
 import json
 import html
+import emoji
 import tweepy
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -41,6 +42,9 @@ def main():
     worksheet = google_sheet.sheet1
     worksheet_name = worksheet.title
 
+    saved_authors_range = '{}!A2:A'.format(worksheet_name)
+    saved_authors = google_sheet.values_get(saved_authors_range).get('values')
+
     saved_quotes_range = '{}!{}'.format(worksheet_name, SAVED_QUOTES_RANGE)
     saved_quotes = google_sheet.values_get(saved_quotes_range).get('values')
     saved_quotes = {w for [w] in saved_quotes} if saved_quotes else set()
@@ -65,6 +69,8 @@ def main():
         for hashtag in tweet_entities.get('hashtags'):
             hashtag = '#{}'.format(hashtag.get('text'))
             tweet_context = tweet_context.replace(hashtag, '')
+
+        tweet_context = emoji.get_emoji_regexp().sub(r'', tweet_context)
 
         is_retweet = data.get('retweeted_status')
         is_reply = data.get('in_reply_to_status_id')
