@@ -67,7 +67,7 @@ for tweet in tweepy.Cursor(twitter_api.user_timeline,
         hashtag = '#{}'.format(hashtag.get('text'))
         tweet_context = tweet_context.replace(hashtag, '')
 
-    tweet_context = emoji.get_emoji_regexp().sub(r'', tweet_context)
+    tweet_context = emoji.get_emoji_regexp().sub('', tweet_context)
 
     is_retweet = data.get('retweeted_status')
     is_reply = data.get('in_reply_to_status_id')
