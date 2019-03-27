@@ -13,18 +13,17 @@ ACCESS_TOKEN = twitter_creds.get('access_token')
 ACCESS_TOKEN_SECRET = twitter_creds.get('access_token_secret')
 
 CODEWISDOM_ID = '396238794'
-MIN_LIKE_COUNT = 1000
 
 SERVICE_ACCOUNT_FILE = 'google_service_account.json'
 SPREADSHEET_ID = '1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4'
 INPUT_OPTION = 'USER_ENTERED'
-SAVED_WISDOMS_RANGE = 'B2:B'
-SAVED_ID_RANGE = 'D2'
+SAVED_QUOTES_RANGE = 'B2:B'
+SAVED_ID_RANGE = 'D1'
 SCOPES = ['https://spreadsheets.google.com/feeds']
 
 
-WISDOM_AUTHOR_RE = re.compile(
-    r'^[\"“](?P<wisdom>.*)[\"”]\s*?[\-–―]\s*?(?P<author>.*)$')
+QUOTE_AUTHOR_RE = re.compile(
+    r'^[\"“](?P<quote>.*)[\"”]\s*?[\-–―]\s*?(?P<author>.*)$')
 
 
 def main():
@@ -41,50 +40,52 @@ def main():
     worksheet = google_sheet.sheet1
     worksheet_name = worksheet.title
 
-    saved_wisdoms_range = '{}!{}'.format(worksheet_name, SAVED_WISDOMS_RANGE)
-    saved_wisdoms = google_sheet.values_get(saved_wisdoms_range).get('values')
-    saved_wisdoms = {w for [w] in saved_wisdoms} if saved_wisdoms else set()
+    saved_quotes_range = '{}!{}'.format(worksheet_name, SAVED_QUOTES_RANGE)
+    saved_quotes = google_sheet.values_get(saved_quotes_range).get('values')
+    saved_quotes = {w for [w] in saved_quotes} if saved_quotes else set()
 
     saved_id = worksheet.acell(SAVED_ID_RANGE).value or None
 
-    new_wisdoms = set()
+    new_quotes = set()
     request_body = []
     latest_tweet_id = None
 
-    for status in tweepy.Cursor(twitter_api.user_timeline,
-                                user_id=CODEWISDOM_ID,
-                                since_id=saved_id,
-                                tweet_mode='extended').items():
+    for tweet in tweepy.Cursor(twitter_api.user_timeline,
+                               user_id=CODEWISDOM_ID,
+                               since_id=saved_id,
+                               tweet_mode='extended').items():
 
-        json = status._json
+        data = tweet._json
 
-        is_retweet = json.get('retweeted_status')
-        is_reply = json.get('in_reply_to_status_id')
-        is_unwanted = json.get('favorite_count') < MIN_LIKE_COUNT
+        tweet_id = data.get('id_str')
+        tweet_context = data.get('full_text')
+        tweet_entities = data.get('entities')
 
-        if any([is_retweet, is_reply, is_unwanted]):
+        is_retweet = data.get('retweeted_status')
+        is_reply = data.get('in_reply_to_status_id')
+        has_url = tweet_entities.get('urls')
+        has_media = tweet_entities.get('media')
+
+        if any([is_retweet, is_reply, has_url, has_media]):
             continue
 
-        tweet_id = json.get('id_str')
-        tweet_context = json.get('full_text')
-
-        for hashtag_entity in json.get('entities').get('hashtags'):
-            hashtag = '#{}'.format(hashtag_entity.get('text'))
+        for hashtag in tweet_entities.get('hashtags'):
+            hashtag = '#{}'.format(hashtag.get('text'))
             tweet_context = tweet_context.replace(hashtag, '')
 
-        match = WISDOM_AUTHOR_RE.match(tweet_context)
+        match = QUOTE_AUTHOR_RE.match(tweet_context)
 
         if match:
             url = 'https://twitter.com/CodeWisdom/status/{}'.format(tweet_id)
-            wisdom = match.group('wisdom').strip()
+            quote = match.group('quote').strip()
             author = match.group('author').strip()
 
-            if wisdom not in saved_wisdoms and wisdom not in new_wisdoms:
+            if quote not in saved_quotes and quote not in new_quotes:
                 if latest_tweet_id is None:
                     latest_tweet_id = tweet_id
 
-                new_wisdoms.add(wisdom)
-                request_body.insert(0, [author, wisdom, url])
+                new_quotes.add(quote)
+                request_body.insert(0, [author, quote, url])
 
     google_sheet.values_append(
         worksheet_name,
