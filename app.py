@@ -39,9 +39,6 @@ google_sheet = google_client.open_by_key(SPREADSHEET_ID)
 worksheet = google_sheet.sheet1
 worksheet_name = worksheet.title
 
-saved_authors_range = '{}!A2:A'.format(worksheet_name)
-saved_authors = google_sheet.values_get(saved_authors_range).get('values')
-
 saved_quotes_range = '{}!{}'.format(worksheet_name, SAVED_QUOTES_RANGE)
 saved_quotes = google_sheet.values_get(saved_quotes_range).get('values')
 saved_quotes = {w for [w] in saved_quotes} if saved_quotes else set()
