@@ -61,31 +61,33 @@ def main():
         tweet_context = data.get('full_text')
         tweet_entities = data.get('entities')
 
-        is_retweet = data.get('retweeted_status')
-        is_reply = data.get('in_reply_to_status_id')
-        has_url = tweet_entities.get('urls')
-        has_media = tweet_entities.get('media')
-
-        if any([is_retweet, is_reply, has_url, has_media]):
-            continue
-
         for hashtag in tweet_entities.get('hashtags'):
             hashtag = '#{}'.format(hashtag.get('text'))
             tweet_context = tweet_context.replace(hashtag, '')
 
+        is_retweet = data.get('retweeted_status')
+        is_reply = data.get('in_reply_to_status_id')
+        has_url = tweet_entities.get('urls')
+        has_media = tweet_entities.get('media')
         match = QUOTE_AUTHOR_RE.match(tweet_context)
 
-        if match:
-            url = 'https://twitter.com/CodeWisdom/status/{}'.format(tweet_id)
-            quote = match.group('quote').strip()
-            author = match.group('author').strip()
+        if any([is_retweet,
+                is_reply,
+                has_url,
+                has_media,
+                match is None]):
+            continue
 
-            if quote not in saved_quotes and quote not in new_quotes:
-                if latest_tweet_id is None:
-                    latest_tweet_id = tweet_id
+        url = 'https://twitter.com/CodeWisdom/status/{}'.format(tweet_id)
+        quote = match.group('quote').strip()
+        author = match.group('author').strip()
 
-                new_quotes.add(quote)
-                request_body.insert(0, [author, quote, url])
+        if quote not in saved_quotes and quote not in new_quotes:
+            if latest_tweet_id is None:
+                latest_tweet_id = tweet_id
+
+            new_quotes.add(quote)
+            request_body.insert(0, [author, quote, url])
 
     google_sheet.values_append(
         worksheet_name,
