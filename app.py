@@ -1,5 +1,6 @@
 import re
 import json
+import html
 import tweepy
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -81,6 +82,9 @@ def main():
         url = 'https://twitter.com/CodeWisdom/status/{}'.format(tweet_id)
         quote = match.group('quote').strip()
         author = match.group('author').strip()
+
+        quote = html.unescape(quote)
+        author = html.unescape(author)
 
         if quote not in saved_quotes and quote not in new_quotes:
             if latest_tweet_id is None:
