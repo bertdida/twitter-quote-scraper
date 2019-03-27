@@ -40,8 +40,8 @@ worksheet = google_sheet.sheet1
 worksheet_name = worksheet.title
 
 saved_quotes_range = '{}!{}'.format(worksheet_name, SAVED_QUOTES_RANGE)
-saved_quotes = google_sheet.values_get(saved_quotes_range).get('values')
-saved_quotes = {w for [w] in saved_quotes} if saved_quotes else set()
+saved_quotes_list = google_sheet.values_get(saved_quotes_range).get('values')
+saved_quotes = {w for [w] in saved_quotes_list} if saved_quotes_list else set()
 
 saved_id = worksheet.acell(SAVED_ID_RANGE).value or None
 
