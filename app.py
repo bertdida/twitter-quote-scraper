@@ -45,7 +45,6 @@ saved_quotes = {w for [w] in saved_quotes_list} if saved_quotes_list else set()
 
 saved_id = worksheet.acell(SAVED_ID_RANGE).value or None
 
-new_quotes = set()
 request_body = []
 latest_tweet_id = None
 
@@ -86,11 +85,11 @@ for tweet in tweepy.Cursor(twitter_api.user_timeline,
     quote = html.unescape(quote)
     author = html.unescape(author)
 
-    if quote not in saved_quotes and quote not in new_quotes:
+    if quote not in saved_quotes:
         if latest_tweet_id is None:
             latest_tweet_id = tweet_id
 
-        new_quotes.add(quote)
+        saved_quotes.add(quote)
         request_body.insert(0, [author, quote, url])
 
 google_sheet.values_append(
