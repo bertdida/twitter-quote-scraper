@@ -6,7 +6,10 @@ import tweepy
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-with open('twitter_creds.json', 'r') as creds_file:
+TWITTER_CREDS_FILE = 'twitter_creds.json'
+SERVICE_ACCOUNT_FILE = 'google_service_account.json'
+
+with open(TWITTER_CREDS_FILE, 'r') as creds_file:
     twitter_creds = json.load(creds_file)
 
 CONSUMER_KEY = twitter_creds.get('consumer_key')
@@ -16,7 +19,6 @@ ACCESS_TOKEN_SECRET = twitter_creds.get('access_token_secret')
 
 CODEWISDOM_ID = '396238794'
 
-SERVICE_ACCOUNT_FILE = 'google_service_account.json'
 SPREADSHEET_ID = '1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4'
 INPUT_OPTION = 'USER_ENTERED'
 SAVED_QUOTES_RANGE = 'B2:B'
@@ -25,7 +27,6 @@ SCOPES = ['https://spreadsheets.google.com/feeds']
 
 QUOTE_AUTHOR_RE = re.compile(
     r'^[\"“](?P<quote>.*)[\"”]\s*?[\-–―]\s*?(?P<author>.*)$')
-
 
 twitter_auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_KEY_SECRET)
 twitter_auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
