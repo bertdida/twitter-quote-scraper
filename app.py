@@ -9,7 +9,7 @@ SERVICE_ACCOUNT_FILE = 'creds/google.json'
 
 SPREADSHEET_ID = '1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4'
 INPUT_OPTION = 'USER_ENTERED'
-SAVED_QUOTES_RANGE = 'B2:B'
+SAVED_PHRASES_RANGE = 'B2:B'
 SAVED_ID_RANGE = 'D1'
 SCOPES = ['https://spreadsheets.google.com/feeds']
 
@@ -23,13 +23,14 @@ google_sheet = google_client.open_by_key(SPREADSHEET_ID)
 worksheet = google_sheet.sheet1
 worksheet_name = worksheet.title
 
-saved_quotes_range = '{}!{}'.format(worksheet_name, SAVED_QUOTES_RANGE)
-saved_quotes = google_sheet.values_get(saved_quotes_range).get('values') or []
+saved_phrases_range = '{}!{}'.format(worksheet_name, SAVED_PHRASES_RANGE)
+saved_phrases = \
+    google_sheet.values_get(saved_phrases_range).get('values') or []
 
 # Convert to lowercase and remove non-alphanumeric characters
 # to reduce the possibility of duplicate quotes.
-saved_quotes_alphanum = \
-    {helpers.to_lowercased_alphanum(q) for [q] in saved_quotes}
+saved_phrases_alphanum = \
+    {helpers.to_lowercased_alphanum(q) for [q] in saved_phrases}
 
 saved_id = worksheet.acell(SAVED_ID_RANGE).value or None
 
@@ -41,12 +42,11 @@ new_quotes = scraper.get_quotes(TWITTER_HANDLE, saved_id)
 
 new_quotes_unique = []
 for quote in new_quotes:
-    quote_alphanum = helpers.to_lowercased_alphanum(quote.phrase)
+    phrase_alphanum = helpers.to_lowercased_alphanum(quote.phrase)
 
-    if quote_alphanum not in saved_quotes_alphanum:
-        saved_quotes_alphanum.add(quote_alphanum)
+    if phrase_alphanum not in saved_phrases_alphanum:
+        saved_phrases_alphanum.add(phrase_alphanum)
         new_quotes_unique.insert(0, quote)
-
 
 google_sheet.values_append(
     worksheet_name,
@@ -55,8 +55,7 @@ google_sheet.values_append(
 
 if new_quotes_unique:
     *_, latest_quote = new_quotes_unique
-    *_, latest_quote_url = latest_quote
-    *_, latest_quote_id = latest_quote_url.split('/')
+    *_, latest_quote_id = latest_quote.url.split('/')
 
     google_sheet.values_update(
         '{}!{}'.format(worksheet_name, SAVED_ID_RANGE),
