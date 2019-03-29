@@ -47,16 +47,16 @@ for author, quote, url in new_quotes:
         saved_quotes_alphanum.add(quote_alphanum)
         new_quotes_unique.insert(0, [author, quote, url])
 
-*_, latest_quote = new_quotes_unique
-*_, latest_quote_url = latest_quote
-*_, latest_quote_id = latest_quote_url.split('/')
+# *_, latest_quote = new_quotes_unique
+# *_, latest_quote_url = latest_quote
+# *_, latest_quote_id = latest_quote_url.split('/')
 
-google_sheet.values_append(
-    worksheet_name,
-    params={'valueInputOption': INPUT_OPTION},
-    body={'values': new_quotes_unique})
+# google_sheet.values_append(
+#     worksheet_name,
+#     params={'valueInputOption': INPUT_OPTION},
+#     body={'values': new_quotes_unique})
 
-google_sheet.values_update(
-    '{}!{}'.format(worksheet_name, SAVED_ID_RANGE),
-    params={'valueInputOption': INPUT_OPTION},
-    body={'values': [[latest_quote_id]]})
+# google_sheet.values_update(
+#     '{}!{}'.format(worksheet_name, SAVED_ID_RANGE),
+#     params={'valueInputOption': INPUT_OPTION},
+#     body={'values': [[latest_quote_id]]})
