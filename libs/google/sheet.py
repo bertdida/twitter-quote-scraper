@@ -5,7 +5,7 @@ INPUT_OPTION = 'USER_ENTERED'
 SCOPES = ['https://spreadsheets.google.com/feeds']
 
 
-class Client:
+class Sheet:
 
     def __init__(self, service_account_file: str, spreadsheet_id: str):
 

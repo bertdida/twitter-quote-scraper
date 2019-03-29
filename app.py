@@ -1,7 +1,6 @@
 import json
 import gspread
-from libs.google.client import Client
-from libs import helpers, QuoteScraper
+from libs import helpers, GoogleSheet, TwitterQuoteScraper
 from oauth2client.service_account import ServiceAccountCredentials
 
 TWITTER_CREDS_FILE = 'creds/twitter.json'
@@ -15,8 +14,8 @@ SAVED_ID_RANGE = 'D1'
 with open(TWITTER_CREDS_FILE, 'r') as twitter_creds_file:
     twitter_creds = json.load(twitter_creds_file)
 
-twitter_scraper = QuoteScraper(twitter_creds)
-google_sheet = Client(SERVICE_ACCOUNT_FILE, SPREADSHEET_ID)
+twitter_scraper = TwitterQuoteScraper(twitter_creds)
+google_sheet = GoogleSheet(SERVICE_ACCOUNT_FILE, SPREADSHEET_ID)
 
 for worksheet in google_sheet.get_worksheets():
     worksheet_name = worksheet.title
