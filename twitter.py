@@ -31,16 +31,16 @@ class QuoteScraper:
 
     def get_quotes(self, user_id: str, since_id: str):
 
-        for tweet in tweepy.Cursor(self.api.user_timeline,
-                                   user_id=user_id,
-                                   since_id=since_id,
-                                   tweet_mode='extended').items():
+        for status in tweepy.Cursor(self.api.user_timeline,
+                                    user_id=user_id,
+                                    since_id=since_id,
+                                    tweet_mode='extended').items():
 
-            data = tweet._json
+            tweet = status._json
 
-            tweet_id = data.get('id_str')
-            tweet_context = data.get('full_text')
-            tweet_entities = data.get('entities')
+            tweet_id = tweet.get('id_str')
+            tweet_context = tweet.get('full_text')
+            tweet_entities = tweet.get('entities')
 
             normalize_tweet = compose(self.strip_emojis,
                                       self.strip_hashtags(tweet_entities),
@@ -49,8 +49,8 @@ class QuoteScraper:
 
             tweet_context = normalize_tweet(tweet_context)
 
-            is_retweet = data.get('retweeted_status')
-            is_reply = data.get('in_reply_to_status_id')
+            is_retweet = tweet.get('retweeted_status')
+            is_reply = tweet.get('in_reply_to_status_id')
             has_url = tweet_entities.get('urls')
             has_media = tweet_entities.get('media')
             match = QUOTE_AUTHOR_RE.match(tweet_context)
