@@ -69,9 +69,9 @@ class QuoteScraper:
             yield [author, quote, url]
 
     @staticmethod
-    def strip_emojis(string):
+    def strip_emojis(tweet_context):
 
-        return emoji.get_emoji_regexp().sub('', string)
+        return emoji.get_emoji_regexp().sub('', tweet_context)
 
     @staticmethod
     def strip_hashtags(tweet_entities: dict):
@@ -79,23 +79,24 @@ class QuoteScraper:
         hashtag_entities = tweet_entities.get('hashtags')
         hashtags = ['#{}'.format(e.get('text')) for e in hashtag_entities]
 
-        def _strip_hashtags(string):
-            for hashtag in hashtags:
-                string = tweet.replace(hashtag, '')
+        def _strip_hashtags(tweet_context):
 
-            return string
+            for hashtag in hashtags:
+                tweet_context = tweet_context.replace(hashtag, '')
+
+            return tweet_context
 
         return _strip_hashtags
 
     @staticmethod
-    def to_ascii(string):
+    def to_ascii(tweet_context):
 
-        return unidecode.unidecode(string)
+        return unidecode.unidecode(tweet_context)
 
     @staticmethod
-    def strip_and_unescape(string):
+    def strip_and_unescape(tweet_context):
 
         function = compose(lambda s: s.strip(),
                            lambda s: html.unescape(s))
 
-        return function(string)
+        return function(tweet_context)
