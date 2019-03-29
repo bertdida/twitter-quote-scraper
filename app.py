@@ -4,14 +4,19 @@ import gspread
 from twitter import QuoteScraper
 from oauth2client.service_account import ServiceAccountCredentials
 
+TWITTER_CREDS_FILE = 'creds/twitter.json'
+SERVICE_ACCOUNT_FILE = 'creds/google.json'
+
 SPREADSHEET_ID = '1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4'
 INPUT_OPTION = 'USER_ENTERED'
 SAVED_QUOTES_RANGE = 'B2:B'
 SAVED_ID_RANGE = 'D1'
 SCOPES = ['https://spreadsheets.google.com/feeds']
 
+CODEWISDOM_ID = '396238794'
+
 google_creds = ServiceAccountCredentials.from_json_keyfile_name(
-    'google_service_account.json', SCOPES)
+    SERVICE_ACCOUNT_FILE, SCOPES)
 google_client = gspread.authorize(google_creds)
 google_sheet = google_client.open_by_key(SPREADSHEET_ID)
 
@@ -25,11 +30,11 @@ saved_quotes_alphanum = \
 
 saved_id = worksheet.acell(SAVED_ID_RANGE).value or None
 
-with open('twitter_creds.json', 'r') as twitter_creds_file:
+with open(TWITTER_CREDS_FILE, 'r') as twitter_creds_file:
     twitter_creds = json.load(twitter_creds_file)
 
 scraper = QuoteScraper(twitter_creds)
-new_quotes = scraper.get_quotes('396238794', saved_id)
+new_quotes = scraper.get_quotes(CODEWISDOM_ID, saved_id)
 
 new_quotes_unique = []
 for author, quote, url in new_quotes:
