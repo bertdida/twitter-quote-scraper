@@ -3,10 +3,13 @@ import html
 import emoji
 import unidecode
 import tweepy
+import collections
 from helpers import compose
 from . import API
 
 QUOTE_AUTHOR_RE = re.compile(r'^"(?P<quote>.*)"\s*?-\s*?(?P<author>.*)$')
+
+Quote = collections.namedtuple('Quote', 'author phrase url')
 
 
 class QuoteScraper:
@@ -52,7 +55,7 @@ class QuoteScraper:
             quote = self.strip_and_unescape(match.group('quote'))
             author = self.strip_and_unescape(match.group('author'))
 
-            yield [author, quote, url]
+            yield Quote(author, quote, url)
 
     @staticmethod
     def strip_emojis(tweet_context):
