@@ -7,7 +7,7 @@ import collections
 from helpers import compose
 from . import API
 
-QUOTE_AUTHOR_RE = re.compile(r'^"(?P<quote>.*)"\s*?-\s*?(?P<author>.*)$')
+QUOTE_PATTERN = re.compile(r'^"(?P<phrase>.*)"\s*?-\s*?(?P<author>.*)$')
 
 Quote = collections.namedtuple('Quote', 'author phrase url')
 
@@ -42,7 +42,7 @@ class QuoteScraper:
             is_retweet = tweet.get('retweeted_status')
             has_url = tweet_entities.get('urls')
             has_media = tweet_entities.get('media')
-            match = QUOTE_AUTHOR_RE.match(tweet_context)
+            match = QUOTE_PATTERN.match(tweet_context)
 
             if any([is_reply,
                     is_retweet,
@@ -52,7 +52,7 @@ class QuoteScraper:
                 continue
 
             url = 'https://twitter.com/CodeWisdom/status/{}'.format(tweet_id)
-            quote = self.strip_and_unescape(match.group('quote'))
+            quote = self.strip_and_unescape(match.group('phrase'))
             author = self.strip_and_unescape(match.group('author'))
 
             yield Quote(author, quote, url)
