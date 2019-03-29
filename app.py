@@ -40,23 +40,25 @@ scraper = QuoteScraper(twitter_creds)
 new_quotes = scraper.get_quotes(TWITTER_HANDLE, saved_id)
 
 new_quotes_unique = []
-for author, quote, url in new_quotes:
-    quote_alphanum = helpers.to_lowercased_alphanum(quote)
+for quote in new_quotes:
+    quote_alphanum = helpers.to_lowercased_alphanum(quote.phrase)
 
     if quote_alphanum not in saved_quotes_alphanum:
         saved_quotes_alphanum.add(quote_alphanum)
-        new_quotes_unique.insert(0, [author, quote, url])
+        new_quotes_unique.insert(0, quote)
 
-*_, latest_quote = new_quotes_unique
-*_, latest_quote_url = latest_quote
-*_, latest_quote_id = latest_quote_url.split('/')
 
 google_sheet.values_append(
     worksheet_name,
     params={'valueInputOption': INPUT_OPTION},
     body={'values': new_quotes_unique})
 
-google_sheet.values_update(
-    '{}!{}'.format(worksheet_name, SAVED_ID_RANGE),
-    params={'valueInputOption': INPUT_OPTION},
-    body={'values': [[latest_quote_id]]})
+if new_quotes_unique:
+    *_, latest_quote = new_quotes_unique
+    *_, latest_quote_url = latest_quote
+    *_, latest_quote_id = latest_quote_url.split('/')
+
+    google_sheet.values_update(
+        '{}!{}'.format(worksheet_name, SAVED_ID_RANGE),
+        params={'valueInputOption': INPUT_OPTION},
+        body={'values': [[latest_quote_id]]})
