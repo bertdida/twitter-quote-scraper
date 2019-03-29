@@ -15,7 +15,7 @@ SAVED_ID_RANGE = 'D1'
 with open(TWITTER_CREDS_FILE, 'r') as twitter_creds_file:
     twitter_creds = json.load(twitter_creds_file)
 
-scraper = QuoteScraper(twitter_creds)
+twitter_scraper = QuoteScraper(twitter_creds)
 google_sheet = Client(SERVICE_ACCOUNT_FILE, SPREADSHEET_ID)
 
 for worksheet in google_sheet.get_worksheets():
@@ -30,7 +30,7 @@ for worksheet in google_sheet.get_worksheets():
 
     [saved_id] = google_sheet.get_values(saved_id_range) or [None]
 
-    new_quotes = scraper.get_quotes(worksheet_name, saved_id)
+    new_quotes = twitter_scraper.get_quotes(worksheet_name, saved_id)
     new_quotes_unique = []
 
     for quote in new_quotes:
