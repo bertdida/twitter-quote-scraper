@@ -27,7 +27,7 @@ class QuoteScraper:
 
     def __init__(self, twitter_creds: dict):
 
-        self.api = TwitterAPI(twitter_creds)
+        self.api = API(twitter_creds)
 
     def get_quotes(self, user_id: str, since_id: str):
 
