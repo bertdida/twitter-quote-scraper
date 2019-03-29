@@ -49,14 +49,14 @@ class QuoteScraper:
 
             tweet_context = normalize_tweet(tweet_context)
 
-            is_retweet = tweet.get('retweeted_status')
             is_reply = tweet.get('in_reply_to_status_id')
+            is_retweet = tweet.get('retweeted_status')
             has_url = tweet_entities.get('urls')
             has_media = tweet_entities.get('media')
             match = self.QUOTE_AUTHOR_RE.match(tweet_context)
 
-            if any([is_retweet,
-                    is_reply,
+            if any([is_reply,
+                    is_retweet,
                     has_url,
                     has_media,
                     match is None]):
