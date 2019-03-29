@@ -1,7 +1,6 @@
 import json
-import helpers
 import gspread
-from twitter import QuoteScraper
+from libs import helpers, QuoteScraper
 from oauth2client.service_account import ServiceAccountCredentials
 
 TWITTER_CREDS_FILE = 'creds/twitter.json'
