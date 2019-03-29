@@ -4,8 +4,8 @@ import emoji
 import unidecode
 import tweepy
 import collections
-from ..helpers import compose
 from . import API
+from ..helpers import compose
 
 QUOTE_PATTERN = re.compile(r'^"(?P<phrase>.*)"\s*?-\s*?(?P<author>.*)$')
 
