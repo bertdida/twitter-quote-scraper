@@ -25,6 +25,9 @@ worksheet_name = worksheet.title
 
 saved_quotes_range = '{}!{}'.format(worksheet_name, SAVED_QUOTES_RANGE)
 saved_quotes = google_sheet.values_get(saved_quotes_range).get('values') or []
+
+# Convert to lowercase and non-alphanumeric characters
+# to reduce the possibility of duplicate quotes.
 saved_quotes_alphanum = \
     {helpers.to_lowercased_alphanum(q) for [q] in saved_quotes}
 
