@@ -13,7 +13,7 @@ SAVED_QUOTES_RANGE = 'B2:B'
 SAVED_ID_RANGE = 'D1'
 SCOPES = ['https://spreadsheets.google.com/feeds']
 
-CODEWISDOM_ID = '396238794'
+TWITTER_HANDLE = '@CodeWisdom'
 
 google_creds = ServiceAccountCredentials.from_json_keyfile_name(
     SERVICE_ACCOUNT_FILE, SCOPES)
@@ -37,7 +37,7 @@ with open(TWITTER_CREDS_FILE, 'r') as twitter_creds_file:
     twitter_creds = json.load(twitter_creds_file)
 
 scraper = QuoteScraper(twitter_creds)
-new_quotes = scraper.get_quotes(CODEWISDOM_ID, saved_id)
+new_quotes = scraper.get_quotes(TWITTER_HANDLE, saved_id)
 
 new_quotes_unique = []
 for author, quote, url in new_quotes:

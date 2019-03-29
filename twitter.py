@@ -29,11 +29,13 @@ class QuoteScraper:
 
         self.api = API(twitter_creds)
 
-    def get_quotes(self, user_id: str, since_id: str):
+    def get_quotes(self, screen_name: str, status_since_id: str):
+
+        screen_name = screen_name.lstrip('@')
 
         for status in tweepy.Cursor(self.api.user_timeline,
-                                    user_id=user_id,
-                                    since_id=since_id,
+                                    screen_name=screen_name,
+                                    since_id=status_since_id,
                                     tweet_mode='extended').items():
 
             tweet = status._json
