@@ -26,11 +26,9 @@ class QuoteScraper:
     QUOTE_AUTHOR_RE = re.compile(r'^"(?P<quote>.*)"\s*?-\s*?(?P<author>.*)$')
 
     def __init__(self, twitter_creds: dict):
-
         self.api = API(twitter_creds)
 
     def get_quotes(self, tweeter_handle: str, status_since_id: str):
-
         tweeter_handle = tweeter_handle.lstrip('@')
 
         for status in tweepy.Cursor(self.api.user_timeline,
@@ -72,17 +70,14 @@ class QuoteScraper:
 
     @staticmethod
     def strip_emojis(tweet_context):
-
         return emoji.get_emoji_regexp().sub('', tweet_context)
 
     @staticmethod
     def strip_hashtags(tweet_entities: dict):
-
         hashtag_entities = tweet_entities.get('hashtags')
         hashtags = ['#{}'.format(e.get('text')) for e in hashtag_entities]
 
         def _strip_hashtags(tweet_context):
-
             for hashtag in hashtags:
                 tweet_context = tweet_context.replace(hashtag, '')
 
@@ -92,12 +87,10 @@ class QuoteScraper:
 
     @staticmethod
     def to_ascii(tweet_context):
-
         return unidecode.unidecode(tweet_context)
 
     @staticmethod
     def strip_and_unescape(tweet_context):
-
         function = compose(lambda s: s.strip(),
                            lambda s: html.unescape(s))
 
