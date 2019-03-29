@@ -52,10 +52,10 @@ class QuoteScraper:
                 continue
 
             url = 'https://twitter.com/CodeWisdom/status/{}'.format(tweet_id)
-            quote = self.strip_and_unescape(match.group('phrase'))
+            phrase = self.strip_and_unescape(match.group('phrase'))
             author = self.strip_and_unescape(match.group('author'))
 
-            yield Quote(author, quote, url)
+            yield Quote(author, phrase, url)
 
     @staticmethod
     def strip_emojis(tweet_context):
