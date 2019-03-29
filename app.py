@@ -1,23 +1,8 @@
-import re
 import json
-import html
-import emoji
-import tweepy
+import helpers
 import gspread
+from twitter import QuoteScraper
 from oauth2client.service_account import ServiceAccountCredentials
-
-TWITTER_CREDS_FILE = 'twitter_creds.json'
-SERVICE_ACCOUNT_FILE = 'google_service_account.json'
-
-with open(TWITTER_CREDS_FILE, 'r') as creds_file:
-    twitter_creds = json.load(creds_file)
-
-CONSUMER_KEY = twitter_creds.get('consumer_key')
-CONSUMER_KEY_SECRET = twitter_creds.get('consumer_key_secret')
-ACCESS_TOKEN = twitter_creds.get('access_token')
-ACCESS_TOKEN_SECRET = twitter_creds.get('access_token_secret')
-
-CODEWISDOM_ID = '396238794'
 
 SPREADSHEET_ID = '1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4'
 INPUT_OPTION = 'USER_ENTERED'
@@ -25,15 +10,8 @@ SAVED_QUOTES_RANGE = 'B2:B'
 SAVED_ID_RANGE = 'D1'
 SCOPES = ['https://spreadsheets.google.com/feeds']
 
-QUOTE_AUTHOR_RE = re.compile(
-    r'^[\"“](?P<quote>.*)[\"”]\s*?[\-–―]\s*?(?P<author>.*)$')
-
-twitter_auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_KEY_SECRET)
-twitter_auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-twitter_api = tweepy.API(twitter_auth)
-
 google_creds = ServiceAccountCredentials.from_json_keyfile_name(
-    SERVICE_ACCOUNT_FILE, SCOPES)
+    'google_service_account.json', SCOPES)
 google_client = gspread.authorize(google_creds)
 google_sheet = google_client.open_by_key(SPREADSHEET_ID)
 
@@ -41,64 +19,36 @@ worksheet = google_sheet.sheet1
 worksheet_name = worksheet.title
 
 saved_quotes_range = '{}!{}'.format(worksheet_name, SAVED_QUOTES_RANGE)
-saved_quotes_list = google_sheet.values_get(saved_quotes_range).get('values')
-saved_quotes = {w for [w] in saved_quotes_list} if saved_quotes_list else set()
+saved_quotes = google_sheet.values_get(saved_quotes_range).get('values') or []
+saved_quotes_alphanum = \
+    {helpers.to_lowercased_alphanum(q) for [q] in saved_quotes}
 
 saved_id = worksheet.acell(SAVED_ID_RANGE).value or None
 
-request_body = []
-latest_tweet_id = None
+with open('twitter_creds.json', 'r') as twitter_creds_file:
+    twitter_creds = json.load(twitter_creds_file)
 
-for tweet in tweepy.Cursor(twitter_api.user_timeline,
-                           user_id=CODEWISDOM_ID,
-                           since_id=saved_id,
-                           tweet_mode='extended').items():
+scraper = QuoteScraper(twitter_creds)
+new_quotes = scraper.get_quotes('396238794', saved_id)
 
-    data = tweet._json
+new_quotes_unique = []
+for author, quote, url in new_quotes:
+    quote_alphanum = helpers.to_lowercased_alphanum(quote)
 
-    tweet_id = data.get('id_str')
-    tweet_context = data.get('full_text')
-    tweet_entities = data.get('entities')
+    if quote_alphanum not in saved_quotes_alphanum:
+        saved_quotes_alphanum.add(quote_alphanum)
+        new_quotes_unique.insert(0, [author, quote, url])
 
-    for hashtag in tweet_entities.get('hashtags'):
-        hashtag = '#{}'.format(hashtag.get('text'))
-        tweet_context = tweet_context.replace(hashtag, '')
-
-    tweet_context = emoji.get_emoji_regexp().sub('', tweet_context)
-
-    is_retweet = data.get('retweeted_status')
-    is_reply = data.get('in_reply_to_status_id')
-    has_url = tweet_entities.get('urls')
-    has_media = tweet_entities.get('media')
-    match = QUOTE_AUTHOR_RE.match(tweet_context)
-
-    if any([is_retweet,
-            is_reply,
-            has_url,
-            has_media,
-            match is None]):
-        continue
-
-    url = 'https://twitter.com/CodeWisdom/status/{}'.format(tweet_id)
-    quote = match.group('quote').strip()
-    author = match.group('author').strip()
-
-    quote = html.unescape(quote)
-    author = html.unescape(author)
-
-    if quote not in saved_quotes:
-        if latest_tweet_id is None:
-            latest_tweet_id = tweet_id
-
-        saved_quotes.add(quote)
-        request_body.insert(0, [author, quote, url])
+*_, latest_quote = new_quotes_unique
+*_, latest_quote_url = latest_quote
+*_, latest_quote_id = latest_quote_url.split('/')
 
 google_sheet.values_append(
     worksheet_name,
     params={'valueInputOption': INPUT_OPTION},
-    body={'values': request_body})
+    body={'values': new_quotes_unique})
 
 google_sheet.values_update(
     '{}!{}'.format(worksheet_name, SAVED_ID_RANGE),
     params={'valueInputOption': INPUT_OPTION},
-    body={'values': [[latest_tweet_id]]})
+    body={'values': [[latest_quote_id]]})
