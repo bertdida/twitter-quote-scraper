@@ -1,3 +1,2 @@
-google_service_account.json
-twitter_creds.json
+creds/
 __pycache__/
