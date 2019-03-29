@@ -53,7 +53,7 @@ class QuoteScraper:
             is_reply = tweet.get('in_reply_to_status_id')
             has_url = tweet_entities.get('urls')
             has_media = tweet_entities.get('media')
-            match = QUOTE_AUTHOR_RE.match(tweet_context)
+            match = self.QUOTE_AUTHOR_RE.match(tweet_context)
 
             if any([is_retweet,
                     is_reply,
