@@ -9,7 +9,6 @@ from helpers import compose
 class API():
 
     def __new__(cls, creds: dict):
-
         auth = tweepy.OAuthHandler(
             creds.get('consumer_key'),
             creds.get('consumer_key_secret'))
