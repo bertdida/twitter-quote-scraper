@@ -25,18 +25,18 @@ class QuoteScraper:
 
         self.api = tweepy.API(auth)
 
-    def get_quotes(self, tweeter_handle: str, status_since_id: str):
+    def get_quotes(self, tweeter_handle: str, tweet_since_id: str):
 
         tweeter_handle = tweeter_handle.lstrip('@')
 
-        for status in tweepy.Cursor(self.api.user_timeline,
-                                    screen_name=tweeter_handle,
-                                    since_id=status_since_id,
-                                    tweet_mode='extended').items():
+        for tweet in tweepy.Cursor(self.api.user_timeline,
+                                   screen_name=tweeter_handle,
+                                   since_id=tweet_since_id,
+                                   tweet_mode='extended').items():
 
-            tweet_id = status.id_str
-            tweet_context = status.full_text
-            tweet_entities = status.entities
+            tweet_id = tweet.id_str
+            tweet_context = tweet.full_text
+            tweet_entities = tweet.entities
             hashtag_entities = tweet_entities.get('hashtags')
 
             normalize_tweet = compose(self.strip_emojis,
@@ -48,9 +48,9 @@ class QuoteScraper:
 
             # To avoid Attribute error, we use the _json data and get method
             # to fallback to None if retweeted_status do not exist.
-            is_retweet = status._json.get('retweeted_status')
+            is_retweet = tweet._json.get('retweeted_status')
 
-            is_reply = status.in_reply_to_status_id
+            is_reply = tweet.in_reply_to_status_id
             has_url = tweet_entities.get('urls')
             has_media = tweet_entities.get('media')
             match = QUOTE_PATTERN.match(tweet_context)
