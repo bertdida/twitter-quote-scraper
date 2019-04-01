@@ -46,8 +46,7 @@ class QuoteScraper:
 
             tweet_context = normalize_tweet(tweet_context)
 
-            # To avoid Attribute error, we use the _json data and get method
-            # to fallback to None if retweeted_status do not exist.
+            # Use the json version of tweet object, to avoid Attribute error.
             is_retweet = tweet._json.get('retweeted_status')
 
             is_reply = tweet.in_reply_to_status_id
