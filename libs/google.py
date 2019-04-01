@@ -11,24 +11,30 @@ class Sheet:
 
         creds = ServiceAccountCredentials.from_json_keyfile_name(
             service_account_file, SCOPES)
-
         client = gspread.authorize(creds)
+
         self.spreadsheet = client.open_by_key(spreadsheet_id)
 
     def get_worksheets(self):
+
         return self.spreadsheet.worksheets()
 
     def get_values(self, range_):
-        values = self.spreadsheet.values_get(range_).get('values') or []
-        return [value for [value] in values]
 
-    def append(self, worksheet_name, request_body: list):
+        values = self.spreadsheet.values_get(range_).get('values') or []
+
+        for [value] in values:
+            yield value
+
+    def append(self, range_, request_body: list):
+
         self.spreadsheet.values_append(
-            worksheet_name,
+            range_,
             params={'valueInputOption': INPUT_OPTION},
             body={'values': request_body})
 
     def update(self, range_, request_body: list):
+
         self.spreadsheet.values_update(
             range_,
             params={'valueInputOption': INPUT_OPTION},

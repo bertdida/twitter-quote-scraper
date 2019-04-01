@@ -1,7 +1,6 @@
 import json
 import gspread
-from libs import helpers, GoogleSheet, TwitterQuoteScraper
-from oauth2client.service_account import ServiceAccountCredentials
+from libs import helpers, google, twitter
 
 TWITTER_CREDS_FILE = 'creds/twitter.json'
 SERVICE_ACCOUNT_FILE = 'creds/google.json'
@@ -10,12 +9,11 @@ SPREADSHEET_ID = '1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4'
 SAVED_PHRASES_RANGE = 'B2:B'
 SAVED_ID_RANGE = 'D1'
 
+with open(TWITTER_CREDS_FILE, 'r') as creds_file:
+    twitter_creds = json.load(creds_file)
 
-with open(TWITTER_CREDS_FILE, 'r') as twitter_creds_file:
-    twitter_creds = json.load(twitter_creds_file)
-
-twitter_scraper = TwitterQuoteScraper(twitter_creds)
-google_sheet = GoogleSheet(SERVICE_ACCOUNT_FILE, SPREADSHEET_ID)
+google_sheet = google.Sheet(SERVICE_ACCOUNT_FILE, SPREADSHEET_ID)
+twitter_scraper = twitter.QuoteScraper(twitter_creds)
 
 for worksheet in google_sheet.get_worksheets():
     worksheet_name = worksheet.title
@@ -23,11 +21,11 @@ for worksheet in google_sheet.get_worksheets():
     saved_phrases_range = '{}!{}'.format(worksheet_name, SAVED_PHRASES_RANGE)
     saved_id_range = '{}!{}'.format(worksheet_name, SAVED_ID_RANGE)
 
-    saved_phrases_alphanum = set()
-    for phrase in google_sheet.get_values(saved_phrases_range):
-        saved_phrases_alphanum.add(helpers.to_lowercased_alphanum(phrase))
+    saved_phrases_alphanum = \
+        {helpers.to_lowercased_alphanum(p)
+         for p in google_sheet.get_values(saved_phrases_range)}
 
-    [saved_id] = google_sheet.get_values(saved_id_range) or [None]
+    [saved_id] = list(google_sheet.get_values(saved_id_range)) or [None]
 
     new_quotes = twitter_scraper.get_quotes(worksheet_name, saved_id)
     new_quotes_unique = []
