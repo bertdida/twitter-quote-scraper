@@ -34,21 +34,23 @@ class QuoteScraper:
                                     since_id=status_since_id,
                                     tweet_mode='extended').items():
 
-            tweet = status._json
-
-            tweet_id = tweet.get('id_str')
-            tweet_context = tweet.get('full_text')
-            tweet_entities = tweet.get('entities')
+            tweet_id = status.id_str
+            tweet_context = status.full_text
+            tweet_entities = status.entities
+            hashtag_entities = tweet_entities.get('hashtags')
 
             normalize_tweet = compose(self.strip_emojis,
-                                      self.strip_hashtags(tweet_entities),
+                                      self.strip_hashtags(hashtag_entities),
                                       self.to_ascii,
                                       lambda s: s.replace('--', '-'))
 
             tweet_context = normalize_tweet(tweet_context)
 
-            is_reply = tweet.get('in_reply_to_status_id')
-            is_retweet = tweet.get('retweeted_status')
+            # To avoid Attribute error, we use the _json data and get method
+            # to fallback to None if retweeted_status do not exist.
+            is_retweet = status._json.get('retweeted_status')
+
+            is_reply = status.in_reply_to_status_id
             has_url = tweet_entities.get('urls')
             has_media = tweet_entities.get('media')
             match = QUOTE_PATTERN.match(tweet_context)
@@ -72,9 +74,8 @@ class QuoteScraper:
         return emoji.get_emoji_regexp().sub('', tweet_context)
 
     @staticmethod
-    def strip_hashtags(tweet_entities: dict):
+    def strip_hashtags(hashtag_entities: list):
 
-        hashtag_entities = tweet_entities.get('hashtags')
         hashtags = ['#{}'.format(e.get('text')) for e in hashtag_entities]
 
         def _strip_hashtags(tweet_context):
