@@ -1,62 +1,45 @@
 import json
 import gspread
-from libs import helpers, QuoteScraper
-from oauth2client.service_account import ServiceAccountCredentials
+from libs import helpers, google, twitter
 
 TWITTER_CREDS_FILE = 'creds/twitter.json'
 SERVICE_ACCOUNT_FILE = 'creds/google.json'
 
 SPREADSHEET_ID = '1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4'
-INPUT_OPTION = 'USER_ENTERED'
 SAVED_PHRASES_RANGE = 'B2:B'
 SAVED_ID_RANGE = 'D1'
-SCOPES = ['https://spreadsheets.google.com/feeds']
 
-TWITTER_HANDLE = '@CodeWisdom'
+with open(TWITTER_CREDS_FILE, 'r') as creds_file:
+    twitter_creds = json.load(creds_file)
 
-google_creds = ServiceAccountCredentials.from_json_keyfile_name(
-    SERVICE_ACCOUNT_FILE, SCOPES)
-google_client = gspread.authorize(google_creds)
-google_sheet = google_client.open_by_key(SPREADSHEET_ID)
+google_sheet = google.Sheet(SERVICE_ACCOUNT_FILE, SPREADSHEET_ID)
+twitter_scraper = twitter.QuoteScraper(twitter_creds)
 
-worksheet = google_sheet.sheet1
-worksheet_name = worksheet.title
+for worksheet in google_sheet.get_worksheets():
+    worksheet_name = worksheet.title
 
-saved_phrases_range = '{}!{}'.format(worksheet_name, SAVED_PHRASES_RANGE)
-saved_phrases = \
-    google_sheet.values_get(saved_phrases_range).get('values') or []
+    saved_phrases_range = '{}!{}'.format(worksheet_name, SAVED_PHRASES_RANGE)
+    saved_id_range = '{}!{}'.format(worksheet_name, SAVED_ID_RANGE)
 
-# Convert to lowercase and remove non-alphanumeric characters
-# to reduce the possibility of duplicate quotes.
-saved_phrases_alphanum = \
-    {helpers.to_lowercased_alphanum(q) for [q] in saved_phrases}
+    saved_phrases_alphanum = \
+        {helpers.to_lowercased_alphanum(p)
+         for p in google_sheet.get_values(saved_phrases_range)}
 
-saved_id = worksheet.acell(SAVED_ID_RANGE).value or None
+    [saved_id] = list(google_sheet.get_values(saved_id_range)) or [None]
 
-with open(TWITTER_CREDS_FILE, 'r') as twitter_creds_file:
-    twitter_creds = json.load(twitter_creds_file)
+    new_quotes = twitter_scraper.get_quotes(worksheet_name, saved_id)
+    new_quotes_unique = []
 
-scraper = QuoteScraper(twitter_creds)
-new_quotes = scraper.get_quotes(TWITTER_HANDLE, saved_id)
+    for quote in new_quotes:
+        phrase_alphanum = helpers.to_lowercased_alphanum(quote.phrase)
 
-new_quotes_unique = []
-for quote in new_quotes:
-    phrase_alphanum = helpers.to_lowercased_alphanum(quote.phrase)
+        if phrase_alphanum not in saved_phrases_alphanum:
+            new_quotes_unique.insert(0, quote)
+            saved_phrases_alphanum.add(phrase_alphanum)
 
-    if phrase_alphanum not in saved_phrases_alphanum:
-        saved_phrases_alphanum.add(phrase_alphanum)
-        new_quotes_unique.insert(0, quote)
+    if new_quotes_unique:
+        *_, latest_quote = new_quotes_unique
+        *_, latest_quote_id = latest_quote.url.split('/')
 
-google_sheet.values_append(
-    worksheet_name,
-    params={'valueInputOption': INPUT_OPTION},
-    body={'values': new_quotes_unique})
-
-if new_quotes_unique:
-    *_, latest_quote = new_quotes_unique
-    *_, latest_quote_id = latest_quote.url.split('/')
-
-    google_sheet.values_update(
-        '{}!{}'.format(worksheet_name, SAVED_ID_RANGE),
-        params={'valueInputOption': INPUT_OPTION},
-        body={'values': [[latest_quote_id]]})
+        google_sheet.update(saved_id_range, [[latest_quote_id]])
+        google_sheet.append(worksheet_name, new_quotes_unique)
