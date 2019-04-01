@@ -54,8 +54,8 @@ class QuoteScraper:
             has_media = tweet_entities.get('media')
             match = QUOTE_PATTERN.match(tweet_context)
 
-            if any([is_reply,
-                    is_retweet,
+            if any([is_retweet,
+                    is_reply,
                     has_url,
                     has_media,
                     match is None]):
