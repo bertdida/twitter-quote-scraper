@@ -21,7 +21,7 @@ class Sheet:
 
     def get_values(self, range_):
 
-        # The API may return None, so when that happen set values to empty list
+        # The API may return None, so when that happen set values to empty list.
         values = self.spreadsheet.values_get(range_).get('values') or []
 
         for [value] in values:

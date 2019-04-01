@@ -22,7 +22,7 @@ for worksheet in google_sheet.get_worksheets():
     saved_id_range = '{}!{}'.format(worksheet_name, SAVED_ID_RANGE)
 
     # Remove non-alphanumeric characters to reduce the possibility
-    # of duplicate quotes
+    # of duplicate quotes.
     saved_phrases_alphanum = \
         {helpers.to_lowercased_alphanum(p)
          for p in google_sheet.get_values(saved_phrases_range)}

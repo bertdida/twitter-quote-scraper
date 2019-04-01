@@ -46,7 +46,7 @@ class QuoteScraper:
 
             tweet_context = normalize_tweet(tweet_context)
 
-            # Use the json version of tweet object, to avoid Attribute error
+            # Use the json version of tweet object, to avoid Attribute error.
             is_retweet = tweet._json.get('retweeted_status')
 
             is_reply = tweet.in_reply_to_status_id
