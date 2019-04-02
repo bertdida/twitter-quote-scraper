@@ -45,3 +45,5 @@ for worksheet in google_sheet.get_worksheets():
 
         google_sheet.update(saved_id_range, [[latest_quote_id]])
         google_sheet.append(worksheet_name, new_quotes_unique)
+        google_sheet.sort(
+            order='ASCENDING', sheet_name=worksheet_name, column=1)

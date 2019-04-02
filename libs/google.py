@@ -40,3 +40,36 @@ class Sheet:
             range_,
             params={'valueInputOption': INPUT_OPTION},
             body={'values': request_body})
+
+    def sort(self, sheet_name: str, column: int = 0, order: str = 'ASCENDING'):
+        '''Sort the values of the given sheet name.
+
+        Args:
+            sheet_name: The name of the sheet to be sorted.
+            column: The column of the sheet where the sort should be applied to.
+            order: The order of the data should be sorted, supported values
+                   are the following:
+                        - ASCENDING
+                        - DESCENDING
+                        - SORT_ORDER_UNSPECIFIED
+        '''
+
+        sheet_id = self.spreadsheet.worksheet(sheet_name).id
+
+        request_body = [{
+            'sortRange': {
+                'range': {
+                    'sheetId': sheet_id,
+                    'startRowIndex': 1
+                },
+                'sortSpecs': [
+                    {
+                        'dimensionIndex': column,
+                        'sortOrder': order
+                    }
+                ]
+            }
+        }]
+
+        self.spreadsheet.batch_update(
+            body={'requests': request_body})
