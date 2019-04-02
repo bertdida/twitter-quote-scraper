@@ -42,7 +42,8 @@ class QuoteScraper:
             normalize_tweet = compose(self.strip_emojis,
                                       self.strip_hashtags(hashtag_entities),
                                       self.to_ascii,
-                                      lambda s: s.replace('--', '-'))
+                                      lambda s: s.replace('--', '-'),  # em dash
+                                      lambda s: s.replace('[?]', ''))  # emojis
 
             tweet_context = normalize_tweet(tweet_context)
 
@@ -89,7 +90,13 @@ class QuoteScraper:
     @staticmethod
     def to_ascii(tweet_context):
 
-        return unidecode.unidecode(tweet_context)
+        chars = []
+
+        for char in tweet_context:
+            ascii_ = unidecode.unidecode(char)
+            chars.append(char if ascii_.isalpha() else ascii_)
+
+        return ''.join(chars)
 
     @staticmethod
     def strip_and_unescape(tweet_context):
