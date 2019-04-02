@@ -47,7 +47,7 @@ class Sheet:
         Args:
             sheet_name: The name of the sheet to be sorted.
             column: The column of the sheet where the sort should be applied to.
-            order: The order of the data should be sorted, supported values
+            order: The order of the data on sort, supported values
                    are the following:
                         - ASCENDING
                         - DESCENDING
@@ -60,7 +60,7 @@ class Sheet:
             'sortRange': {
                 'range': {
                     'sheetId': sheet_id,
-                    'startRowIndex': 1
+                    'startRowIndex': 1  # exclude headers
                 },
                 'sortSpecs': [
                     {
