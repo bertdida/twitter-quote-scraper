@@ -21,7 +21,7 @@ class Sheet:
 
     def get_values(self, range_):
 
-        # Set values to empty list when the API returns None.
+        # Set values to empty list if the API returns None.
         values = self.spreadsheet.values_get(range_).get('values') or []
 
         for [value] in values:
@@ -47,8 +47,7 @@ class Sheet:
         Args:
             sheet_name: The name of the sheet to be sorted.
             column: The column of the sheet where the sort should be applied to.
-            order: The order of the data on sort, supported values
-                   are the following:
+            order: The order of the data on sort. Supported values are the following:
                         - ASCENDING
                         - DESCENDING
                         - SORT_ORDER_UNSPECIFIED
