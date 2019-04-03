@@ -1,5 +1,4 @@
 import json
-import gspread
 from libs import helpers, google, twitter
 
 TWITTER_CREDS_FILE = 'creds/twitter.json'
