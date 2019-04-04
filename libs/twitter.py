@@ -28,6 +28,7 @@ class QuoteScraper:
     def get_quotes(self, tweeter_handle: str, tweet_since_id: str):
 
         tweeter_handle = tweeter_handle.lstrip('@')
+        base_url = 'https://twitter.com/{}'.format(tweeter_handle)
 
         for tweet in tweepy.Cursor(self.api.user_timeline,
                                    screen_name=tweeter_handle,
@@ -62,7 +63,7 @@ class QuoteScraper:
                     match is None]):
                 continue
 
-            url = 'https://twitter.com/CodeWisdom/status/{}'.format(tweet_id)
+            url = '{}/status/{}'.format(base_url, tweet_id)
             phrase = self.strip_and_unescape(match.group('phrase'))
             author = self.strip_and_unescape(match.group('author'))
 
