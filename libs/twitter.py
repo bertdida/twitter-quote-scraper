@@ -69,6 +69,10 @@ class QuoteScraper:
             phrase = phrase.strip('"')
             author = self.strip_and_unescape(match.group('author'))
 
+            if not phrase:
+                # https://twitter.com/GreatestQuotes/status/992182076215619585
+                continue
+
             yield Quote(author, phrase, url)
 
     @staticmethod
