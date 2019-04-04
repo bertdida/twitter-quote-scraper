@@ -44,8 +44,7 @@ class QuoteScraper:
             normalize_tweet = compose(self.strip_emojis,
                                       self.strip_hashtags(hashtag_entities),
                                       self.to_ascii,
-                                      lambda s: s.replace(
-                                          '--', '-'),  # em dash
+                                      lambda s: s.replace('--', '-'),  # em dash
                                       lambda s: s.replace('[?]', ''))  # emojis
 
             tweet_context = normalize_tweet(tweet_context)
@@ -67,6 +66,7 @@ class QuoteScraper:
 
             url = '{}/status/{}'.format(base_url, tweet_id)
             phrase = self.strip_and_unescape(match.group('phrase'))
+            phrase = phrase.strip('"')
             author = self.strip_and_unescape(match.group('author'))
 
             yield Quote(author, phrase, url)
