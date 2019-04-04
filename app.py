@@ -1,3 +1,4 @@
+import re
 import json
 from libs import helpers, google, twitter
 
@@ -13,6 +14,36 @@ with open(TWITTER_CREDS_FILE, 'r') as creds_file:
 
 google_sheet = google.Sheet(SERVICE_ACCOUNT_FILE, SPREADSHEET_ID)
 twitter_scraper = twitter.QuoteScraper(twitter_creds)
+
+tweet = twitter_scraper.api.get_status('981050470767702018', tweet_mode='extended')
+tweet_context = tweet.full_text
+tweet_context = twitter_scraper.to_ascii(tweet_context)
+
+match = twitter.QUOTE_PATTERN.match(tweet_context)
+phrase = twitter_scraper.strip_and_unescape(match.group('phrase'))
+author = twitter_scraper.strip_and_unescape(match.group('author'))
+
+print(match.group('phrase').encode('utf-8'))
+quit()
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 
 for worksheet in google_sheet.get_worksheets():
     worksheet_name = worksheet.title

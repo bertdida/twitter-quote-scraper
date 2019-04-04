@@ -107,8 +107,8 @@ class QuoteScraper:
     @staticmethod
     def strip_and_unescape(tweet_context):
 
-        function = compose(lambda s: s.strip('"'),
-                           lambda s: s.strip(),
+        function = compose(lambda s: s.strip(),
+                           lambda s: s.strip('"'),
                            lambda s: html.unescape(s))
 
         return function(tweet_context)
