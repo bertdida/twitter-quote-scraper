@@ -66,7 +66,6 @@ class QuoteScraper:
 
             url = '{}/status/{}'.format(base_url, tweet_id)
             phrase = self.strip_and_unescape(match.group('phrase'))
-            phrase = phrase.strip('"')
             author = self.strip_and_unescape(match.group('author'))
 
             if not phrase:
@@ -108,7 +107,8 @@ class QuoteScraper:
     @staticmethod
     def strip_and_unescape(tweet_context):
 
-        function = compose(lambda s: s.strip(),
+        function = compose(lambda s: s.strip('"'),
+                           lambda s: s.strip(),
                            lambda s: html.unescape(s))
 
         return function(tweet_context)
