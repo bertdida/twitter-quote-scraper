@@ -7,7 +7,7 @@ import collections
 from typing import List
 from .helpers import compose
 
-QUOTE_PATTERN = re.compile(r'^(?P<phrase>.*)\s+?[-~]\s*(?P<author>.*)$')
+QUOTE_PATTERN = re.compile(r'^"(?P<phrase>.*)"\s*-\s*(?P<author>.*)$')
 
 Quote = collections.namedtuple('Quote', 'author phrase url')
 
