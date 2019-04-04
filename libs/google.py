@@ -1,3 +1,4 @@
+from typing import List
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -27,14 +28,14 @@ class Sheet:
         for [value] in values:
             yield value
 
-    def append(self, range_, request_body: list):
+    def append(self, range_, request_body: List[list]):
 
         self.spreadsheet.values_append(
             range_,
             params={'valueInputOption': INPUT_OPTION},
             body={'values': request_body})
 
-    def update(self, range_, request_body: list):
+    def update(self, range_, request_body: List[list]):
 
         self.spreadsheet.values_update(
             range_,

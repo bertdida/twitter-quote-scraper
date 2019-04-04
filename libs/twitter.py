@@ -4,6 +4,7 @@ import emoji
 import unidecode
 import tweepy
 import collections
+from typing import List
 from .helpers import compose
 
 QUOTE_PATTERN = re.compile(r'^"(?P<phrase>.*)"\s*?-\s*?(?P<author>.*)$')
@@ -75,7 +76,7 @@ class QuoteScraper:
         return emoji.get_emoji_regexp().sub('', tweet_context)
 
     @staticmethod
-    def strip_hashtags(hashtag_entities: list):
+    def strip_hashtags(hashtag_entities: List[dict]):
 
         hashtags = ['#{}'.format(e.get('text')) for e in hashtag_entities]
 
