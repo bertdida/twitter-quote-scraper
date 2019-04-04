@@ -20,7 +20,7 @@ class Sheet:
 
         return self.spreadsheet.worksheets()
 
-    def get_values(self, range_):
+    def get_values(self, range_: str):
 
         # Set values to empty list if the API returns None.
         values = self.spreadsheet.values_get(range_).get('values') or []
