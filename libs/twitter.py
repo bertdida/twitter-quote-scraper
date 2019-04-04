@@ -7,7 +7,7 @@ import collections
 from typing import List
 from .helpers import compose
 
-QUOTE_PATTERN = re.compile(r'^"(?P<phrase>.*)"\s*?-\s*?(?P<author>.*)$')
+QUOTE_PATTERN = re.compile(r'^"??(?P<phrase>.*)"??\s*?-\s*?(?P<author>.*)$')
 
 Quote = collections.namedtuple('Quote', 'author phrase url')
 
@@ -44,7 +44,8 @@ class QuoteScraper:
             normalize_tweet = compose(self.strip_emojis,
                                       self.strip_hashtags(hashtag_entities),
                                       self.to_ascii,
-                                      lambda s: s.replace('--', '-'),  # em dash
+                                      lambda s: s.replace(
+                                          '--', '-'),  # em dash
                                       lambda s: s.replace('[?]', ''))  # emojis
 
             tweet_context = normalize_tweet(tweet_context)
