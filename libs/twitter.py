@@ -62,7 +62,6 @@ class QuoteScraper:
                     has_url,
                     has_media,
                     match is None]):
-                print(tweet_id)
                 continue
 
             url = '{}/status/{}'.format(base_url, tweet_id)
