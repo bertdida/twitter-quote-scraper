@@ -28,14 +28,14 @@ class Sheet:
         for [value] in values:
             yield value
 
-    def append(self, range_, request_body: List[list]):
+    def append(self, range_: str, request_body: List[list]):
 
         self.spreadsheet.values_append(
             range_,
             params={'valueInputOption': INPUT_OPTION},
             body={'values': request_body})
 
-    def update(self, range_, request_body: List[list]):
+    def update(self, range_: str, request_body: List[list]):
 
         self.spreadsheet.values_update(
             range_,
