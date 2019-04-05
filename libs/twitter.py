@@ -1,8 +1,8 @@
 import re
 import html
 import emoji
-import unidecode
 import tweepy
+import unidecode
 import collections
 from typing import List
 from .helpers import compose
