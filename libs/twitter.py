@@ -39,15 +39,14 @@ class QuoteScraper:
             tweet_id = tweet.id_str
             tweet_context = tweet.full_text
             tweet_entities = tweet.entities
+
             hashtag_entities = tweet_entities.get('hashtags')
+            _strip_hashtags = self.strip_hashtags(hashtag_entities)
 
-            normalize_tweet = compose(self.strip_emojis,
-                                      self.strip_hashtags(hashtag_entities),
-                                      self.to_ascii,
-                                      lambda s: s.replace('--', '-'),  # em dash
-                                      lambda s: s.replace('[?]', ''))  # emojis
+            normalize_tweet = compose(
+                _strip_hashtags, self.to_ascii, lambda s: s.replace('--', '-'))
 
-            tweet_context = normalize_tweet(tweet_context)
+            normalized_tweet_context = normalize_tweet(tweet_context)
 
             # To avoid Attribute error, use the json version of the tweet object.
             is_retweet = tweet._json.get('retweeted_status')
@@ -55,12 +54,14 @@ class QuoteScraper:
             is_reply = tweet.in_reply_to_status_id
             has_url = tweet_entities.get('urls')
             has_media = tweet_entities.get('media')
+            has_emoji = self.has_emoji(tweet_context)
             match = QUOTE_PATTERN.match(tweet_context)
 
             if any([is_retweet,
                     is_reply,
                     has_url,
                     has_media,
+                    has_emoji,
                     match is None]):
                 continue
 
@@ -71,9 +72,9 @@ class QuoteScraper:
             yield Quote(author, phrase, url)
 
     @staticmethod
-    def strip_emojis(tweet_context):
+    def has_emoji(tweet_context):
 
-        return emoji.get_emoji_regexp().sub('', tweet_context)
+        return emoji.get_emoji_regexp().search(tweet_context) is not None
 
     @staticmethod
     def strip_hashtags(hashtag_entities: List[dict]):
