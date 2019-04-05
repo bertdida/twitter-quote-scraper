@@ -7,7 +7,7 @@ import collections
 from typing import List
 from .helpers import compose
 
-QUOTE_PATTERN = re.compile(r'^"(?P<phrase>.*)"\s*-\s*(?P<author>.*)$')
+QUOTE_PATTERN = re.compile(r'^[\"\']{0, 1}([A-Z].*[\.!?])[\"\']{0,1}\s*?[-~]\s*(.*)$')
 
 Quote = collections.namedtuple('Quote', 'author phrase url')
 
@@ -67,10 +67,6 @@ class QuoteScraper:
             url = '{}/status/{}'.format(base_url, tweet_id)
             phrase = self.strip_and_unescape(match.group('phrase'))
             author = self.strip_and_unescape(match.group('author'))
-
-            if not phrase:
-                # https://twitter.com/GreatestQuotes/status/992182076215619585
-                continue
 
             yield Quote(author, phrase, url)
 
