@@ -63,7 +63,7 @@ class QuoteScraper:
 
             normalize_tweet = compose(_strip_hashtags,
                                       self.to_ascii,
-                                      lambda s: s.replace('--', '-'))
+                                      lambda s: s.replace('--', '-'))  # em dash
 
             tweet_context = normalize_tweet(tweet_context)
             match = QUOTE_PATTERN.match(normalized_tweet_context)
