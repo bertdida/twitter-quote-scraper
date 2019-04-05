@@ -14,8 +14,6 @@ QUOTE_PATTERN = \
 
 Quote = collections.namedtuple('Quote', 'author phrase url')
 
-print(QUOTE_PATTERN.pattern)
-
 
 class QuoteScraper:
 
@@ -111,7 +109,6 @@ class QuoteScraper:
     def strip_and_unescape(tweet_context):
 
         function = compose(lambda s: s.strip(),
-                           lambda s: s.strip('"'),
                            lambda s: html.unescape(s))
 
         return function(tweet_context)
