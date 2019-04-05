@@ -8,11 +8,13 @@ from typing import List
 from .helpers import compose
 
 QUOTE_PATTERN = \
-    re.compile(r'^[\"\']{0, 1}(?P<phrase>[A-Z].*[\.!?])[\"\']{0,1}'
+    re.compile(r'^[\"\']{0,1}(?P<phrase>[A-Z].*[\.!?])[\"\']{0,1}'
                r'\s*?[-~]\s*'
                r'(?P<author>.*)$')
 
 Quote = collections.namedtuple('Quote', 'author phrase url')
+
+print(QUOTE_PATTERN.pattern)
 
 
 class QuoteScraper:
