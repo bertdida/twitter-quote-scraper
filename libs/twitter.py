@@ -62,7 +62,7 @@ class QuoteScraper:
             _strip_hashtags = self.strip_hashtags(hashtag_entities)
 
             normalize_tweet = compose(_strip_hashtags,
-                                      self.to_ascii,
+                                      self.convert_special_chars_to_ascii,
                                       lambda s: s.replace('--', '-'))  # em dash
 
             tweet_context = normalize_tweet(tweet_context)
@@ -95,15 +95,15 @@ class QuoteScraper:
         return _strip_hashtags
 
     @staticmethod
-    def to_ascii(tweet_context):
+    def convert_special_chars_to_ascii(tweet_context):
 
-        chars = []
+        new_tweet_context = []
 
         for char in tweet_context:
             ascii_ = unidecode.unidecode(char)
-            chars.append(char if ascii_.isalpha() else ascii_)
+            new_tweet_context.append(char if ascii_.isalpha() else ascii_)
 
-        return ''.join(chars)
+        return ''.join(new_tweet_context)
 
     @staticmethod
     def strip_and_unescape(tweet_context):
