@@ -43,14 +43,6 @@ class QuoteScraper:
             tweet_context = tweet.full_text
             tweet_entities = tweet.entities
 
-            hashtag_entities = tweet_entities.get('hashtags')
-            _strip_hashtags = self.strip_hashtags(hashtag_entities)
-
-            normalize_tweet = compose(
-                _strip_hashtags, self.to_ascii, lambda s: s.replace('--', '-'))
-
-            normalized_tweet_context = normalize_tweet(tweet_context)
-
             # To avoid Attribute error, use the json version of the tweet object.
             is_retweet = tweet._json.get('retweeted_status')
 
@@ -58,21 +50,30 @@ class QuoteScraper:
             has_url = tweet_entities.get('urls')
             has_media = tweet_entities.get('media')
             has_emoji = self.has_emoji(tweet_context)
-            match = QUOTE_PATTERN.match(tweet_context)
 
             if any([is_retweet,
                     is_reply,
                     has_url,
                     has_media,
-                    has_emoji,
-                    match is None]):
+                    has_emoji]):
                 continue
 
-            url = '{}/status/{}'.format(base_url, tweet_id)
-            phrase = self.strip_and_unescape(match.group('phrase'))
-            author = self.strip_and_unescape(match.group('author'))
+            hashtag_entities = tweet_entities.get('hashtags')
+            _strip_hashtags = self.strip_hashtags(hashtag_entities)
 
-            yield Quote(author, phrase, url)
+            normalize_tweet = compose(_strip_hashtags,
+                                      self.to_ascii,
+                                      lambda s: s.replace('--', '-'))
+
+            tweet_context = normalize_tweet(tweet_context)
+            match = QUOTE_PATTERN.match(normalized_tweet_context)
+
+            if match:
+                url = '{}/status/{}'.format(base_url, tweet_id)
+                phrase = self.strip_and_unescape(match.group('phrase'))
+                author = self.strip_and_unescape(match.group('author'))
+
+                yield Quote(author, phrase, url)
 
     @staticmethod
     def has_emoji(tweet_context):
