@@ -66,7 +66,7 @@ class QuoteScraper:
                                       lambda s: s.replace('--', '-'))  # em dash
 
             tweet_context = normalize_tweet(tweet_context)
-            match = QUOTE_PATTERN.match(normalized_tweet_context)
+            match = QUOTE_PATTERN.match(tweet_context)
 
             if match:
                 url = '{}/status/{}'.format(base_url, tweet_id)
