@@ -79,7 +79,7 @@ class QuoteScraper:
     @staticmethod
     def has_emoji(tweet_context):
 
-        return emoji.get_emoji_regexp().search(tweet_context) is not None
+        return bool(emoji.get_emoji_regexp().search(tweet_context))
 
     @staticmethod
     def strip_hashtags(hashtag_entities: List[dict]):
