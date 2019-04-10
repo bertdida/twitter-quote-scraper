@@ -43,7 +43,7 @@ class Sheet:
             body={'values': request_body})
 
     def sort(self, sheet_name: str, column: int = 0, order: str = 'ASCENDING'):
-        '''Sort the values of the given sheet name.
+        """Sort the values of the given sheet name.
 
         Args:
             sheet_name: The name of the sheet to be sorted.
@@ -52,7 +52,7 @@ class Sheet:
                         - ASCENDING
                         - DESCENDING
                         - SORT_ORDER_UNSPECIFIED
-        '''
+        """
 
         sheet_id = self.spreadsheet.worksheet(sheet_name).id
 
