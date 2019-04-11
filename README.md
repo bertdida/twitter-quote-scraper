@@ -9,7 +9,7 @@ Example spreadsheet can be found [here](https://docs.google.com/spreadsheets/d/1
 ## Notes
 
 - Tweets that are a retweet, reply, has URL or media (image or video) and any emoji are disregarded.
-- This project highly depends on a regular expression. A Tweet should match this pattern to be considered: `^[\"\']{0,1}(?P<phrase>[A-Z].*[\.!?])[\"\']{0,1}\s*?[-~]\s*(?P<author>.*)$`.
+- This project highly depends on a regular expression. A Tweet should match this pattern to be considered a quote: `^[\"\']{0,1}(?P<phrase>[A-Z].*[\.!?])[\"\']{0,1}\s*?[-~]\s*(?P<author>.*)$`.
 
 ## Prerequisites
 
