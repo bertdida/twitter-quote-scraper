@@ -71,6 +71,10 @@ From the terminal run the following commands:
 - [emoji](https://github.com/carpedm20/emoji/) - used to check and ignore tweets that have an emoji
 - [unidecode](https://github.com/avian2/unidecode) - used to convert tweets' Unicode special characters to ASCII
 
+## Contribute
+
+If you have any problem, idea or suggestion, feel free to create issues and pull requests.
+
 ## License
 
 Distributed under the MIT license. See LICENSE for more information.
