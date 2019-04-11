@@ -8,7 +8,7 @@ Example spreadsheet can be found [here](https://docs.google.com/spreadsheets/d/1
 
 ## Notes
 
-- Tweets that are a retweet, reply, has URL or media (image and video) and any emoji are ignored.
+- Tweets that are a retweet, reply, has URL or media (image or video) and any emoji are ignored.
 - This project is highly dependent on regular expression. A Tweet should match this pattern to be included: `^[\"\']{0,1}(?P<phrase>[A-Z].\_[\.!?])[\"\']{0,1}\s\_?[-~]\s\*(?P<author>.\*)\$`
 
 ## Prerequisites
