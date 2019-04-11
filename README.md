@@ -25,10 +25,18 @@ Example spreadsheet can be found [here](https://docs.google.com/spreadsheets/d/1
 
 ## Setup
 
+### Google spreadsheet
+
+1. Login on Google and create a spreadsheet.
+2. Create a header by inserting Author, Phrase, and URL on the first row.
+3. Click the number beside the first row (this highlights the row) and click View > Freeze.
+4. Rename the first sheet to the desired Twitter handle you want to scrape (may or may not start with @ character).
+
+### Codebase
+
 1. Inside the `creds` folder, open `google.example.json` and `twitter.example.json` then place your Google service account and Twitter keys respectively.
-2. Rename the `google.example.json` and `twitter.example.json` to remove `.example`.
-3. Create a Google spreadsheet and give a Can Edit access to the `client_email` you can find inside the `google.json`.
-4. Rename the first sheet to your desired Twitter handle you want to scrape (may or may not start with @ character).
+2. Rename `google.example.json` and `twitter.example.json` to remove `.example`.
+3. Go back to Google spreadsheet and give a Can Edit access to the `client_email` you'll find inside the `google.json`.
 
 ## Usage
 
