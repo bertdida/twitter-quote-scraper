@@ -2,14 +2,14 @@
 
 So I think creating an API regarding programming quotes is fun, by fun I mean lots of learnings. That's why I created this project to provide the most fundamental data of my ideal API, quotes.
 
-TwitterQuoteScraper enables you to collect tweets from any Twitter accounts who share motivational phrases taken from a book, movie or someone. It does this by using the Twitter and Google Sheets API.
+TwitterQuoteScraper enables you to collect tweets from any Twitter accounts who share motivational phrases taken from a book, movie or someone.
 
 Example spreadsheet can be found [here](https://docs.google.com/spreadsheets/d/1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4/edit?usp=sharing).
 
 ## Notes
 
 - Tweets that are a retweet, reply, has URL or media (image or video) and any emojis are ignored.
-- This project is highly dependent on regular expression. A Tweet should match this pattern to be included: `^[\"\']{0,1}(?P<phrase>[A-Z].\_[\.!?])[\"\']{0,1}\s\_?[-~]\s\*(?P<author>.\*)\$`.
+- This project is highly dependent on regular expression. A Tweet should match this pattern to be included: `^[\"\']{0,1}(?P<phrase>[A-Z].*[\.!?])[\"\']{0,1}\s*?[-~]\s*(?P<author>.*)$`.
 
 ## Prerequisites
 
