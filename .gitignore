@@ -1,3 +1,4 @@
-creds/
+creds/google.json
+creds/twitter.json
 *__pycache__/
 test_data
