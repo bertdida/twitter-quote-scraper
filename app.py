@@ -5,7 +5,7 @@ from libs import helpers, google, twitter
 TWITTER_CREDS_FILE = 'creds/twitter.json'
 SERVICE_ACCOUNT_FILE = 'creds/google.json'
 
-SPREADSHEET_ID = '1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4'
+SPREADSHEET_ID = ''
 SAVED_PHRASES_RANGE = 'B2:B'
 SAVED_ID_RANGE = 'D1'
 
