@@ -34,10 +34,9 @@ Example spreadsheet can be found [here](https://docs.google.com/spreadsheets/d/1
 
 ### Codebase
 
-1. Inside the `creds` folder, open `google.example.json` and `twitter.example.json` then place your Google service account and Twitter keys respectively.
-2. Rename `google.example.json` and `twitter.example.json` to remove `.example`.
-3. Open app.py and update `SPREADSHEET_ID` with your spreadsheet id.
-4. Go back to Google spreadsheet and give a Can Edit access to the `client_email` you'll find inside the `google.json`.
+1. Within the `creds` folder, update `google.json` and `twitter.json` with your Google service account and Twitter keys respectively.
+2. Open `app.py` and edit `SPREADSHEET_ID` with your Google spreadsheet's id.
+3. Go back to the spreadsheet and give a Can Edit access to the `client_email` you'll find inside `creds/google.json`.
 
 ## Usage
 
