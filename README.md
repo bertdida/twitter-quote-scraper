@@ -27,8 +27,6 @@ Example spreadsheet can be found [here](https://docs.google.com/spreadsheets/d/1
 
 ### Google spreadsheet
 
-Google spreadsheet
-
 1. Login on your Google account and create a spreadsheet.
 2. On the top menu click View > Freeze > 1 row.
 3. Insert Author, Phrase, and URL on each column of the first row.
