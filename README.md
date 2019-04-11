@@ -18,7 +18,7 @@ Example spreadsheet can be found [here](https://docs.google.com/spreadsheets/d/1
 5. Rename the first sheet to your desired Twitter handle.
 6. Run `pipenv install`, `pipenv shell` then `app.py`.
 
-Tested on the following accounts:
+## Tested handles
 
 - [@GreatestQuotes](https://twitter.com/GreatestQuotes)
 - [@CodeWisdom](https://twitter.com/CodeWisdom)
