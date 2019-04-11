@@ -20,16 +20,18 @@ Example spreadsheet can be found [here](https://docs.google.com/spreadsheets/d/1
 
 ## Installation
 
-1. Download the [zip file](https://github.com/bertdida/TwitterQuoteScraper/archive/master.zip) or use Git to clone the repository.
-2. Inside the directory open a terminal and run `pipenv install`.
+1. Download and extract the [zip file](https://github.com/bertdida/TwitterQuoteScraper/archive/master.zip) or use Git to clone the repository.
+2. Inside the directory open a terminal and run pipenv install.
 
 ## Setup
 
 ### Google spreadsheet
 
-1. Login on Google and create a spreadsheet.
-2. Create a header by inserting Author, Phrase, and URL on the first row.
-3. Click the number beside the first row (this highlights the row) and click View > Freeze.
+Google spreadsheet
+
+1. Login on your Google account and create a spreadsheet.
+2. On the top menu click View > Freeze > 1 row.
+3. Insert Author, Phrase, and URL on each column of the first row.
 4. Rename the first sheet to the desired Twitter handle you want to scrape (may or may not start with @ character).
 
 ### Codebase
