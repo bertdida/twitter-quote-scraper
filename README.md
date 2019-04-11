@@ -21,7 +21,7 @@ Example spreadsheet can be found [here](https://docs.google.com/spreadsheets/d/1
 ## Installation
 
 1. Download and extract the [zip file](https://github.com/bertdida/TwitterQuoteScraper/archive/master.zip) or use Git to clone the repository.
-2. Inside the directory open a terminal and run pipenv install.
+2. Inside the directory open a terminal and run `pipenv install`.
 
 ## Setup
 
