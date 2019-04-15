@@ -68,8 +68,7 @@ class QuoteScraper:
                         has_media,
                         has_emoji])
 
-    @staticmethod
-    def get_normalized_tweet_text(tweet):
+    def get_normalized_tweet_text(self, tweet):
 
         strip_hashtags = self.strip_hashtags(tweet.entities.get('hashtags'))
 
