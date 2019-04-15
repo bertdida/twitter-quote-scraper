@@ -85,25 +85,25 @@ class QuoteScraper:
 
         hashtags = ['#{}'.format(e.get('text')) for e in hashtag_entities]
 
-        def _strip_hashtags(tweet_context):
+        def _strip_hashtags(tweet_text):
 
             for hashtag in hashtags:
-                tweet_context = tweet_context.replace(hashtag, '')
+                tweet_text = tweet_text.replace(hashtag, '')
 
-            return tweet_context
+            return tweet_text
 
         return _strip_hashtags
 
     @staticmethod
-    def special_chars_to_ascii(tweet_context):
+    def special_chars_to_ascii(tweet_text):
 
-        new_tweet_context = []
+        new_tweet_text = []
 
-        for char in tweet_context:
+        for char in tweet_text:
 
             if SPECIAL_CHARS_PATTERN.match(char):
                 char = unidecode.unidecode(char)
 
-            new_tweet_context.append(char)
+            new_tweet_text.append(char)
 
-        return ''.join(new_tweet_context)
+        return ''.join(new_tweet_text)
