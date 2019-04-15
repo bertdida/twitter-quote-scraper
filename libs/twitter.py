@@ -52,7 +52,7 @@ class QuoteScraper:
                 yield Quote(author, phrase, url)
 
     @staticmethod
-    def is_allowed(self, tweet):
+    def is_allowed(tweet):
 
         # To avoid Attribute error, use the JSON version of the tweet object.
         is_retweet = tweet._json.get('retweeted_status')
