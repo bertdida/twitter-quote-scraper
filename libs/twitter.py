@@ -41,13 +41,7 @@ class QuoteScraper:
             if not self.is_allowed(tweet):
                 continue
 
-            strip_hashtags = \
-                self.strip_hashtags(tweet.entities.get('hashtags'))
-
-            tweet_context = strip_hashtags(tweet.full_text)
-            tweet_context = self.special_chars_to_ascii(tweet_context)
-            tweet_context = tweet_context.replace('--', '-')
-
+            tweet_context = self.get_normalize_tweet_context(tweet)
             match = QUOTE_PATTERN.match(tweet_context)
 
             if match:
@@ -73,6 +67,16 @@ class QuoteScraper:
                         has_url,
                         has_media,
                         has_emoji])
+
+    @staticmethod
+    def get_normalize_tweet_context(tweet):
+
+        strip_hashtags = self.strip_hashtags(tweet.entities.get('hashtags'))
+        tweet_context = strip_hashtags(tweet.full_text)
+
+        tweet_context = self.special_chars_to_ascii(tweet_context)
+
+        return tweet_context.replace('--', '-')
 
     @staticmethod
     def strip_hashtags(hashtag_entities: List[dict]):
