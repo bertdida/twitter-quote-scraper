@@ -11,6 +11,8 @@ QUOTE_PATTERN = \
                r'\s*?[-~]\s*'
                r'(?P<author>.*)$')
 
+SPECIAL_CHARS_PATTERN = re.compile(r'[^a-zA-Z0-9]')
+
 Quote = collections.namedtuple('Quote', 'author phrase url')
 
 
@@ -98,7 +100,10 @@ class QuoteScraper:
         new_tweet_context = []
 
         for char in tweet_context:
-            ascii_ = unidecode.unidecode(char)
-            new_tweet_context.append(char if ascii_.isalpha() else ascii_)
+
+            if SPECIAL_CHARS_PATTERN.match(char):
+                char = unidecode.unidecode(char)
+
+            new_tweet_context.append(char)
 
         return ''.join(new_tweet_context)
