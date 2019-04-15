@@ -28,7 +28,7 @@ class QuoteScraper:
 
         self.api = tweepy.API(auth)
 
-    def get_quotes(self, twitter_handle: str, tweet_since_id: str):
+    def get_quotes(self, twitter_handle: str, tweet_since_id=None):
 
         twitter_handle = twitter_handle.lstrip('@')
         base_url = 'https://twitter.com/{}'.format(twitter_handle)
