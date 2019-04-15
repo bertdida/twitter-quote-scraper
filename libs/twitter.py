@@ -38,41 +38,42 @@ class QuoteScraper:
                                    since_id=tweet_since_id,
                                    tweet_mode='extended').items():
 
-            tweet_id = tweet.id_str
-            tweet_context = tweet.full_text
-            tweet_entities = tweet.entities
-
-            # To avoid Attribute error, use the JSON version
-            # of the tweet object.
-            is_retweet = tweet._json.get('retweeted_status')
-
-            is_reply = tweet.in_reply_to_status_id
-            has_url = tweet_entities.get('urls')
-            has_media = tweet_entities.get('media')
-            has_emoji = bool(emoji.get_emoji_regexp().search(tweet_context))
-
-            if any([is_retweet,
-                    is_reply,
-                    has_url,
-                    has_media,
-                    has_emoji]):
+            if not self.is_allowed(tweet):
                 continue
 
-            hashtag_entities = tweet_entities.get('hashtags')
-            _strip_hashtags = self.strip_hashtags(hashtag_entities)
+            hashtag_entities = tweet.entities.get('hashtags')
+            strip_hashtags = self.strip_hashtags(hashtag_entities)
 
-            tweet_context = _strip_hashtags(tweet_context)
+            tweet_context = strip_hashtags(tweet.full_text)
             tweet_context = self.special_chars_to_ascii(tweet_context)
             tweet_context = tweet_context.replace('--', '-')
 
             match = QUOTE_PATTERN.match(tweet_context)
 
             if match:
-                url = '{}/status/{}'.format(base_url, tweet_id)
+                url = '{}/status/{}'.format(base_url, tweet.id_str)
                 phrase = html.unescape(match.group('phrase').strip())
                 author = html.unescape(match.group('author').strip())
 
                 yield Quote(author, phrase, url)
+
+    @staticmethod
+    def is_allowed(self, tweet):
+
+        # To avoid Attribute error, use the JSON version
+        # of the tweet object.
+        is_retweet = tweet._json.get('retweeted_status')
+
+        is_reply = tweet.in_reply_to_status_id
+        has_url = tweet.entities.get('urls')
+        has_media = tweet.entities.get('media')
+        has_emoji = bool(emoji.get_emoji_regexp().search(tweet.full_text))
+
+        return not any([is_retweet,
+                        is_reply,
+                        has_url,
+                        has_media,
+                        has_emoji])
 
     @staticmethod
     def strip_hashtags(hashtag_entities: List[dict]):
