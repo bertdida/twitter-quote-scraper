@@ -61,17 +61,16 @@ class QuoteScraper:
             hashtag_entities = tweet_entities.get('hashtags')
             _strip_hashtags = self.strip_hashtags(hashtag_entities)
 
-            normalize_tweet = compose(_strip_hashtags,
-                                      self.convert_special_chars_to_ascii,
-                                      lambda s: s.replace('--', '-'))  # em dash
+            tweet_context = _strip_hashtags(tweet_context)
+            tweet_context = self.special_chars_to_ascii(tweet_context)
+            tweet_context = tweet_context.replace('--', '-')
 
-            tweet_context = normalize_tweet(tweet_context)
             match = QUOTE_PATTERN.match(tweet_context)
 
             if match:
                 url = '{}/status/{}'.format(base_url, tweet_id)
-                phrase = self.strip_and_unescape(match.group('phrase'))
-                author = self.strip_and_unescape(match.group('author'))
+                phrase = html.unescape(match.group('phrase').strip())
+                author = html.unescape(match.group('author').strip())
 
                 yield Quote(author, phrase, url)
 
@@ -95,7 +94,7 @@ class QuoteScraper:
         return _strip_hashtags
 
     @staticmethod
-    def convert_special_chars_to_ascii(tweet_context):
+    def special_chars_to_ascii(tweet_context):
 
         new_tweet_context = []
 
@@ -104,11 +103,3 @@ class QuoteScraper:
             new_tweet_context.append(char if ascii_.isalpha() else ascii_)
 
         return ''.join(new_tweet_context)
-
-    @staticmethod
-    def strip_and_unescape(tweet_context):
-
-        function = compose(lambda s: s.strip(),
-                           lambda s: html.unescape(s))
-
-        return function(tweet_context)
