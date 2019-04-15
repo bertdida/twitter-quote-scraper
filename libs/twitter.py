@@ -49,7 +49,7 @@ class QuoteScraper:
             is_reply = tweet.in_reply_to_status_id
             has_url = tweet_entities.get('urls')
             has_media = tweet_entities.get('media')
-            has_emoji = self.has_emoji(tweet_context)
+            has_emoji = bool(emoji.get_emoji_regexp().search(tweet_context))
 
             if any([is_retweet,
                     is_reply,
@@ -73,11 +73,6 @@ class QuoteScraper:
                 author = html.unescape(match.group('author').strip())
 
                 yield Quote(author, phrase, url)
-
-    @staticmethod
-    def has_emoji(tweet_context):
-
-        return bool(emoji.get_emoji_regexp().search(tweet_context))
 
     @staticmethod
     def strip_hashtags(hashtag_entities: List[dict]):
