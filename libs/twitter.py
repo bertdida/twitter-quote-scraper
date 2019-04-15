@@ -5,7 +5,6 @@ import tweepy
 import unidecode
 import collections
 from typing import List
-from .helpers import compose
 
 QUOTE_PATTERN = \
     re.compile(r'^[\"\']{0,1}(?P<phrase>[A-Z].*[\.!?])[\"\']{0,1}'
@@ -29,13 +28,13 @@ class QuoteScraper:
 
         self.api = tweepy.API(auth)
 
-    def get_quotes(self, tweeter_handle: str, tweet_since_id: str):
+    def get_quotes(self, twitter_handle: str, tweet_since_id: str):
 
-        tweeter_handle = tweeter_handle.lstrip('@')
-        base_url = 'https://twitter.com/{}'.format(tweeter_handle)
+        twitter_handle = twitter_handle.lstrip('@')
+        base_url = 'https://twitter.com/{}'.format(twitter_handle)
 
         for tweet in tweepy.Cursor(self.api.user_timeline,
-                                   screen_name=tweeter_handle,
+                                   screen_name=twitter_handle,
                                    since_id=tweet_since_id,
                                    tweet_mode='extended').items():
 
