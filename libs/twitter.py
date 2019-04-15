@@ -41,8 +41,8 @@ class QuoteScraper:
             if not self.is_allowed(tweet):
                 continue
 
-            tweet_context = self.get_normalize_tweet_context(tweet)
-            match = QUOTE_PATTERN.match(tweet_context)
+            tweet_text = self.get_normalized_tweet_text(tweet)
+            match = QUOTE_PATTERN.match(tweet_text)
 
             if match:
                 url = '{}/status/{}'.format(base_url, tweet.id_str)
@@ -69,14 +69,15 @@ class QuoteScraper:
                         has_emoji])
 
     @staticmethod
-    def get_normalize_tweet_context(tweet):
+    def get_normalized_tweet_text(tweet):
 
         strip_hashtags = self.strip_hashtags(tweet.entities.get('hashtags'))
-        tweet_context = strip_hashtags(tweet.full_text)
 
-        tweet_context = self.special_chars_to_ascii(tweet_context)
+        text = strip_hashtags(tweet.full_text)
+        text = self.special_chars_to_ascii(text)
+        text = text.replace('--', '-')
 
-        return tweet_context.replace('--', '-')
+        return text
 
     @staticmethod
     def strip_hashtags(hashtag_entities: List[dict]):
