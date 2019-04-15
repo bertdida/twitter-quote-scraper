@@ -41,8 +41,8 @@ class QuoteScraper:
             if not self.is_allowed(tweet):
                 continue
 
-            hashtag_entities = tweet.entities.get('hashtags')
-            strip_hashtags = self.strip_hashtags(hashtag_entities)
+            strip_hashtags = \
+                self.strip_hashtags(tweet.entities.get('hashtags'))
 
             tweet_context = strip_hashtags(tweet.full_text)
             tweet_context = self.special_chars_to_ascii(tweet_context)
@@ -60,8 +60,7 @@ class QuoteScraper:
     @staticmethod
     def is_allowed(self, tweet):
 
-        # To avoid Attribute error, use the JSON version
-        # of the tweet object.
+        # To avoid Attribute error, use the JSON version of the tweet object.
         is_retweet = tweet._json.get('retweeted_status')
 
         is_reply = tweet.in_reply_to_status_id
