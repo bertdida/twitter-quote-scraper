@@ -5,14 +5,22 @@ import json
 
 class LocalFile:
 
-    supported_formats = ('json', 'csv')
+    supported_file_types = ('json', 'csv')
 
     def __init__(self, file_type, output_folder):
+
+        if not self.is_supported(file_type):
+            raise ValueError('Not supported file type: {}'.format(file_type))
 
         self.file_type = file_type
         self.output_folder = output_folder
 
         os.makedirs(os.path.dirname(self.output_folder), exist_ok=True)
+
+    @classmethod
+    def is_supported(cls, file_type):
+
+        return file_type in cls.supported_file_types
 
     def get_filepath(self, file_name):
 
