@@ -1,49 +1,149 @@
 import re
+import os
+import csv
 import json
-from libs import helpers, google, twitter
+import argparse
+from libs import google, twitter, localfile
 
-TWITTER_CREDS_FILE = 'creds/twitter.json'
-SERVICE_ACCOUNT_FILE = 'creds/google.json'
 
-SPREADSHEET_ID = ''
-SAVED_PHRASES_RANGE = 'B2:B'
-SAVED_ID_RANGE = 'D1'
+def to_lowercase_alphanum(text):
 
-with open(TWITTER_CREDS_FILE, 'r') as creds_file:
-    twitter_creds = json.load(creds_file)
+    return re.sub(r'[^a-z0-9]', '', text.lower())
 
-google_sheet = google.Sheet(SERVICE_ACCOUNT_FILE, SPREADSHEET_ID)
-twitter_scraper = twitter.QuoteScraper(twitter_creds)
 
-for worksheet in google_sheet.get_worksheets():
-    worksheet_name = worksheet.title
+def google_sheet(args):
 
-    saved_phrases_range = '{}!{}'.format(worksheet_name, SAVED_PHRASES_RANGE)
-    saved_id_range = '{}!{}'.format(worksheet_name, SAVED_ID_RANGE)
+    google_sheet = google.Sheet(args.service_account.name, args.spreadsheet_id)
+    scraper = twitter.QuoteScraper(json.load(args.twitter_creds))
 
-    # Remove non-alphanumeric characters to reduce the possibility
-    # of duplicate quotes.
-    saved_phrases_alphanum = \
-        {helpers.to_lowercased_alphanum(p)
-         for p in google_sheet.get_values(saved_phrases_range)}
+    for worksheet in google_sheet.worksheets:
+        worksheet_name = worksheet.title
 
-    [saved_id] = list(google_sheet.get_values(saved_id_range)) or [None]
+        saved_phrases_range = '{}!B2:B'.format(worksheet_name)
+        saved_id_range = '{}!D1'.format(worksheet_name)
 
-    new_quotes = twitter_scraper.get_quotes(worksheet_name, saved_id)
-    new_quotes_unique = []
+        saved_phrases = google_sheet.get_values(saved_phrases_range)
+        saved_phrases_alphanum = \
+            {to_lowercase_alphanum(p) for p in saved_phrases}
 
-    for quote in new_quotes:
-        phrase_alphanum = helpers.to_lowercased_alphanum(quote.phrase)
+        [saved_id] = list(google_sheet.get_values(saved_id_range)) or [None]
 
-        if phrase_alphanum not in saved_phrases_alphanum:
-            new_quotes_unique.insert(0, quote)
-            saved_phrases_alphanum.add(phrase_alphanum)
+        quotes_unique = []
+        for quote in scraper.get_quotes(worksheet_name, saved_id):
+            phrase_alphanum = to_lowercase_alphanum(quote.phrase)
 
-    if new_quotes_unique:
-        *_, latest_quote = new_quotes_unique
-        *_, latest_quote_id = latest_quote.url.split('/')
+            if phrase_alphanum not in saved_phrases_alphanum:
+                quotes_unique.insert(0, quote)
+                saved_phrases_alphanum.add(phrase_alphanum)
 
-        google_sheet.update(saved_id_range, [[latest_quote_id]])
-        google_sheet.append(worksheet_name, new_quotes_unique)
-        google_sheet.sort(
-            order='ASCENDING', sheet_name=worksheet_name, column=1)
+        if quotes_unique:
+            *_, latest_id = quotes[0].url.split('/')
+
+            google_sheet.update(saved_id_range, [[latest_id]])
+            google_sheet.append(worksheet_name, quotes_unique)
+            google_sheet.sort(order='ASCENDING',
+                              column=1,
+                              worksheet_name=worksheet_name,)
+
+
+def local_file(args):
+
+    local_file = localfile.LocalFile(args.file_type, args.output_folder)
+    scraper = twitter.QuoteScraper(json.load(args.twitter_creds))
+
+    for handle in args.twitter_handles:
+        handle = handle.lstrip('@')
+        file_path = local_file.get_filepath(handle)
+
+        saved_quotes = local_file.read(file_path)
+
+        saved_phrases_alphanum = \
+            {to_lowercase_alphanum(q['phrase']) for q in saved_quotes}
+
+        saved_id = None
+        if saved_quotes:
+            *_, saved_id = saved_quotes[0]['url'].split('/')
+
+        quotes_unique = []
+        for quote in scraper.get_quotes(handle, saved_id):
+            phrase_alphanum = to_lowercase_alphanum(quote.phrase)
+
+            if phrase_alphanum not in saved_phrases_alphanum:
+                quote_dict = dict(quote._asdict())  # namedtuple to dict
+
+                quotes_unique.append(quote_dict)
+                saved_phrases_alphanum.add(phrase_alphanum)
+
+        for quote in reversed(quotes_unique):
+            saved_quotes.insert(0, quote)
+
+        local_file.write(file_path, saved_quotes)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='Scrapes for quotes on Twitter')
+
+    parser.add_argument(
+        '--twitter-creds',
+        help='Path to JSON file that holds Twitter keys and tokens',
+        required=True,
+        type=argparse.FileType('r'))
+
+    subparsers = parser.add_subparsers(title='Commands', dest='subparser')
+
+    parser_google_sheet = subparsers.add_parser(
+        'google_sheet',
+        help='Saves parsed quotations into Google spreadsheet')
+
+    parser_local_file = subparsers.add_parser(
+        'local_file',
+        help='Generates and saves parsed quotations to a file')
+
+    parser_google_sheet.set_defaults(func=google_sheet)
+    parser_local_file.set_defaults(func=local_file)
+
+    parser_google_sheet.add_argument(
+        '--service-account',
+        help='Path to Google Service Account\'s JSON file',
+        required=True,
+        type=argparse.FileType('r'))
+
+    parser_google_sheet.add_argument(
+        '--spreadsheet-id',
+        help='The spreadsheet\'s ID',
+        required=True,
+        type=str)
+
+    parser_local_file.add_argument(
+        '--twitter-handles',
+        help='List of Twitter handles to scrape (may or may not start with '
+             '@ character)',
+        required=True,
+        nargs='+',
+        type=str)
+
+    parser_local_file.add_argument(
+        '--output-folder',
+        help='The folder where the generated files to place to',
+        type=str,
+        default=os.getcwd())
+
+    parser_local_file.add_argument(
+        '--file-type',
+        help='The file type',
+        type=str,
+        default='csv',
+        choices=localfile.LocalFile.supported_file_types)
+
+    args = parser.parse_args()
+
+    if args.subparser is None:
+        parser.print_help()
+        exit(1)
+
+    args.func(args)
+
+
+if __name__ == '__main__':
+    main()
