@@ -34,6 +34,9 @@ class LocalFile:
 
     def write(self, file_path, quotes):
 
+        if not quotes:
+            return
+
         with open(file_path, 'w') as outfile:
             if self.file_type == 'json':
                 json.dump(quotes, fp=outfile, indent=4)
