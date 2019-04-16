@@ -41,8 +41,8 @@ def google_sheet(args):
             google_sheet.update(saved_id_range, [[latest_id]])
             google_sheet.append(worksheet_name, quotes_unique)
             google_sheet.sort(order='ASCENDING',
-                              column=1,
-                              worksheet_name=worksheet_name,)
+                              worksheet_name=worksheet_name
+                              column=1)
 
 
 def local_file(args):
