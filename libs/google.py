@@ -9,9 +9,8 @@ class Sheet:
 
     def __init__(self, service_account_file, spreadsheet_id):
 
-        creds = \
-            ServiceAccountCredentials\
-            .from_json_keyfile_name(service_account_file, SCOPES)
+        creds = ServiceAccountCredentials.from_json_keyfile_name(
+            service_account_file, SCOPES)
 
         client = gspread.authorize(creds)
 
