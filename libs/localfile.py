@@ -29,8 +29,7 @@ class LocalFile:
             if self.file_type == 'json':
                 quotes = json.loads(infile.read())
             else:
-                reader = csv.DictReader(infile)
-                quotes = [dict(r) for r in reader]
+                quotes = [dict(q) for q in csv.DictReader(infile)]
 
             return quotes
 
