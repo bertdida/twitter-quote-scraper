@@ -6,6 +6,71 @@ import argparse
 from libs import google, twitter, localfile
 
 
+def main():
+    parser = argparse.ArgumentParser(
+        description='Scrapes for quotes on Twitter')
+
+    parser.add_argument(
+        '--twitter-creds',
+        help='Path to JSON file that holds Twitter keys and tokens',
+        required=True,
+        type=argparse.FileType('r'))
+
+    subparsers = parser.add_subparsers(title='Commands', dest='subparser')
+
+    parser_google_sheet = subparsers.add_parser(
+        'google_sheet',
+        help='Saves parsed quotations into Google spreadsheet')
+
+    parser_local_file = subparsers.add_parser(
+        'local_file',
+        help='Generates and saves parsed quotations to a file')
+
+    parser_google_sheet.set_defaults(func=google_sheet)
+    parser_local_file.set_defaults(func=local_file)
+
+    parser_google_sheet.add_argument(
+        '--service-account',
+        help='Path to Google Service Account\'s JSON file',
+        required=True,
+        type=argparse.FileType('r'))
+
+    parser_google_sheet.add_argument(
+        '--spreadsheet-id',
+        help='The spreadsheet\'s ID',
+        required=True,
+        type=str)
+
+    parser_local_file.add_argument(
+        '--twitter-handles',
+        help='List of Twitter handles to scrape (may or may not start with '
+             '@ character)',
+        required=True,
+        nargs='+',
+        type=str)
+
+    parser_local_file.add_argument(
+        '--output-folder',
+        help='The folder where the generated files to place to',
+        type=str,
+        default=os.getcwd())
+
+    parser_local_file.add_argument(
+        '--file-type',
+        help='The file type',
+        type=str,
+        default='csv',
+        choices=localfile.LocalFile.supported_file_types)
+
+    args = parser.parse_args()
+
+    if args.subparser is None:
+        parser.print_help()
+        exit(1)
+
+    args.func(args)
+
+
 def to_lowercase_alphanum(text):
 
     return re.sub(r'[^a-z0-9]', '', text.lower())
@@ -77,71 +142,6 @@ def local_file(args):
             saved_quotes.insert(0, quote)
 
         local_file.write(file_path, saved_quotes)
-
-
-def main():
-    parser = argparse.ArgumentParser(
-        description='Scrapes for quotes on Twitter')
-
-    parser.add_argument(
-        '--twitter-creds',
-        help='Path to JSON file that holds Twitter keys and tokens',
-        required=True,
-        type=argparse.FileType('r'))
-
-    subparsers = parser.add_subparsers(title='Commands', dest='subparser')
-
-    parser_google_sheet = subparsers.add_parser(
-        'google_sheet',
-        help='Saves parsed quotations into Google spreadsheet')
-
-    parser_local_file = subparsers.add_parser(
-        'local_file',
-        help='Generates and saves parsed quotations to a file')
-
-    parser_google_sheet.set_defaults(func=google_sheet)
-    parser_local_file.set_defaults(func=local_file)
-
-    parser_google_sheet.add_argument(
-        '--service-account',
-        help='Path to Google Service Account\'s JSON file',
-        required=True,
-        type=argparse.FileType('r'))
-
-    parser_google_sheet.add_argument(
-        '--spreadsheet-id',
-        help='The spreadsheet\'s ID',
-        required=True,
-        type=str)
-
-    parser_local_file.add_argument(
-        '--twitter-handles',
-        help='List of Twitter handles to scrape (may or may not start with '
-             '@ character)',
-        required=True,
-        nargs='+',
-        type=str)
-
-    parser_local_file.add_argument(
-        '--output-folder',
-        help='The folder where the generated files to place to',
-        type=str,
-        default=os.getcwd())
-
-    parser_local_file.add_argument(
-        '--file-type',
-        help='The file type',
-        type=str,
-        default='csv',
-        choices=localfile.LocalFile.supported_file_types)
-
-    args = parser.parse_args()
-
-    if args.subparser is None:
-        parser.print_help()
-        exit(1)
-
-    args.func(args)
 
 
 if __name__ == '__main__':
