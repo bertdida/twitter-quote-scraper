@@ -49,7 +49,7 @@ def main():
 
     parser_local_file.add_argument(
         '--output-folder',
-        help='The folder where the generated files to place to',
+        help='The generated file\'s folder',
         type=str,
         default=os.getcwd())
 
