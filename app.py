@@ -17,7 +17,7 @@ def main():
         required=True,
         type=argparse.FileType('r'))
 
-    subparsers = parser.add_subparsers(title='Commands', dest='subparser')
+    subparsers = parser.add_subparsers(title='command', dest='subparser')
 
     parser_google_sheet = subparsers.add_parser(
         'google_sheet',
