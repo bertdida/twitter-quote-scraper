@@ -8,7 +8,7 @@ from libs import google, twitter, localfile
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Scrapes for quotes on Twitter')
+        description='Scrapes for quotations on Twitter')
 
     parser.add_argument(
         '--twitter-creds',
@@ -25,9 +25,6 @@ def main():
     parser_local_file = subparsers.add_parser(
         'local_file',
         help='Generates and saves parsed quotations to a file')
-
-    parser_google_sheet.set_defaults(func=google_sheet)
-    parser_local_file.set_defaults(func=local_file)
 
     parser_google_sheet.add_argument(
         '--service-account',
@@ -61,6 +58,9 @@ def main():
         type=str,
         default='csv',
         choices=localfile.LocalFile.supported_file_types)
+
+    parser_google_sheet.set_defaults(func=google_sheet)
+    parser_local_file.set_defaults(func=local_file)
 
     args = parser.parse_args()
 
