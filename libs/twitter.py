@@ -4,14 +4,11 @@ import emoji
 import tweepy
 import unidecode
 import collections
-from typing import List
 
 QUOTE_PATTERN = \
     re.compile(r'^[\"\']{0,1}(?P<phrase>[A-Z].*[\.!?])[\"\']{0,1}'
                r'\s*?[-~]\s*'
                r'(?P<author>.*)$')
-
-SPECIAL_CHARS_PATTERN = re.compile(r'[^a-zA-Z0-9]')
 
 Quote = collections.namedtuple('Quote', 'author phrase url')
 
@@ -30,39 +27,40 @@ class QuoteScraper:
 
         self.api = tweepy.API(auth)
 
-    def get_quotes(self, twitter_handle: str, tweet_since_id=None):
+    def get_quotes(self, twitter_handle, since_id=None):
 
         twitter_handle = twitter_handle.lstrip('@')
         base_url = 'https://twitter.com/{}'.format(twitter_handle)
 
-        for tweet in tweepy.Cursor(self.api.user_timeline,
-                                   screen_name=twitter_handle,
-                                   since_id=tweet_since_id,
-                                   tweet_mode='extended').items():
+        for status in tweepy.Cursor(self.api.user_timeline,
+                                    id=twitter_handle,
+                                    since_id=since_id,
+                                    tweet_mode='extended').items():
 
-            if not self.is_allowed(tweet):
+            if not self.is_allowed(status):
                 continue
 
-            tweet_text = self.get_normalized_tweet_text(tweet)
-            match = QUOTE_PATTERN.match(tweet_text)
+            tweet = self.get_normalized_tweet(status)
+            match = QUOTE_PATTERN.match(tweet)
 
-            if match:
-                url = '{}/status/{}'.format(base_url, tweet.id_str)
-                phrase = html.unescape(match.group('phrase').strip())
-                author = html.unescape(match.group('author').strip())
+            if match is None:
+                continue
 
-                yield Quote(author, phrase, url)
+            url = '{}/status/{}'.format(base_url, status.id_str)
+            phrase = html.unescape(match.group('phrase').strip())
+            author = html.unescape(match.group('author').strip())
+
+            yield Quote(author, phrase, url)
 
     @staticmethod
-    def is_allowed(tweet):
+    def is_allowed(status):
 
-        # To avoid Attribute error, use the JSON version of the tweet object.
-        is_retweet = tweet._json.get('retweeted_status')
+        is_retweet = status._json.get('retweeted_status')
 
-        is_reply = tweet.in_reply_to_status_id
-        has_url = tweet.entities.get('urls')
-        has_media = tweet.entities.get('media')
-        has_emoji = bool(emoji.get_emoji_regexp().search(tweet.full_text))
+        is_reply = status.in_reply_to_status_id
+        has_url = status.entities.get('urls')
+        has_media = status.entities.get('media')
+        has_emoji = bool(emoji.get_emoji_regexp().search(status.full_text))
 
         return not any([is_retweet,
                         is_reply,
@@ -70,40 +68,33 @@ class QuoteScraper:
                         has_media,
                         has_emoji])
 
-    def get_normalized_tweet_text(self, tweet):
+    @classmethod
+    def get_normalized_tweet(cls, status):
 
-        strip_hashtags = self.strip_hashtags(tweet.entities.get('hashtags'))
+        tweet = status.full_text
+        tweet = cls.strip_hashtags(tweet, status.entities.get('hashtags'))
+        tweet = cls.non_alphanum_chars_to_ascii(tweet)
 
-        text = strip_hashtags(tweet.full_text)
-        text = self.special_chars_to_ascii(text)
-        text = text.replace('--', '-')
-
-        return text
-
-    @staticmethod
-    def strip_hashtags(hashtag_entities: List[dict]):
-
-        hashtags = ['#{}'.format(e.get('text')) for e in hashtag_entities]
-
-        def _strip_hashtags(tweet_text):
-
-            for hashtag in hashtags:
-                tweet_text = tweet_text.replace(hashtag, '')
-
-            return tweet_text
-
-        return _strip_hashtags
+        return tweet.replace('--', '-')
 
     @staticmethod
-    def special_chars_to_ascii(tweet_text):
+    def strip_hashtags(tweet, hashtag_entities):
 
-        new_tweet_text = []
+        for hashtag_entity in hashtag_entities:
+            hashtag = '#{}'.format(hashtag_entity.get('text'))
+            tweet = tweet.replace(hashtag, '')
 
-        for char in tweet_text:
+        return tweet
 
-            if SPECIAL_CHARS_PATTERN.match(char):
-                char = unidecode.unidecode(char)
+    @staticmethod
+    def non_alphanum_chars_to_ascii(tweet):
+        """Convert characters that do not evaluate to alphanumeric into ASCII.
+        """
 
-            new_tweet_text.append(char)
+        retval = []
 
-        return ''.join(new_tweet_text)
+        for char in tweet:
+            char_ascii = unidecode.unidecode(char)
+            retval.append(char if char_ascii.isalpha() else char_ascii)
+
+        return ''.join(retval)
