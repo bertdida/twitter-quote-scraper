@@ -1,4 +1,3 @@
-from typing import List
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -8,7 +7,7 @@ SCOPES = ['https://spreadsheets.google.com/feeds']
 
 class Sheet:
 
-    def __init__(self, service_account_file: str, spreadsheet_id: str):
+    def __init__(self, service_account_file, spreadsheet_id):
 
         creds = \
             ServiceAccountCredentials\
@@ -18,53 +17,43 @@ class Sheet:
 
         self.spreadsheet = client.open_by_key(spreadsheet_id)
 
-    def get_worksheets(self):
+    @property
+    def worksheets(self):
 
         return self.spreadsheet.worksheets()
 
-    def get_values(self, range_: str):
+    def get_values(self, range_):
 
-        # The API sometimes return None, when that happens set value
-        # to an empty list.
-        values = self.spreadsheet.values_get(range_).get('values') or []
+        values = self.spreadsheet.values_get(range_).get('values')
+
+        if values is None:
+            values = []
 
         for [value] in values:
             yield value
 
-    def append(self, range_: str, request_body: List[list]):
+    def append(self, range_, request_body):
 
         self.spreadsheet.values_append(
             range_,
             params={'valueInputOption': INPUT_OPTION},
             body={'values': request_body})
 
-    def update(self, range_: str, request_body: List[list]):
+    def update(self, range_, request_body):
 
         self.spreadsheet.values_update(
             range_,
             params={'valueInputOption': INPUT_OPTION},
             body={'values': request_body})
 
-    def sort(self, sheet_name: str, column: int = 0, order: str = 'ASCENDING'):
-        """Sort the values of the given sheet name.
+    def sort(self, worksheet_name, column=0, order='ASCENDING'):
 
-        Args:
-            sheet_name: The name of the sheet to be sorted.
-            column: The column of the sheet where the sort should
-                be applied to.
-            order: The order of the data on sort. Supported values
-                are the following:
-                    - ASCENDING
-                    - DESCENDING
-                    - SORT_ORDER_UNSPECIFIED
-        """
-
-        sheet_id = self.spreadsheet.worksheet(sheet_name).id
+        worksheet_id = self.spreadsheet.worksheet(worksheet_name).id
 
         request_body = [{
             'sortRange': {
                 'range': {
-                    'sheetId': sheet_id,
+                    'sheetId': worksheet_id,
                     'startRowIndex': 1  # exclude headers
                 },
                 'sortSpecs': [
@@ -76,5 +65,4 @@ class Sheet:
             }
         }]
 
-        self.spreadsheet.batch_update(
-            body={'requests': request_body})
+        self.spreadsheet.batch_update(body={'requests': request_body})
