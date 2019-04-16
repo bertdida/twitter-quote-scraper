@@ -22,19 +22,17 @@ class LocalFile:
 
     def read(self, file_path):
 
-        quotes = []
+        if not os.path.exists(file_path):
+            return []
 
-        if os.path.exists(file_path):
+        with open(file_path, 'r') as infile:
+            if self.file_type == 'json':
+                quotes = json.loads(infile.read())
+            else:
+                reader = csv.DictReader(infile)
+                quotes = [dict(r) for r in reader]
 
-            with open(file_path, 'r') as infile:
-
-                if self.file_type == 'json':
-                    quotes = json.loads(infile.read())
-                else:
-                    reader = csv.DictReader(infile)
-                    quotes = [dict(r) for r in reader]
-
-        return quotes
+            return quotes
 
     def write(self, file_path, quotes):
 
