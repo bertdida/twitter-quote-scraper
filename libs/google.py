@@ -25,9 +25,7 @@ class Sheet:
     def get_values(self, range_):
 
         values = self.spreadsheet.values_get(range_).get('values')
-
-        if values is None:
-            values = []
+        values = [] if values is None else values
 
         for [value] in values:
             yield value
