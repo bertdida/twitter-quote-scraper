@@ -1,3 +1,5 @@
+<p align="center"><img src="/logo/logotype-horizontal.png"></p>
+
 # TwitterQuoteScraper
 
 So I think creating an API regarding programming quotes is fun, by fun I mean lots of learnings. That's why I created this project to provide the most fundamental data of my ideal API, quotes.
@@ -84,3 +86,5 @@ Distributed under the MIT license. See LICENSE for more information.
 ## Author
 
 Herbert Verdida / [@bertdida](https://twitter.com/bertdida)
+
+Logo by [@Tobaloidee](https://github.com/Tobaloidee)
