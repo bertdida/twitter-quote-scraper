@@ -14,10 +14,10 @@ class LocalFile:
 
         os.makedirs(os.path.dirname(self.output_folder), exist_ok=True)
 
-    def get_file_path(self, twitter_handle):
+    def get_filepath(self, file_name):
 
         return os.path.join(
-            self.output_folder, '{}.{}'.format(twitter_handle, self.file_type))
+            self.output_folder, '{}.{}'.format(file_name, self.file_type))
 
     def read(self, file_path):
 
