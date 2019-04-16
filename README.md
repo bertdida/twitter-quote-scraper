@@ -2,6 +2,8 @@
 
 # TwitterQuoteScraper
 
+**Important:** This README is not yet updated.
+
 So I think creating an API regarding programming quotes is fun, by fun I mean lots of learnings. That's why I created this project to provide the most fundamental data of my ideal API, quotes.
 
 TwitterQuoteScraper collects and parses tweets from any Twitter accounts who share motivational sayings or paraphrases.
