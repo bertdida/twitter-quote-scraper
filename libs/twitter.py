@@ -55,14 +55,14 @@ class QuoteScraper:
     @staticmethod
     def is_allowed(status):
 
+        is_retweet = hasattr(status, 'retweeted_status')
         is_reply = status.in_reply_to_status_id
-        is_retweet = status.get('retweeted_status')
         has_url = status.entities.get('urls')
         has_media = status.entities.get('media')
         has_emoji = emoji.get_emoji_regexp().search(status.full_text)
 
-        return not any([is_reply,
-                        is_retweet,
+        return not any([is_retweet,
+                        is_reply,
                         has_url,
                         has_media,
                         has_emoji])
