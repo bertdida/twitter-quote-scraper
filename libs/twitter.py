@@ -27,6 +27,10 @@ class QuoteScraper:
 
         self.api = tweepy.API(auth)
 
+    def get_total_tweets(self, handle):
+
+        return self.api.get_user(handle).statuses_count
+
     def get_quotes(self, handle, since_id=None):
 
         handle = handle.lstrip('@')
