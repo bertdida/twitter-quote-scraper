@@ -105,7 +105,7 @@ def google_sheet(args):
                 saved_phrases_alphanum.add(phrase_alphanum)
 
         if quotes_unique:
-            *_, latest_id = quotes[0].url.split('/')
+            *_, latest_id = quotes_unique[-1].url.split('/')
 
             google_sheet.update(saved_id_range, [[latest_id]])
             google_sheet.append(worksheet_name, quotes_unique)
