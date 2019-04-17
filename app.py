@@ -74,6 +74,8 @@ def main():
 
 
 def to_lowercase_alphanum(text):
+    """Remove non-alphanumeric characters and convert value to lowercase.
+    """
 
     return re.sub(r'[^a-z0-9]', '', text.lower())
 
