@@ -13,7 +13,8 @@ def main():
 
     parser.add_argument(
         '--twitter-creds',
-        help='Path to JSON file that holds Twitter keys and tokens',
+        help='Path to JSON file that holds your Twitter App\'s consumer_key, '
+             'consumer_key_secret, access_token and access_token_secret.',
         required=True,
         type=argparse.FileType('r'))
 
