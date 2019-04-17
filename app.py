@@ -41,8 +41,7 @@ def main():
 
     parser_local_file.add_argument(
         '--twitter-handles',
-        help='List of Twitter handles to scrape (may or may not start with '
-             '@ character)',
+        help='List of Twitter handles to scrape',
         required=True,
         nargs='+',
         type=str)
