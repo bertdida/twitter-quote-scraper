@@ -118,8 +118,7 @@ def local_file(args):
     scraper = twitter.QuoteScraper(json.load(args.twitter_creds))
 
     for handle in args.twitter_handles:
-        handle = handle.lstrip('@')
-        file_path = local_file.get_filepath(handle)
+        file_path = local_file.get_filepath(handle.lstrip('@'))
 
         saved_quotes = local_file.read(file_path)
 
