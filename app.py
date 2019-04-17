@@ -94,7 +94,7 @@ def google_sheet(args):
         saved_phrases = google_sheet.get_values(saved_phrases_range)
         saved_phrases_alphanum = {to_lowercase_alphanum(p) for p in saved_phrases}
 
-        [saved_id] = list(google_sheet.get_values(saved_id_range)) or [None]
+        saved_id = (list(google_sheet.get_values(saved_id_range)) + [None])[0]
 
         quotes_unique = []
         for quote in scraper.get_quotes(worksheet_name, saved_id):
