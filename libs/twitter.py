@@ -18,12 +18,12 @@ class QuoteScraper:
     def __init__(self, creds: dict):
 
         auth = tweepy.OAuthHandler(
-            creds.get('consumer_key'),
-            creds.get('consumer_key_secret'))
+            creds['consumer_key'],
+            creds['consumer_key_secret'])
 
         auth.set_access_token(
-            creds.get('access_token'),
-            creds.get('access_token_secret'))
+            creds['access_token'],
+            creds['access_token_secret'])
 
         self.api = tweepy.API(auth)
 
