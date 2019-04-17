@@ -25,7 +25,8 @@ def main():
 
     parser_local_file = subparsers.add_parser(
         'local_file',
-        help='Generates and saves parsed quotations to a file')
+        help='Generates and saves parsed quotations to a file',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser_google_sheet.add_argument(
         '--service-account',
