@@ -27,7 +27,7 @@ class LocalFile:
         return os.path.join(
             self.output_folder, '{}.{}'.format(file_name, self.file_type))
 
-    def read(self, file_path) -> dict:
+    def read(self, file_path) -> list:
 
         if not os.path.exists(file_path):
             return []
