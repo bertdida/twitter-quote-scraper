@@ -60,7 +60,7 @@ class QuoteScraper:
         is_reply = status.in_reply_to_status_id
         has_url = status.entities.get('urls')
         has_media = status.entities.get('media')
-        has_emoji = bool(emoji.get_emoji_regexp().search(status.full_text))
+        has_emoji = emoji.get_emoji_regexp().search(status.full_text)
 
         return not any([is_retweet,
                         is_reply,
