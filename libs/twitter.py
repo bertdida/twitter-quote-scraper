@@ -33,8 +33,7 @@ class QuoteScraper:
 
     def get_quotes(self, handle, since_id=None):
 
-        handle = handle.lstrip('@')
-        base_url = 'https://twitter.com/{}'.format(handle)
+        base_url = 'https://twitter.com/{}'.format(handle.lstrip('@'))
 
         for status in tweepy.Cursor(self.api.user_timeline,
                                     id=handle,
