@@ -14,7 +14,7 @@ def main():
     parser.add_argument(
         '--twitter-creds',
         help='Path to JSON file that holds your Twitter App\'s consumer_key, '
-             'consumer_key_secret, access_token and access_token_secret.',
+             'consumer_key_secret, access_token and access_token_secret',
         required=True,
         type=argparse.FileType('r'))
 
@@ -30,7 +30,7 @@ def main():
 
     parser_google_sheet.add_argument(
         '--service-account',
-        help='Path to Google Service Account\'s JSON file',
+        help='Path to Google service account\'s JSON file',
         required=True,
         type=argparse.FileType('r'))
 
@@ -50,7 +50,7 @@ def main():
 
     parser_local_file.add_argument(
         '--output-folder',
-        help='The generated file\'s folder',
+        help='The folder where the files will be generated',
         type=str,
         default=os.getcwd())
 
