@@ -27,10 +27,6 @@ class QuoteScraper:
 
         self.api = tweepy.API(auth)
 
-    def get_total_tweets(self, handle):
-
-        return self.api.get_user(handle).statuses_count
-
     def get_quotes(self, handle, since_id=None):
 
         base_url = 'https://twitter.com/{}'.format(handle.lstrip('@'))
