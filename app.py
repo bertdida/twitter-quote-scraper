@@ -8,7 +8,7 @@ from libs import google, twitter, localfile
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Scrapes for quotations on Twitter')
+        description='Scrapes quotations from Twitter')
 
     parser.add_argument(
         '--twitter-creds',
