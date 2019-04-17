@@ -44,6 +44,16 @@ class Sheet:
             body={'values': request_body})
 
     def sort(self, worksheet_name, column=0, order='ASCENDING'):
+        """Sort values of the given worksheet name.
+
+        Args:
+            worksheet_name: The worksheet's name.
+            column: The column where the sort should be applied to.
+            order: The order of values on sort, supported orderings are:
+                - SORT_ORDER_UNSPECIFIED
+                - ASCENDING
+                - DESCENDING
+        """
 
         worksheet_id = self.spreadsheet.worksheet(worksheet_name).id
 
