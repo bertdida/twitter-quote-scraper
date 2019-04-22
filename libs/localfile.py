@@ -12,6 +12,7 @@ class LocalFile:
         if not self.is_supported(file_type):
             raise ValueError('Not supported file type: {}'.format(file_type))
 
+        self.file = JSON() if file_type == 'json' else CSV()
         self.file_type = file_type
         self.output_folder = output_folder
 
@@ -32,24 +33,44 @@ class LocalFile:
         if not os.path.exists(file_path):
             return []
 
-        with open(file_path, 'r') as infile:
-            if self.file_type == 'json':
-                quotes = json.loads(infile.read())
-            else:
-                quotes = [dict(q) for q in csv.DictReader(infile)]
-
-            return quotes
+        return self.file.read(file_path)
 
     def write(self, file_path, quotes):
 
         if not quotes:
             return
 
-        with open(file_path, 'w', encoding='utf-8') as outfile:
-            if self.file_type == 'json':
-                json.dump(quotes, fp=outfile, indent=4)
-            else:
-                writer = csv.DictWriter(outfile, fieldnames=quotes[0].keys())
+        self.file.write(file_path, quotes)
 
-                writer.writeheader()
-                writer.writerows(quotes)
+
+class JSON:
+
+    @staticmethod
+    def read(file_path) -> list:
+
+        with open(file_path, 'r') as infile:
+            return json.loads(infile.read())
+
+    @staticmethod
+    def write(file_path, quotes):
+
+        with open(file_path, 'w', encoding='utf-8') as outfile:
+            json.dump(quotes, fp=outfile, indent=4)
+
+
+class CSV:
+
+    @staticmethod
+    def read(file_path) -> list:
+
+        with open(file_path, 'r') as infile:
+            return [dict(q) for q in csv.DictReader(infile)]
+
+    @staticmethod
+    def write(file_path, quotes):
+
+        with open(file_path, 'w', encoding='utf-8') as outfile:
+            writer = csv.DictWriter(outfile, fieldnames=quotes[0].keys())
+
+            writer.writeheader()
+            writer.writerows(quotes)
