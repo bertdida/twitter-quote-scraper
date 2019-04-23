@@ -60,8 +60,8 @@ def main():
         default='csv',
         choices=localfile.LocalFile.supported_file_types)
 
-    parser_google_sheet.set_defaults(func=google_sheet)
-    parser_local_file.set_defaults(func=local_file)
+    parser_google_sheet.set_defaults(func=use_google_sheet)
+    parser_local_file.set_defaults(func=use_local_file)
 
     args = parser.parse_args()
 
@@ -79,7 +79,7 @@ def to_lowercase_alphanum(text):
     return re.sub(r'[^a-z0-9]', '', text.lower())
 
 
-def google_sheet(args):
+def use_google_sheet(args):
 
     google_sheet = google.Sheet(args.service_account.name, args.spreadsheet_id)
     scraper = twitter.QuoteScraper(json.load(args.twitter_creds))
@@ -113,7 +113,7 @@ def google_sheet(args):
                               column=1)
 
 
-def local_file(args):
+def use_local_file(args):
 
     local_file = localfile.LocalFile(args.file_type, args.output_folder)
     scraper = twitter.QuoteScraper(json.load(args.twitter_creds))
