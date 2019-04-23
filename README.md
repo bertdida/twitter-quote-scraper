@@ -30,4 +30,6 @@ Help: `python app.py --twitter-creds creds/twitter.json local_file -h`.
 
 The command below will scrape [@prog_quotes](https://twitter.com/prog_quotes) account and will generate the `prog_quotes.csv`.
 
-`python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes`
+```shell
+python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes
+```
