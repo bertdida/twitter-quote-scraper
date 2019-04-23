@@ -57,7 +57,7 @@ python app.py --twitter-creds creds/twitter.json google_sheet --service-account 
 - [gspread](https://github.com/burnash/gspread)
 - [oauth2client](https://github.com/googleapis/oauth2client)
 - [emoji](https://github.com/carpedm20/emoji/) - used to check and ignore tweets that have an emoji
-- [unidecode](https://github.com/avian2/unidecode) - used to convert tweets' Unicode special characters to ASCII
+- [unidecode](https://github.com/avian2/unidecode) - used to convert tweets' unicode special characters to ASCII
 
 ## Contribute
 
