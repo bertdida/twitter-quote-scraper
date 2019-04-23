@@ -26,7 +26,7 @@ TwitterQuoteScraper is a command line tool with a purpose to help in scraping qu
 
 ## Usage
 
-Currently, TwitterQuoteScraper supports both saving quotations to a local file or into Google spreadsheet. But either of these ways you must first create a JSON file that holds your Twitter app's credentials (see `creds/twitter.json`), the Twitter JSON's file path is required every time you run a command to scrape quotations.
+Currently, TwitterQuoteScraper supports both saving quotations to a local file or into Google spreadsheet. But either of these ways you must first create a JSON file that holds your Twitter app's credentials (see `creds/twitter.json`), this file's path is required every time you run a command to scrape quotations.
 
 To maintain consistency, this documentation will use `creds/twitter.json` and `creds/google.json` as the values for `--twitter-creds` and `--service-account` respectively. Don't forget to change these to the actual path of your JSON files.
 
