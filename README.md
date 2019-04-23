@@ -22,14 +22,20 @@ TwitterQuoteScraper is a command line tool with a purpose to help in scraping qu
 
 To get started you must first create a JSON file that holds your Twitter app's credentials (see `creds/twitter.json` for a template).
 
-Currently, TwitterQuoteScraper supports saving quotations on both local file and Google spreadsheet.
-
 ### Local file
 
 Run `python app.py --twitter-creds creds/twitter.json local_file -h` to view help.
 
-The command below will scrape [@prog_quotes](https://twitter.com/prog_quotes) account and will generate a prog_quotes.csv. If you want to get a JSON file instead, override the default file type by adding `--file-type json`.
+The command below will scrape [@prog_quotes](https://twitter.com/prog_quotes) account and will generate a `prog_quotes.csv`. If you want to get a JSON file instead, override the default file type by adding `--file-type json`.
 
 ```shell
 python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes
 ```
+
+### Google spreadsheet
+
+Run `python app.py --twitter-creds creds/twitter.json google_sheet -h` to view help.
+
+1. Make a copy of the [template spreadsheet](https://docs.google.com/spreadsheets/d/1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk/edit?usp=sharing).
+2. Share the spreadsheet with the `client_email` you can find inside your Google service account's JSON file.
+3. Note your [spreadsheet ID](https://developers.google.com/sheets/api/guides/concepts#spreadsheet_id).
