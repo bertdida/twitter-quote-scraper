@@ -24,9 +24,15 @@ TwitterQuoteScraper is a command line tool with a purpose to help in scraping qu
 1. Download and extract the [zip file](https://github.com/bertdida/TwitterQuoteScraper/archive/master.zip) or use Git to clone this repository.
 2. Inside the directory open a terminal and run `pipenv install`.
 
-## Basic Usage
+## Usage
 
-To get started you must first create a JSON file that holds your Twitter app's credentials (see `creds/twitter.json`).
+Currently, TwitterQuoteScraper supports both saving quotations to a local file or into Google spreadsheet. But either of these ways you must first create a JSON file that holds your Twitter app's credentials (see `creds/twitter.json`), this file's path is a required argument everytime you run a command.
+
+To learn more about a command's usage and syntax, like which options are available and the command's structure you may run any of the following:
+
+- `python app.py -h`
+- `python app.py --twitter-creds creds/twitter.json local_file -h`
+- `python app.py --twitter-creds creds/twitter.json google_sheet -h`
 
 ### Local file
 
