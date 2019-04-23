@@ -40,8 +40,32 @@ Run `python app.py --twitter-creds creds/twitter.json google_sheet -h` to view h
 2. Share the spreadsheet with the `client_email` you can find inside your Google service account's JSON file.
 3. Note your [spreadsheet ID](https://developers.google.com/sheets/api/guides/concepts#spreadsheet_id).
 
-The names of the sheets you have on the spreadsheet will identify the Twitter accounts to be scraped. Assuming you did not change the first sheet's name, the command below will scrape [@CodeWisdom](https://twitter.com/CodeWisdom) account and then will sort the phrase alphabetically.
+The names of the sheets you have on the spreadsheet will identify the Twitter accounts to be scraped. Assuming you did not change the first sheet's name, the command below will scrape [@CodeWisdom](https://twitter.com/CodeWisdom) account and then will sort by phrase alphabetically.
 
 ```shell
 python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id YOUR_SPREADSHEETS_ID
 ```
+
+## Dependencies
+
+- [tweepy](https://github.com/tweepy/tweepy)
+- [gspread](https://github.com/burnash/gspread)
+- [oauth2client](https://github.com/googleapis/oauth2client)
+- [emoji](https://github.com/carpedm20/emoji/) - used to check and ignore tweets that have an emoji
+- [unidecode](https://github.com/avian2/unidecode) - used to convert tweets' Unicode special characters to ASCII
+
+## Contribute
+
+If you have any problem, idea or suggestion, feel free to create issues and pull requests.
+
+## License
+
+Distributed under the MIT license. See LICENSE for more information.
+
+## Author
+
+Herbert Verdida / [@bertdida](https://twitter.com/bertdida)
+
+## Thanks
+
+Thanks [@Tobaloidee](https://github.com/Tobaloidee) for making an awesome logo.
