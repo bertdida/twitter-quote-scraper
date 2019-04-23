@@ -2,7 +2,7 @@
 
 # TwitterQuoteScraper
 
-_One day I was thinking about creating a web application that displays quotations randomly. There are already lots of this on [CodePen](https://codepen.io/search/pens?q=random%20quote%20generator&page=1&order=popularity&depth=everything), but I want to experience on how to develop both of its frontend and backend sides. I need the data first and I assume Twitter can help me with this._
+_One day I was thinking about creating a web application that displays quotations randomly. There are already lots of this on [CodePen](https://codepen.io/search/pens?q=random%20quote%20generator&page=1&order=popularity&depth=everything), but I want to experience on how to develop both of its frontend and backend functionalities. I need the data first and I assume Twitter can help me with this!_
 
 TwitterQuoteScraper is a command line tool with a purpose to help in scraping quotations from the desired Twitter accounts.
 
