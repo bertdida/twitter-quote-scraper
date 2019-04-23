@@ -65,7 +65,7 @@ Usage example:
 python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk
 ```
 
-Note, each sheet should be the name of the account you want to scrape.
+Note, each sheet's name should be the name of the account you want to scrape.
 
 ## Dependencies
 
