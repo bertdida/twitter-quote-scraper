@@ -52,18 +52,17 @@ python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @p
 python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes --file-type json
 ```
 
-### Google spreadsheet
+### Saving to Google spreadsheet
 
-Run `python app.py --twitter-creds creds/twitter.json google_sheet -h` to view help.
+#### Setting up spreadsheet
 
-1. Make a copy of the [template spreadsheet](https://docs.google.com/spreadsheets/d/1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk/edit?usp=sharing).
-2. Share the spreadsheet with the `client_email` you can find inside your Google service account's JSON file.
-3. Note your [spreadsheet ID](https://developers.google.com/sheets/api/guides/concepts#spreadsheet_id).
+1. Log in to Google and make a copy of the [template spreadsheet](<(https://docs.google.com/spreadsheets/d/1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk/edit?usp=sharing)>).
+2. Share the spreadsheet with the client_email you can find inside your Google service account's JSON file.
 
-The names of the sheets you have on the spreadsheet will identify the Twitter accounts to be scraped. Assuming you did not change the first sheet's name, the command below will scrape [@CodeWisdom](https://twitter.com/CodeWisdom) account and then will sort by phrase alphabetically.
+Usage example:
 
 ```shell
-python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id YOUR_SPREADSHEETS_ID
+python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk
 ```
 
 ## Dependencies
