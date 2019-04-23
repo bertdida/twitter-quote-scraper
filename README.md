@@ -36,15 +36,19 @@ To learn more about a command's usage and syntax, like which options are availab
 - `python app.py --twitter-creds creds/twitter.json local_file -h`
 - `python app.py --twitter-creds creds/twitter.json google_sheet -h`
 
-### Local file
+### Saving to a local file
 
-Run `python app.py --twitter-creds creds/twitter.json local_file -h` to view help.
-
-The command below will scrape [@prog_quotes](https://twitter.com/prog_quotes) account and will generate a `prog_quotes.csv`. If you want to get a JSON file instead, override the default file type by adding `--file-type json`.
+Usage example:
 
 ```shell
 python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes
 ```
+
+| flag | alias             | description                                  | choices       | default           |
+| ---- | ----------------- | -------------------------------------------- | ------------- | ----------------- |
+|      | --twitter-handles | List of Twitter handles to scrape            |               |                   |
+|      | --output-folder   | The folder where the files will be generated |               | Current directory |
+|      | --file-type       | The generated file's type                    | `json`, `csv` | `csv`             |
 
 ### Google spreadsheet
 
