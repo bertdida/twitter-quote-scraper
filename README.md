@@ -56,7 +56,7 @@ python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @p
 
 #### Setting up spreadsheet
 
-1. Log in to Google and make a copy of the [template spreadsheet](<(https://docs.google.com/spreadsheets/d/1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk/edit?usp=sharing)>).
+1. Log in to Google and make a copy of the [template spreadsheet](https://docs.google.com/spreadsheets/d/1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk/edit?usp=sharing).
 2. Share the spreadsheet with the client_email you can find inside your Google service account's JSON file.
 
 Usage example:
