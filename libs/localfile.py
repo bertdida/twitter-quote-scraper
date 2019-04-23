@@ -14,7 +14,7 @@ class LocalFile:
 
         self.file = JSON() if file_type == 'json' else CSV()
         self.file_type = file_type
-        self.output_folder = output_folder
+        self.output_folder = '{}/'.format(output_folder.rstrip('/'))
 
         os.makedirs(os.path.dirname(self.output_folder), exist_ok=True)
 
