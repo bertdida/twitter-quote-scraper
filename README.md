@@ -26,9 +26,9 @@ Currently, TwitterQuoteScraper supports saving quotations on both local file and
 
 ### Local file
 
-Help: `python app.py --twitter-creds creds/twitter.json local_file -h`.
+Run python `app.py --twitter-creds creds/twitter.json local_file -h` to view help.
 
-The command below will scrape [@prog_quotes](https://twitter.com/prog_quotes) account and will generate the `prog_quotes.csv`. If you want to get a JSON file instead, override the default file type by adding `--file-type json`.
+The command below will scrape [@prog_quotes](https://twitter.com/prog_quotes) account and will generate a prog_quotes.csv. If you want to get a JSON file instead, override the default file type by adding `--file-type json`.
 
 ```shell
 python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes
