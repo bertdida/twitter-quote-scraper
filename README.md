@@ -67,8 +67,6 @@ Usage example:
 python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk
 ```
 
-Note, each sheet's name should be the name of the account you want to scrape.
-
 Here's an example of a [spreadsheet](https://docs.google.com/spreadsheets/d/1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4/edit?usp=sharing) that was set up to be updated daily via CRON job.
 
 ## Dependencies
