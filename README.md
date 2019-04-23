@@ -91,4 +91,4 @@ Herbert Verdida / [@bertdida](https://twitter.com/bertdida)
 
 ## Thanks
 
-My gratitude to [@Tobaloidee](https://github.com/Tobaloidee) for making the awesome logo.
+My gratitude to [@Tobaloidee](https://github.com/Tobaloidee) for making this project's awesome logo.
