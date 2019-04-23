@@ -28,8 +28,6 @@ TwitterQuoteScraper is a command line tool with a purpose to help in scraping qu
 
 Currently, TwitterQuoteScraper supports both saving quotations to a local file or into Google spreadsheet. But either of these ways you must first create a JSON file that holds your Twitter app's credentials (see `creds/twitter.json`), this file's path is required every time you run a command to scrape quotations.
 
-To maintain consistency `creds/twitter.json` and `creds/google.json` will be used as the values for `--twitter-creds` and `--service-account` respectively.
-
 To learn more about a command's usage and syntax, like which options are available and the command's structure you may run any of the following:
 
 - `python app.py -h`
@@ -41,14 +39,18 @@ To learn more about a command's usage and syntax, like which options are availab
 Usage example:
 
 ```shell
+# Single account
 python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes
-```
 
-| flag | alias             | description                                  | choices       | default           |
-| ---- | ----------------- | -------------------------------------------- | ------------- | ----------------- |
-|      | --twitter-handles | List of Twitter handles to scrape            |               |                   |
-|      | --output-folder   | The folder where the files will be generated |               | Current directory |
-|      | --file-type       | The generated file's type                    | `json`, `csv` | `csv`             |
+# Multiple accounts
+python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes @CodeWisdom
+
+# Specify the folder where the files will be generated
+python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes --output-folder quotes
+
+# Override the default file type
+python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes --file-type json
+```
 
 ### Google spreadsheet
 
