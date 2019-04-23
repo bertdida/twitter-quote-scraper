@@ -1,14 +1,8 @@
-<p align="center"><img src="/logo/logotype-horizontal.png"></p>
+<p align="center"><img src="logo/logotype-horizontal.png"></p>
 
 # TwitterQuoteScraper
 
-**Important:** This README is not yet updated.
-
-So I think creating an API regarding programming quotes is fun, by fun I mean lots of learnings. That's why I created this project to provide the most fundamental data of my ideal API, quotes.
-
-TwitterQuoteScraper collects and parses tweets from any Twitter accounts who share motivational sayings or paraphrases.
-
-Example spreadsheet can be found [here](https://docs.google.com/spreadsheets/d/1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4/edit?usp=sharing).
+TwitterQuoteScraper is a command line tool with a purpose to help in scraping quotations from the desired Twitter accounts.
 
 ## Notes
 
@@ -19,8 +13,8 @@ Example spreadsheet can be found [here](https://docs.google.com/spreadsheets/d/1
 
 - Python 3.6
 - [Pipenv](https://github.com/pypa/pipenv)
-- Google service account
 - Twitter API Keys and Tokens
+- Google service account (optional)
 
 ## Installation
 
