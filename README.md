@@ -4,11 +4,6 @@
 
 TwitterQuoteScraper is a command line tool with a purpose to help in scraping quotations from the desired Twitter accounts.
 
-## Notes
-
-- Tweets that are a retweet, reply, has URL or media (image or video) and any emoji are disregarded.
-- This project highly depends on a regular expression. A Tweet should match this pattern to be considered as a quote: `^[\"\']{0,1}(?P<phrase>[A-Z].*[\.!?])[\"\']{0,1}\s*?[-~]\s*(?P<author>.*)$`.
-
 ## Prerequisites
 
 - Python 3.6
@@ -18,32 +13,10 @@ TwitterQuoteScraper is a command line tool with a purpose to help in scraping qu
 
 ## Installation
 
-1. Download and extract the [zip file](https://github.com/bertdida/TwitterQuoteScraper/archive/master.zip) or use Git to clone the repository.
+1. Download and extract the [zip file](https://github.com/bertdida/TwitterQuoteScraper/archive/master.zip) or use Git to clone this repository.
 2. Inside the directory open a terminal and run `pipenv install`.
 
-## Setup
-
-### Google spreadsheet
-
-1. Login on your Google account and create a spreadsheet.
-2. On the top menu click View > Freeze > 1 row.
-3. Insert Author, Phrase, and URL on each column of the first row.
-4. Rename the first sheet to the desired Twitter handle you want to scrape (may or may not start with @ character).
-
-### Codebase
-
-1. Within the `creds` folder, update `google.json` and `twitter.json` with your Google service account and Twitter keys respectively.
-2. Open `app.py` and edit `SPREADSHEET_ID` with your Google spreadsheet's id.
-3. Go back to the spreadsheet and give a Can Edit access to the `client_email` you'll find inside `creds/google.json`.
-
-## Usage
-
-From the terminal run the following commands:
-
-1. `pipenv shell`
-2. `python app.py`
-
-## Tested Twitter handles
+## Tested Twitter accounts
 
 | Twitter handle                                          | Date of testing | Total tweets | Total quotes |
 | ------------------------------------------------------- | --------------- | ------------ | ------------ |
