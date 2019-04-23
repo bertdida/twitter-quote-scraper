@@ -39,3 +39,9 @@ Run `python app.py --twitter-creds creds/twitter.json google_sheet -h` to view h
 1. Make a copy of the [template spreadsheet](https://docs.google.com/spreadsheets/d/1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk/edit?usp=sharing).
 2. Share the spreadsheet with the `client_email` you can find inside your Google service account's JSON file.
 3. Note your [spreadsheet ID](https://developers.google.com/sheets/api/guides/concepts#spreadsheet_id).
+
+The command below will scrape [@prog_quotes](https://twitter.com/prog_quotes) account and will save to the specified spreadsheet sorted by phrase column alphabetically.
+
+```shell
+python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id YOUR_SPREADSHEETS_ID
+```
