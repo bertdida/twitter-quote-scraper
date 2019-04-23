@@ -54,16 +54,18 @@ python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @p
 
 ### Saving to Google spreadsheet
 
-#### Setting up spreadsheet
+Before you run the command, set up a Google spreadsheet first.
 
 1. Log in to Google and make a copy of the [template spreadsheet](https://docs.google.com/spreadsheets/d/1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk/edit?usp=sharing).
-2. Share the spreadsheet with the client_email you can find inside your Google service account's JSON file.
+2. Share the spreadsheet with the `client_email` you can find inside your Google service account's JSON file.
 
 Usage example:
 
 ```shell
 python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk
 ```
+
+Note, each sheet should be the name of the account you want to scrape.
 
 ## Dependencies
 
