@@ -6,6 +6,11 @@ _One day I was thinking about creating a web application that displays quotation
 
 TwitterQuoteScraper is a command line tool with a purpose to help in scraping quotations from the desired Twitter accounts.
 
+## Behaviors
+
+- Tweets that are a retweet, reply, has URL or media (image or video) and any emoji are disregarded.
+- This project highly depends on a regular expression. A Tweet should match this pattern to be considered as a quote: `^[\"\']{0,1}(?P<phrase>[A-Z].*[\.!?])[\"\']{0,1}\s*?[-~]\s*(?P<author>.*)$`.
+
 ## Prerequisites
 
 - Python 3.6
