@@ -2,7 +2,7 @@
 
 # TwitterQuoteScraper
 
-_One day I was inspired to build a random quote generator that also offers free to use API, something like [forismatic.com](https://forismatic.com/en/). I need some data, and I assume Twitter can help me with this!_
+_One day I was inspired to build a random quote generator that also provides a free to use API, something like [forismatic.com](https://forismatic.com/en/). I need some data, and I assume Twitter can help me with this!_
 
 TwitterQuoteScraper is a command line tool with a purpose to help in scraping quotations from the desired Twitter accounts.
 
