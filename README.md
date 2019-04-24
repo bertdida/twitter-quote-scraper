@@ -70,7 +70,7 @@ This [spreadsheet](https://docs.google.com/spreadsheets/d/1U41EhnxXkWSJhmSqkPLpd
 - [tweepy](https://github.com/tweepy/tweepy)
 - [gspread](https://github.com/burnash/gspread)
 - [oauth2client](https://github.com/googleapis/oauth2client)
-- [emoji](https://github.com/carpedm20/emoji/) - used to check and ignore tweets that have an emoji
+- [emoji](https://github.com/carpedm20/emoji/) - used to check and ignore tweets that have emoji
 - [unidecode](https://github.com/avian2/unidecode) - used to convert tweets' unicode special characters to ASCII
 
 ## Contribute
