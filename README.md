@@ -17,7 +17,7 @@ TwitterQuoteScraper is a command line tool with a purpose to help in scraping qu
 - Python 3.6
 - [Pipenv](https://github.com/pypa/pipenv)
 - [Twitter API Keys and Tokens](https://developer.twitter.com/en/docs/basics/authentication/guides/access-tokens.html)
-- [Google service account](https://developers.google.com/sheets/api/guides/authorizing) (only if you want to use Google spreadsheet)
+- [Google service account](https://developers.google.com/sheets/api/guides/authorizing) (only if Google spreadsheet is to use)
 
 ## Installation
 
