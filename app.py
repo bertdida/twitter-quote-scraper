@@ -43,8 +43,8 @@ def main():
 
     parser_google_sheet.add_argument(
         '--sort',
-        help='A JSON-like string that specifies the sorting of spreadsheet\'s '
-             'values',
+        help='A JSON-like string that specifies the sorting of '
+             'spreadsheet\'s values',
         default='{"order": null, "column": 0}',
         type=json.loads)
 
