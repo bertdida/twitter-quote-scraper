@@ -22,7 +22,8 @@ def main():
 
     parser_google_sheet = subparsers.add_parser(
         'google_sheet',
-        help='Saves quotations to Google spreadsheet')
+        help='Saves quotations to Google spreadsheet',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser_local_file = subparsers.add_parser(
         'local_file',
