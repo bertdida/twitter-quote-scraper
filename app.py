@@ -41,6 +41,13 @@ def main():
         required=True,
         type=str)
 
+    parser_google_sheet.add_argument(
+        '--sort',
+        help='A dictionary that specifies the sorting of spreadsheet\'s '
+             'values',
+        default='{"order": null, "column": 0}',
+        type=json.loads)
+
     parser_local_file.add_argument(
         '--twitter-handles',
         help='List of Twitter handles to scrape',
@@ -82,6 +89,14 @@ def to_lowercase_alphanum(text):
 
 def use_google_sheet(args):
 
+    sort_map = {
+        'asc': 'ASCENDING',
+        'des': 'DESCENDING'
+    }
+
+    sort_column = args.sort.get('column', 0)
+    sort_order = sort_map.get(args.sort.get('order'))
+
     google_sheet = google.Sheet(args.service_account.name, args.spreadsheet_id)
     scraper = twitter.QuoteScraper(json.load(args.twitter_creds))
 
@@ -110,9 +125,11 @@ def use_google_sheet(args):
 
             google_sheet.update(saved_id_range, [[latest_id]])
             google_sheet.append(worksheet_name, quotes_unique)
-            google_sheet.sort(order='ASCENDING',
-                              worksheet_name=worksheet_name,
-                              column=1)
+
+            if sort_order:
+                google_sheet.sort(worksheet_name=worksheet_name,
+                                  column=sort_column,
+                                  order=sort_order)
 
 
 def use_local_file(args):
