@@ -50,7 +50,6 @@ class Sheet:
             worksheet_name: The worksheet's name.
             column: The column where the sort should be applied to.
             order: The order of values on sort, supported orderings are:
-                - SORT_ORDER_UNSPECIFIED
                 - ASCENDING
                 - DESCENDING
         """
