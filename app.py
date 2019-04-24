@@ -12,8 +12,9 @@ def main():
 
     parser.add_argument(
         '--twitter-creds',
-        help='Path to JSON file that holds your Twitter App\'s consumer_key, '
-             'consumer_key_secret, access_token and access_token_secret',
+        help='Path to JSON file that contains your Twitter app\'s '
+             'consumer_key, consumer_key_secret, access_token and '
+             'access_token_secret',
         required=True,
         type=argparse.FileType('r'))
 
@@ -21,11 +22,11 @@ def main():
 
     parser_google_sheet = subparsers.add_parser(
         'google_sheet',
-        help='Saves parsed quotations into Google spreadsheet')
+        help='Saves quotations to Google spreadsheet')
 
     parser_local_file = subparsers.add_parser(
         'local_file',
-        help='Generates and saves parsed quotations to a file',
+        help='Generates and saves quotations to a file',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser_google_sheet.add_argument(
@@ -91,7 +92,8 @@ def use_google_sheet(args):
         saved_id_range = '{}!D1'.format(worksheet_name)
 
         saved_phrases = google_sheet.get_values(saved_phrases_range)
-        saved_phrases_alphanum = {to_lowercase_alphanum(p) for p in saved_phrases}
+        saved_phrases_alphanum = {
+            to_lowercase_alphanum(p) for p in saved_phrases}
 
         saved_id = (list(google_sheet.get_values(saved_id_range)) + [None])[0]
 
@@ -124,7 +126,8 @@ def use_local_file(args):
         saved_quotes = local_file.read(file_path)
 
         saved_phrases = [q['phrase'] for q in saved_quotes]
-        saved_phrases_alphanum = {to_lowercase_alphanum(p) for p in saved_phrases}
+        saved_phrases_alphanum = {
+            to_lowercase_alphanum(p) for p in saved_phrases}
 
         saved_id = None
         if saved_quotes:
