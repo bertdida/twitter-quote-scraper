@@ -2,6 +2,9 @@
 
 # TwitterQuoteScraper
 [![Maintainability](https://api.codeclimate.com/v1/badges/91583eca09bd1e2f163b/maintainability)](https://codeclimate.com/github/bertdida/TwitterQuoteScraper/maintainability)
+[![License: MIT](https://img.shields.io/github/license/bertdida/TwitterQuoteScraper.svg)](https://github.com/bertdida/TwitterQuoteScraper/blob/master/LICENSE)
+
+
 
 _One day I was inspired to build a random quote generator that also provides a free to use API, something like [forismatic.com](https://forismatic.com/en/). I need some data, and I assume Twitter can help me with this!_
 
