@@ -31,14 +31,17 @@ class Sheet:
 
     def append(self, range_, request_body):
 
-        self.spreadsheet.values_append(
-            range_,
-            params={'valueInputOption': INPUT_OPTION},
-            body={'values': request_body})
+        self._call_func(self.spreadsheet.values_append, range_, request_body)
 
     def update(self, range_, request_body):
 
-        self.spreadsheet.values_update(
+        self._call_func(self.spreadsheet.values_update, range_, request_body)
+
+    def _call_func(self, spreadsheet_func, *args):
+
+        range_, request_body = args
+
+        spreadsheet_func(
             range_,
             params={'valueInputOption': INPUT_OPTION},
             body={'values': request_body})
