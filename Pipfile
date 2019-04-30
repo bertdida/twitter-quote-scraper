@@ -11,6 +11,7 @@ gspread = "*"
 oauth2client = "*"
 emoji = "*"
 unidecode = "*"
+pymysql = "*"
 
 [requires]
 python_version = "3.6"
