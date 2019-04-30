@@ -1,6 +1,5 @@
 import re
 import os
-import csv
 import json
 import argparse
 from libs import google, twitter, localfile
