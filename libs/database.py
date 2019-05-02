@@ -53,6 +53,7 @@ class MySQL:
                            'ORDER BY `id` DESC'.format(table_name))
 
             result = cursor.fetchall()
+
         return result
 
     def save_quotes(self, table_name, quotes: list):
