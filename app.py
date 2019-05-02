@@ -29,7 +29,7 @@ def main():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser_database = subparsers.add_parser(
-        'mysql_db',
+        'database',
         help='Saves quotations to MySQL database',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
