@@ -17,20 +17,49 @@ def main():
         type=argparse.FileType('r'))
 
     subparsers = parser.add_subparsers(title='command', dest='subparser')
+    common_parser = argparse.ArgumentParser(add_help=False)
 
-    parser_google_sheet = subparsers.add_parser(
-        'google_sheet',
-        help='Saves quotations to Google spreadsheet',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    common_parser.add_argument(
+        '--twitter-handles',
+        help='List of Twitter handles to scrape',
+        required=True,
+        nargs='+',
+        type=str)
 
     parser_local_file = subparsers.add_parser(
         'local_file',
         help='Generates and saves quotations to a file',
+        parents=[common_parser],
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser_database = subparsers.add_parser(
         'database',
         help='Saves quotations to MySQL database',
+        parents=[common_parser],
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+    parser_local_file.add_argument(
+        '--output-folder',
+        help='The folder where the files will be generated',
+        type=str,
+        default=os.getcwd())
+
+    parser_local_file.add_argument(
+        '--file-type',
+        help='The generated file\'s type',
+        type=str,
+        default='csv',
+        choices=localfile.LocalFile.supported_file_types)
+
+    parser_database.add_argument(
+        '--database-configs',
+        help='Path to database configurations\' JSON file',
+        required=True,
+        type=argparse.FileType('r'))
+
+    parser_google_sheet = subparsers.add_parser(
+        'google_sheet',
+        help='Saves quotations to Google spreadsheet',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser_google_sheet.add_argument(
@@ -52,35 +81,9 @@ def main():
         default='{"order": null, "column": 0}',
         type=json.loads)
 
-    parser_local_file.add_argument(
-        '--twitter-handles',
-        help='List of Twitter handles to scrape',
-        required=True,
-        nargs='+',
-        type=str)
-
-    parser_local_file.add_argument(
-        '--output-folder',
-        help='The folder where the files will be generated',
-        type=str,
-        default=os.getcwd())
-
-    parser_local_file.add_argument(
-        '--file-type',
-        help='The generated file\'s type',
-        type=str,
-        default='csv',
-        choices=localfile.LocalFile.supported_file_types)
-
-    parser_database.add_argument(
-        '--database-configs',
-        help='Path to database configurations\' JSON file',
-        required=True,
-        type=argparse.FileType('r'))
-
-    parser_google_sheet.set_defaults(func=use_google_sheet)
     parser_local_file.set_defaults(func=use_local_file)
     parser_database.set_defaults(func=use_database)
+    parser_google_sheet.set_defaults(func=use_google_sheet)
 
     args = parser.parse_args()
 
