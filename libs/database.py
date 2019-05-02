@@ -10,7 +10,7 @@ class MySQL:
             host=configs['host'],
             user=configs['user'],
             password=configs['password'],
-            charset=configs['charset'],
+            charset='utf8mb4',
             autocommit=True,
             cursorclass=pymysql.cursors.DictCursor)
 
