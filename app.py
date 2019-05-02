@@ -2,7 +2,7 @@ import re
 import os
 import json
 import argparse
-from libs import google, twitter, localfile
+from libs import google, twitter, localfile, database
 
 
 def main():
@@ -26,6 +26,11 @@ def main():
     parser_local_file = subparsers.add_parser(
         'local_file',
         help='Generates and saves quotations to a file',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+    parser_database = subparsers.add_parser(
+        'mysql_db',
+        help='Saves quotations to MySQL database',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser_google_sheet.add_argument(
@@ -66,6 +71,12 @@ def main():
         type=str,
         default='csv',
         choices=localfile.LocalFile.supported_file_types)
+
+    parser_database.add_argument(
+        '--database-configs',
+        help='Path to database configurations\' JSON file',
+        required=True,
+        type=argparse.FileType('r'))
 
     parser_google_sheet.set_defaults(func=use_google_sheet)
     parser_local_file.set_defaults(func=use_local_file)
@@ -163,6 +174,35 @@ def use_local_file(args):
             saved_quotes.insert(0, quote)
 
         local_file.write(file_path, saved_quotes)
+
+
+def use_database(args):
+
+    scraper = twitter.QuoteScraper(json.load(args.twitter_creds))
+
+    with database.MySQL(args.database_configs) as db_con:
+
+        for handle in args.twitter_handles:
+            handle = handle.lstrip('@')
+            db_con.create_table(handle)
+
+            saved_quotes = db_con.fetch_quotes(handle)
+            saved_phrases_alphanum = {
+                to_lowercase_alphanum(q[1]) for q in saved_quotes}
+
+            saved_id = None
+            if saved_quotes:
+                *_, saved_id = saved_quotes[0][2].split('/')
+
+            quotes_unique = []
+            for quote in scraper.get_quotes(handle, saved_id):
+                phrase_alphanum = to_lowercase_alphanum(quote.phrase)
+
+                if phrase_alphanum not in saved_phrases_alphanum:
+                    quotes_unique.insert(0, quote)
+                    saved_phrases_alphanum.add(phrase_alphanum)
+
+            db_con.save_quotes(handle, quotes_unique)
 
 
 if __name__ == '__main__':
