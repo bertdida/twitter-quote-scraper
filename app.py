@@ -155,10 +155,8 @@ def use_local_file(args):
         file_path = local_file.get_filepath(handle.lstrip('@'))
 
         saved_quotes = local_file.read(file_path)
-
-        saved_phrases = [q['phrase'] for q in saved_quotes]
         saved_phrases_alphanum = {
-            to_lowercase_alphanum(p) for p in saved_phrases}
+            to_lowercase_alphanum(q['phrase']) for q in saved_quotes}
 
         saved_id = None
         if saved_quotes:
