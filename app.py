@@ -192,11 +192,11 @@ def use_database(args):
 
             saved_quotes = db_con.fetch_quotes(handle)
             saved_phrases_alphanum = {
-                to_lowercase_alphanum(q[1]) for q in saved_quotes}
+                to_lowercase_alphanum(q['phrase']) for q in saved_quotes}
 
             saved_id = None
             if saved_quotes:
-                *_, saved_id = saved_quotes[0][2].split('/')
+                *_, saved_id = saved_quotes[0]['url'].split('/')
 
             quotes_unique = []
             for quote in scraper.get_quotes(handle, saved_id):

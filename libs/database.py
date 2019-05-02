@@ -1,5 +1,6 @@
-import pymysql
 import warnings
+import pymysql
+import pymysql.cursors
 
 warnings.filterwarnings('ignore', category=pymysql.Warning)
 
@@ -13,7 +14,8 @@ class MySQL:
             user=configs['user'],
             password=configs['password'],
             charset=configs['charset'],
-            autocommit=True)
+            autocommit=True,
+            cursorclass=pymysql.cursors.DictCursor)
 
         self.database_name = configs['database']
 
