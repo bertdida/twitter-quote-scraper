@@ -183,8 +183,9 @@ def use_local_file(args):
 def use_database(args):
 
     scraper = twitter.QuoteScraper(json.load(args.twitter_creds))
+    db_creds = json.load(args.database_configs)
 
-    with database.MySQL(args.database_configs) as db_con:
+    with database.MySQL(db_creds) as db_con:
         for handle in args.twitter_handles:
             handle = handle.lstrip('@')
             db_con.create_table(handle)
