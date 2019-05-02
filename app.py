@@ -81,8 +81,8 @@ def main():
         default='{"order": null, "column": 0}',
         type=json.loads)
 
-    parser_local_file.set_defaults(func=use_local_file)
     parser_database.set_defaults(func=use_database)
+    parser_local_file.set_defaults(func=use_local_file)
     parser_google_sheet.set_defaults(func=use_google_sheet)
 
     args = parser.parse_args()
