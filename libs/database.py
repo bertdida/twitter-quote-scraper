@@ -1,8 +1,5 @@
-import warnings
 import pymysql
 import pymysql.cursors
-
-warnings.filterwarnings('ignore', category=pymysql.Warning)
 
 
 class MySQL:
