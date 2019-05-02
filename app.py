@@ -2,7 +2,7 @@ import re
 import os
 import json
 import argparse
-from libs import google, twitter, localfile
+from libs import google, twitter, localfile, database
 
 
 def main():
@@ -17,15 +17,49 @@ def main():
         type=argparse.FileType('r'))
 
     subparsers = parser.add_subparsers(title='command', dest='subparser')
+    common_parser = argparse.ArgumentParser(add_help=False)
 
-    parser_google_sheet = subparsers.add_parser(
-        'google_sheet',
-        help='Saves quotations to Google spreadsheet',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    common_parser.add_argument(
+        '--twitter-handles',
+        help='List of Twitter handles to scrape',
+        required=True,
+        nargs='+',
+        type=str)
 
     parser_local_file = subparsers.add_parser(
         'local_file',
         help='Generates and saves quotations to a file',
+        parents=[common_parser],
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+    parser_database = subparsers.add_parser(
+        'database',
+        help='Saves quotations to MySQL database',
+        parents=[common_parser],
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+    parser_local_file.add_argument(
+        '--output-folder',
+        help='The folder where the files will be generated',
+        type=str,
+        default=os.getcwd())
+
+    parser_local_file.add_argument(
+        '--file-type',
+        help='The generated file\'s type',
+        type=str,
+        default='csv',
+        choices=localfile.LocalFile.supported_file_types)
+
+    parser_database.add_argument(
+        '--database-configs',
+        help='Path to database configurations\' JSON file',
+        required=True,
+        type=argparse.FileType('r'))
+
+    parser_google_sheet = subparsers.add_parser(
+        'google_sheet',
+        help='Saves quotations to Google spreadsheet',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser_google_sheet.add_argument(
@@ -47,28 +81,9 @@ def main():
         default='{"order": null, "column": 0}',
         type=json.loads)
 
-    parser_local_file.add_argument(
-        '--twitter-handles',
-        help='List of Twitter handles to scrape',
-        required=True,
-        nargs='+',
-        type=str)
-
-    parser_local_file.add_argument(
-        '--output-folder',
-        help='The folder where the files will be generated',
-        type=str,
-        default=os.getcwd())
-
-    parser_local_file.add_argument(
-        '--file-type',
-        help='The generated file\'s type',
-        type=str,
-        default='csv',
-        choices=localfile.LocalFile.supported_file_types)
-
-    parser_google_sheet.set_defaults(func=use_google_sheet)
     parser_local_file.set_defaults(func=use_local_file)
+    parser_database.set_defaults(func=use_database)
+    parser_google_sheet.set_defaults(func=use_google_sheet)
 
     args = parser.parse_args()
 
@@ -163,6 +178,35 @@ def use_local_file(args):
             saved_quotes.insert(0, quote)
 
         local_file.write(file_path, saved_quotes)
+
+
+def use_database(args):
+
+    scraper = twitter.QuoteScraper(json.load(args.twitter_creds))
+    db_creds = json.load(args.database_configs)
+
+    with database.MySQL(db_creds) as db_con:
+        for handle in args.twitter_handles:
+            handle = handle.lstrip('@')
+            db_con.create_table(handle)
+
+            saved_quotes = db_con.fetch_quotes(handle)
+            saved_phrases_alphanum = {
+                to_lowercase_alphanum(q['phrase']) for q in saved_quotes}
+
+            saved_id = None
+            if saved_quotes:
+                *_, saved_id = saved_quotes[0]['url'].split('/')
+
+            quotes_unique = []
+            for quote in scraper.get_quotes(handle, saved_id):
+                phrase_alphanum = to_lowercase_alphanum(quote.phrase)
+
+                if phrase_alphanum not in saved_phrases_alphanum:
+                    quotes_unique.insert(0, quote)
+                    saved_phrases_alphanum.add(phrase_alphanum)
+
+            db_con.save_quotes(handle, quotes_unique)
 
 
 if __name__ == '__main__':
