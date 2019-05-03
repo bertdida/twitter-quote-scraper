@@ -43,3 +43,9 @@ commands: `local_file`
 **--database-configs** Path to database configurations' JSON file, see `creds/database.json` for keys.
 
 commands: `database`
+
+<br>
+
+**--service-account** Path to your Google service account's JSON file. Follow the [Acquiring and using an API key](https://developers.google.com/sheets/api/guides/authorizing) tutorial if you don't have yet.
+
+commands: `google_sheet`
