@@ -25,3 +25,9 @@ usage: `python app.py --twitter-creds google_sheet --service-account --spreadshe
 **--twitter-handles** List of Twitter handles (may or may not start with @ character) to scrape.
 
 commands: `local_file`, `database`
+
+<br>
+
+**--output-folder** The folder where the files will be generated; by default, its value is set to the current working directory.
+
+commands: `local_file`
