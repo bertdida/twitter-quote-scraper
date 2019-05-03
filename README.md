@@ -31,6 +31,11 @@ TwitterQuoteScraper is a command line tool with a purpose to help in scraping qu
 
 ## Usage
 
+Make sure you activate the virtual environment first:
+```shell
+pipenv shell
+```
+
 To learn more about the command's usage and syntax, like which options are available and the command's structure run the following:
 
 - `python app.py -h`
