@@ -15,3 +15,7 @@ usage: `python app.py --twitter-creds database --twitter-handles --database-conf
 **google_sheet** Save quotations to Google spreadsheet.
 
 usage: `python app.py --twitter-creds google_sheet --service-account --spreadsheet-id [--sort]`
+
+## Arguments
+
+**--twitter-creds** Think of this as the login form to access Twitter's API. Its value is the path to JSON file that holds your Twitter app's credentials, see `creds/twitter.json` for the expected keys.
