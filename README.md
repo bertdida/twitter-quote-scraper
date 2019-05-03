@@ -1,97 +1,26 @@
-<p align="center"><img src="logo/logotype-horizontal.png"></p>
-
-# TwitterQuoteScraper
-[![Maintainability](https://api.codeclimate.com/v1/badges/91583eca09bd1e2f163b/maintainability)](https://codeclimate.com/github/bertdida/TwitterQuoteScraper/maintainability)
-[![codebeat badge](https://codebeat.co/badges/24297975-d0d0-4185-8b41-ad84e53f241b)](https://codebeat.co/projects/github-com-bertdida-twitterquotescraper-master)
-[![License: MIT](https://img.shields.io/github/license/bertdida/TwitterQuoteScraper.svg)](https://github.com/bertdida/TwitterQuoteScraper/blob/master/LICENSE)
-
-
-
-_One day I was inspired to build a random quote generator that also provides a free to use API, something like [forismatic.com](https://forismatic.com/en/). I need some data, and I assume Twitter can help me with this!_
-
-TwitterQuoteScraper is a command line tool with a purpose to help in scraping quotations from the desired Twitter accounts.
-
-## Behaviors
-
-- Tweets that are a retweet, reply, has URL or media (image or video) and any emoji are disregarded.
-- This project highly depends on a regular expression. A tweet should match the pattern to be considered as a quotation: `^[\"\']{0,1}(?P<phrase>[A-Z].*[\.!?])[\"\']{0,1}\s*?[-~]\s*(?P<author>.*)$`.
-- When using a Google spreadsheet, values will be sorted by phrase column alphabetically.
-
-## Prerequisites
-
-- Python 3.6
-- [Pipenv](https://github.com/pypa/pipenv)
-- [Twitter API Keys and Tokens](https://developer.twitter.com/en/docs/basics/authentication/guides/access-tokens.html)
-- [Google service account](https://developers.google.com/sheets/api/guides/authorizing) (only if you want to use Google spreadsheet)
-
-## Installation
-
-1. Download and extract the [zip file](https://github.com/bertdida/TwitterQuoteScraper/archive/master.zip) or use Git to clone this repository.
-2. Inside the directory open a terminal and run `pipenv install`.
-
 ## Usage
-
-Important, make sure you activate the virtual environment first. This can be done by using the `pipenv shell` command.
-
-To learn more about the command's usage and syntax, like which options are available and the command's structure run the following:
-
-- `python app.py -h`
-- `python app.py --twitter-creds creds/twitter.json local_file -h`
-- `python app.py --twitter-creds creds/twitter.json google_sheet -h`
-- `python app.py --twitter-creds creds/twitter.json database -h`
-
-### Saving to a local file
-
-Usage example:
-
 ```shell
-# Single account
-python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes
-
-# Multiple accounts
-python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes @CodeWisdom
-
-# Specify the folder where the files will be generated
-python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes --output-folder quotes
-
-# Override the default file type
-python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes --file-type json
+python app.py --twitter-creds [command] [<arguments>]
 ```
 
-### Saving to Google spreadsheet
+#### `--twitter-creds`
+Think of this as a log in form for Twitter's API. It is the path to JSON file that contains the Twitter app's credentials, see `creds/twitter.json` for the expected keys.
 
-Before you run the command, set up a Google spreadsheet first.
+### Commands
 
-1. Log in to Google and make a copy of the [template spreadsheet](https://docs.google.com/spreadsheets/d/1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk/edit?usp=sharing).
-2. Share the spreadsheet with the `client_email` you can find inside your Google service account's JSON file.
-
-Usage example:
+#### `local_file`
+Generates and saves quotations to a file.
 
 ```shell
-python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk
-
-# Sort the second column alphabetically
-python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk --sort '{"order": "asc", "column": 1}'
+python app.py --twitter-creds local_file [<arguments>]
 ```
 
-This [spreadsheet](https://docs.google.com/spreadsheets/d/1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4/edit?usp=sharing)'s command was set up to run daily via CRON job.
+### Arguments
+#### `--twitter-handles`
+List of Twitter handles to scrape. The values may or may not start with the @ character.
 
-## Dependencies
+#### `--output-folder`
+The folder where the files will be generated, the current working directory is its default value.
 
-- [tweepy](https://github.com/tweepy/tweepy)
-- [gspread](https://github.com/burnash/gspread)
-- [oauth2client](https://github.com/googleapis/oauth2client)
-- [emoji](https://github.com/carpedm20/emoji/)
-- [unidecode](https://github.com/avian2/unidecode)
-
-## License
-
-Distributed under the MIT license. See [LICENSE](https://github.com/bertdida/TwitterQuoteScraper/blob/master/LICENSE) for more information.
-
-## Author
-
-Herbert Verdida / [@bertdida](https://twitter.com/bertdida)
-
-## Thanks
-
-Thanks to [@Tobaloidee](https://github.com/Tobaloidee) for making this project's logo.
+#### `--file-type`
+The generated file's type, either `CSV` or `JSON` format.
