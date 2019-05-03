@@ -60,7 +60,7 @@ commands: `google_sheet`
 
 **--sort** A JSON-like string that specifies how to sort the spreadsheet's values; the default value is set to (without comments):
 
-```json
+```javascript
 {
     // The sort order, supported values are:
     // - null: default, do not sort
