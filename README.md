@@ -37,3 +37,9 @@ commands: `local_file`
 **--file-type** The file's format to be generated, choose either `CSV` which is the default or `JSON`.
 
 commands: `local_file`
+
+<br>
+
+**--database-configs** Path to database configurations' JSON file, see `creds/database.json` for keys.
+
+commands: `database`
