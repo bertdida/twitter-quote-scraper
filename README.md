@@ -62,14 +62,13 @@ commands: `google_sheet`
 
 ```javascript
 {
-    // The sort order, supported values are:
-    // - null: default, do not sort
-    // - "asc": sort by ascending
-    // - "desc": sort by descending
+    // Specifies the sort order, supported values are:
+    // - null
+    // - "asc"
+    // - "desc"
     "order": null,
 
-    // The column's number where the sort
-    // should be applied to.
+    // The column's number where the sort should be applied to.
     "column": 0
 }
 ```
