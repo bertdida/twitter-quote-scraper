@@ -58,6 +58,20 @@ commands: `google_sheet`
 
 <br>
 
-**--sort** A JSON-like string that specifies how to sort the spreadsheet's values. The default value is set to `{"order": null, "column": 0}`; where order can be a `null` (no sort), `asc` (ascending) or `desc` (descending) and column is the column number where the sort should be applied to.
+**--sort** A JSON-like string that specifies how to sort the spreadsheet's values; the default value is set to (without comments):
+
+```json
+{
+    // The sort order, supported values are:
+    // - null: default, do not sort
+    // - "asc": sort by ascending
+    // - "desc": sort by descending
+    "order": null,
+
+    // The column's number where the sort
+    // should be applied to.
+    "column": 0
+}
+```
 
 commands: `google_sheet`
