@@ -19,5 +19,5 @@ Command to save quotations to Google spreadsheet.
 
 ---
 
-### `--twitter-handles`
+#### `--twitter-handles`
 An argument for `local_file` and `database` command. List of Twitter handles (may or may not start with @ character) to scrape.
