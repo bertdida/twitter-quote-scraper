@@ -18,4 +18,4 @@ usage: `python app.py --twitter-creds google_sheet --service-account --spreadshe
 
 ## Arguments
 
-**--twitter-creds** Think of this as the login form to access Twitter's API. Its value is the path to JSON file that holds your Twitter app's credentials, see `creds/twitter.json` for the expected keys.
+**--twitter-creds** Think of this as a login form to access the Twitter's API. Its value is the path to JSON file that holds your Twitter app's credentials, see `creds/twitter.json` for the expected keys.
