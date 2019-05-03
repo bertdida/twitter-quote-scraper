@@ -31,3 +31,7 @@ commands: `local_file`, `database`
 **--output-folder** The folder where the files will be generated; by default, its value is set to the current working directory.
 
 commands: `local_file`
+
+<br>
+
+**--file-type** The file's format to be generated, choose either `CSV` which is the default or `JSON`.
