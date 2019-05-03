@@ -49,3 +49,9 @@ commands: `database`
 **--service-account** Path to your Google service account's JSON file. Follow the [Acquiring and using an API key](https://developers.google.com/sheets/api/guides/authorizing) tutorial if you don't have yet.
 
 commands: `google_sheet`
+
+<br>
+
+**--spreadsheet-id** The spreadsheet's ID.
+
+commands: `google_sheet`
