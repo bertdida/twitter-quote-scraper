@@ -62,7 +62,7 @@ commands: `google_sheet`
 
 ```javascript
 {
-    "order": null,  // supports the following values: null, "asc" and "desc"
+    "order": null,  // expects the following values: null, "asc" or "desc"
     "column": 0     // column's number where the sort should be applied to 
 }
 ```
