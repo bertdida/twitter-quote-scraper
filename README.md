@@ -63,9 +63,9 @@ commands: `google_sheet`
 ```javascript
 {
     // Specifies the sort order, supported values are:
-    // - null
-    // - "asc"
-    // - "desc"
+    // - null   - default, do not sort
+    // - "asc"  - sort by ascending
+    // - "desc" - sort by descending
     "order": null,
 
     // The column's number where the sort should be applied to.
