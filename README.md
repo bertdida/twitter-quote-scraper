@@ -35,3 +35,5 @@ commands: `local_file`
 <br>
 
 **--file-type** The file's format to be generated, choose either `CSV` which is the default or `JSON`.
+
+commands: `local_file`
