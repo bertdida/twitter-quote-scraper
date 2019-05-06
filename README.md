@@ -30,6 +30,19 @@ python app.py --twitter-creds creds/twitter.json database --twitter-handles @pro
 python -W ignore app.py --twitter-creds creds/twitter.json database --twitter-handles @prog_quotes --database-configs c reds/database.json
 ```
 
+### Saving to Google spreadsheet
+
+Before you run the command, follow the steps below to set up a Google spreadsheet.
+- Log in to Google and make a copy of the spreadsheet's template.
+- Share the spreadsheet with the `client_email` you can find inside your Google service account's JSON file.
+
+```shell
+python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk
+
+# Sort the second column alphabetically
+python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk --sort '{"order": "asc", "column": 1}'
+```
+
 ## Commands
 
 **local_file**  Generate and save quotations to a file.
