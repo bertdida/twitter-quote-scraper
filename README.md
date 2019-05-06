@@ -4,6 +4,8 @@
 [![codebeat badge](https://codebeat.co/badges/24297975-d0d0-4185-8b41-ad84e53f241b)](https://codebeat.co/projects/github-com-bertdida-twitterquotescraper-master)
 [![License: MIT](https://img.shields.io/github/license/bertdida/TwitterQuoteScraper.svg)](https://github.com/bertdida/TwitterQuoteScraper/blob/master/LICENSE)
 
+_One day I was inspired to build a random quote generator that also provides a free to use API, something like forismatic.com. I need some data, and I assume Twitter can help me with this!_
+
 TwitterQuoteScraper is a command line tool with a purpose to help in scraping quotations from the desired Twitter accounts.
 
 **Note:** For the tweet to be considered as a quotation the following conditions must be satisfied:
