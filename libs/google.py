@@ -7,7 +7,7 @@ SCOPES = ['https://spreadsheets.google.com/feeds']
 
 class Sheet:
 
-    def __init__(self, service_account_file, spreadsheet_id):
+    def __init__(self, service_account_file: str, spreadsheet_id):
 
         creds = ServiceAccountCredentials\
             .from_json_keyfile_name(service_account_file, SCOPES)
