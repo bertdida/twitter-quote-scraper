@@ -132,3 +132,7 @@ Distributed under the MIT license. See [LICENSE](https://github.com/bertdida/Twi
 ## Author
 
 Herbert Verdida / [@bertdida](https://twitter.com/bertdida)
+
+## Credits
+
+Thanks to [@Tobaloidee](https://github.com/Tobaloidee) for making this project's logo.
