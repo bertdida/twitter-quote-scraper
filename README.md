@@ -125,7 +125,7 @@ commands: `database`
 
 <br>
 
-**--service-account** Path to your Google service account's JSON file. If you have not yet created, [this](https://www.fillup.io/post/read-and-write-google-sheets-from-php/) blog outlines how to get one.
+**--service-account** Path to your Google service account's JSON file.
 
 commands: `google_sheet`
 
