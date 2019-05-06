@@ -70,7 +70,7 @@ python app.py --twitter-creds creds/twitter.json database --twitter-handles @pro
 python app.py --twitter-creds creds/twitter.json database --twitter-handles @prog_quotes @CodeWisdom --database-configs creds/database.json
 
 # Ignore warnings
-python -W ignore app.py --twitter-creds creds/twitter.json database --twitter-handles @prog_quotes --database-configs c reds/database.json
+python -W ignore app.py --twitter-creds creds/twitter.json database --twitter-handles @prog_quotes --database-configs creds/database.json
 ```
 
 ### Saving to Google spreadsheet
