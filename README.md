@@ -18,7 +18,7 @@ usage: `python app.py --twitter-creds google_sheet --service-account --spreadshe
 
 ## Arguments
 
-**--twitter-creds** Path to JSON file that contains your Twitter app's credentials, see `creds/twitter.json` for the expected keys. This argument should take place before every command, think of this as the login form to access the Twitter's API.
+**--twitter-creds** Path to JSON file that contains your Twitter app's credentials, see `creds/twitter.json` for the expected keys. This argument should take place before every command, think of this as a login form to access Twitter's API.
 
 <br>
 
