@@ -60,7 +60,7 @@ python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @p
 
 ### Saving to MySQL database
 
-The Database and each Twitter handle's table will be generated if doesn't exist.
+The Database and each Twitter handle's table will be generated if it doesn't exist.
 
 ```shell
 # Single account
