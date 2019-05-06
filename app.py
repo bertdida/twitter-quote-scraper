@@ -76,7 +76,7 @@ def main():
 
     parser_google_sheet.add_argument(
         '--sort',
-        help='A JSON-like string that specifies the sorting of '
+        help='A JSON-formatted string that specifies how to sort the '
              'spreadsheet\'s values',
         default='{"order": null, "column": 0}',
         type=json.loads)
