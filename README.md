@@ -43,7 +43,9 @@ python app.py --twitter-creds creds/twitter.json google_sheet --service-account 
 python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk --sort '{"order": "asc", "column": 1}'
 ```
 
-## Commands
+## References
+
+### Commands
 
 **local_file**  Generate and save quotations to a file.
 
@@ -61,7 +63,7 @@ usage: `python app.py --twitter-creds database --twitter-handles --database-conf
 
 usage: `python app.py --twitter-creds google_sheet --service-account --spreadsheet-id [--sort]`
 
-## Arguments
+### Arguments
 
 **--twitter-creds** Path to JSON file that contains your Twitter app's credentials, see `creds/twitter.json` for the expected keys. This argument should take place before every command, think of this as a login form to access Twitter's API.
 
