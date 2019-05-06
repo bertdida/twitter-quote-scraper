@@ -9,7 +9,7 @@
 ## Prerequisites
 
 - Python 3.6
-- [Pipenv](https://github.com/pypa/pipenv) installed
+- [Pipenv](https://github.com/pypa/pipenv)
 - [Twitter API Keys and Tokens](https://developer.twitter.com/en/docs/basics/authentication/guides/access-tokens.html)
 - Google service account (required only if the `google_sheet` command is used) - [this](https://www.fillup.io/post/read-and-write-google-sheets-from-php/) blog has simplified outlines on getting one
 
