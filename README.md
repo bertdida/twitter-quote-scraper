@@ -1,3 +1,10 @@
+## Prerequisites
+
+- Python 3.6
+- [Pipenv](https://github.com/pypa/pipenv) installed
+- [Twitter API Keys and Tokens](https://developer.twitter.com/en/docs/basics/authentication/guides/access-tokens.html)
+- Google service account (required only when using google_sheet command) - [this](https://www.fillup.io/post/read-and-write-google-sheets-from-php/) blog outlines how to get one
+
 ## Installation
 
 1. Download and extract the [zip file](https://github.com/bertdida/TwitterQuoteScraper/archive/master.zip) or use Git to clone this repository.
