@@ -22,7 +22,7 @@ usage: `python app.py --twitter-creds google_sheet --service-account --spreadshe
 
 <br>
 
-**--twitter-handles** List of Twitter handles (may or may not start with @ character) to scrape.
+**--twitter-handles** List of Twitter handles to scrape (may or may not start with @ character).
 
 commands: `local_file`, `database`
 
