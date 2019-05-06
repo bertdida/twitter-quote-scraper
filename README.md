@@ -79,7 +79,7 @@ Before you run the command, you must set up your Google spreadsheet first for th
 # Make sure to change --spreadsheet-id's value
 python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk
 
-# Sort the second column alphabetically
+# Alphabetically sort the second column
 python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk --sort '{"order": "asc", "column": 1}'
 ```
 
