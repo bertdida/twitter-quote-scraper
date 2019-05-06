@@ -1,3 +1,5 @@
+<p align="center"><img src="logo/logotype-horizontal.png"></p>
+
 # TwitterQuoteScraper
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/91583eca09bd1e2f163b/maintainability)](https://codeclimate.com/github/bertdida/TwitterQuoteScraper/maintainability)
