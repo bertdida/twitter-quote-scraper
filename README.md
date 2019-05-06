@@ -113,3 +113,13 @@ commands: `google_sheet`
 ```
 
 commands: `google_sheet`
+
+
+## Dependencies
+
+- [tweepy](https://github.com/tweepy/tweepy)
+- [gspread](https://github.com/burnash/gspread)
+- [oauth2client](https://github.com/googleapis/oauth2client)
+- [emoji](https://github.com/carpedm20/emoji/)
+- [unidecode](https://github.com/avian2/unidecode)
+- [pymysql](https://github.com/PyMySQL/PyMySQL)
