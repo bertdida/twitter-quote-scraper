@@ -1,5 +1,5 @@
 ## Usage
-**Important:** Make sure you launch the virtual environment first. This can be done by using the command below:
+**Important:** Make sure to launch the virtual environment first, this can be done by using the command below:
 ```shell
 pipenv shell
 ```
