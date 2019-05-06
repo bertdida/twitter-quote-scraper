@@ -2,8 +2,6 @@
 
 ### Saving to a local file
 
-Usage example:
-
 ```shell
 # Single account
 python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes
@@ -12,7 +10,7 @@ python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @p
 python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes @CodeWisdom
 
 # Specify the folder where the files will be generated
-python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes --output-folder quotes
+python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes --output-folder quotes/
 
 # Override the default file type
 python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes --file-type json
