@@ -82,6 +82,7 @@ Before you run the command, you must set up your Google spreadsheet for the serv
 
 ```shell
 # Make sure to change --spreadsheet-id's value
+
 python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk
 
 # Alphabetically sort the second column
