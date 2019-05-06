@@ -1,3 +1,33 @@
+## Usage
+
+### Saving to a local file
+
+Usage example:
+
+```shell
+# Single account
+python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes
+
+# Multiple accounts
+python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes @CodeWisdom
+
+# Specify the folder where the files will be generated
+python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes --output-folder quotes
+
+# Override the default file type
+python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @prog_quotes --file-type json
+```
+
+### Saving to MySQL database
+
+```shell
+# Database and tables will be generated if doesn't exist
+python app.py --twitter-creds creds/twitter.json database --twitter-handles @prog_quotes --database-configs creds/database.json
+
+# Do not display warnings
+python -W ignore app.py --twitter-creds creds/twitter.json database --twitter-handles @prog_quotes --database-configs c reds/database.json
+```
+
 ## Commands
 
 **local_file**  Generate and save quotations to a file.
