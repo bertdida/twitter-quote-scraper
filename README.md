@@ -33,7 +33,7 @@ python -W ignore app.py --twitter-creds creds/twitter.json database --twitter-ha
 ### Saving to Google spreadsheet
 
 Before you run the command, follow the steps below to set up a Google spreadsheet.
-1. Log in to Google and make a copy of the spreadsheet's template.
+1. Log in to Google and make a copy of the [spreadsheet's template](https://docs.google.com/spreadsheets/d/1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk/edit?usp=sharing).
 2. Share the spreadsheet with the `client_email` you can find inside your Google service account's JSON file.
 
 ```shell
