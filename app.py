@@ -46,7 +46,7 @@ def main():
 
     parser_local_file.add_argument(
         '--file-type',
-        help='The generated file\'s type',
+        help='The file\'s format to be generated',
         type=str,
         default='csv',
         choices=localfile.LocalFile.supported_file_types)
