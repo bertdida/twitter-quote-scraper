@@ -24,7 +24,7 @@
 
 ## Usage
 
-**Important:** Make sure to activate the virtual environment first, doing this will put the virtual environment-specific python and pip executables into your shell’s PATH:
+**Important:** Make sure to activate the virtual environment first, doing this will put the virtual environment-specific python and pip executables into pipenv's shell’s PATH:
 
 ```shell
 pipenv shell
