@@ -127,3 +127,8 @@ commands: `google_sheet`
 ## License
 
 Distributed under the MIT license. See [LICENSE](https://github.com/bertdida/TwitterQuoteScraper/blob/master/LICENSE) for more information.
+
+
+## Author
+
+Herbert Verdida / [@bertdida](https://twitter.com/bertdida)
