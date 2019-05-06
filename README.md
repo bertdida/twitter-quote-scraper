@@ -1,5 +1,7 @@
 ## Usage
+
 **Important:** Make sure to launch the virtual environment first, this can be done by using the command below:
+
 ```shell
 pipenv shell
 ```
@@ -28,6 +30,7 @@ python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @p
 ```
 
 ### Saving to MySQL database
+
 Database and each Twitter handle's table will be generated if doesn't exist.
 
 ```shell
@@ -44,6 +47,7 @@ python -W ignore app.py --twitter-creds creds/twitter.json database --twitter-ha
 ### Saving to Google spreadsheet
 
 Before you run the command, follow the steps below to set up a Google spreadsheet.
+
 1. Log in to Google and make a copy of the [spreadsheet's template](https://docs.google.com/spreadsheets/d/1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk/edit?usp=sharing).
 2. Share the spreadsheet with the `client_email` you can find inside your Google service account's JSON file.
 
@@ -59,7 +63,7 @@ python app.py --twitter-creds creds/twitter.json google_sheet --service-account 
 
 ### Commands
 
-**local_file**  Generate and save quotations to a file.
+**local_file** Generate and save quotations to a file.
 
 usage: `python app.py --twitter-creds local_file --twitter-handles [--output-folder] [--file-type]`
 
@@ -122,12 +126,11 @@ commands: `google_sheet`
 ```javascript
 {
     "order": null,  // expects the following values: null, "asc" or "desc"
-    "column": 0     // column's number where the sort should be applied to 
+    "column": 0     // column's number where the sort should be applied to
 }
 ```
 
 commands: `google_sheet`
-
 
 ## Dependencies
 
@@ -141,7 +144,6 @@ commands: `google_sheet`
 ## License
 
 Distributed under the MIT license. See [LICENSE](https://github.com/bertdida/TwitterQuoteScraper/blob/master/LICENSE) for more information.
-
 
 ## Author
 
