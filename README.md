@@ -37,6 +37,7 @@ Before you run the command, follow the steps below to set up a Google spreadshee
 2. Share the spreadsheet with the `client_email` you can find inside your Google service account's JSON file.
 
 ```shell
+# Make sure to change the --spreadsheet-id's value
 python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk
 
 # Sort the second column alphabetically
