@@ -24,7 +24,7 @@
 
 ## Usage
 
-**Important:** Make sure to launch the virtual environment first, this can be done by using the command below:
+**Important:** Make sure to activate the virtual environment first, doing this will put the virtual environment-specific python and pip executables into your shell’s PATH:
 
 ```shell
 pipenv shell
