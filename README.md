@@ -1,4 +1,4 @@
-<p align="center"><img src="logo/logotype-horizontal.png"></p>
+<h1 align="center"><img alt="logo" src="logo/logotype-horizontal.png"></h1>
 
 # TwitterQuoteScraper
 
