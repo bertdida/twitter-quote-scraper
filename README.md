@@ -19,12 +19,16 @@ python app.py --twitter-creds creds/twitter.json local_file --twitter-handles @p
 ```
 
 ### Saving to MySQL database
+Database and each Twitter handle's table will be generated if doesn't exist.
 
 ```shell
-# Database and tables will be generated if doesn't exist
+# Single account
 python app.py --twitter-creds creds/twitter.json database --twitter-handles @prog_quotes --database-configs creds/database.json
 
-# Do not display warnings
+# Multiple accounts
+python app.py --twitter-creds creds/twitter.json database --twitter-handles @prog_quotes @CodeWisdom --database-configs creds/database.json
+
+# Ignore warnings
 python -W ignore app.py --twitter-creds creds/twitter.json database --twitter-handles @prog_quotes --database-configs c reds/database.json
 ```
 
