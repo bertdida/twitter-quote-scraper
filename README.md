@@ -2,16 +2,16 @@
 
 # TwitterQuoteScraper
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/91583eca09bd1e2f163b/maintainability)](https://codeclimate.com/github/bertdida/TwitterQuoteScraper/maintainability)
+[![codebeat badge](https://codebeat.co/badges/24297975-d0d0-4185-8b41-ad84e53f241b)](https://codebeat.co/projects/github-com-bertdida-twitterquotescraper-master)
+[![License: MIT](https://img.shields.io/github/license/bertdida/TwitterQuoteScraper.svg)](https://github.com/bertdida/TwitterQuoteScraper/blob/master/LICENSE)
+
 TwitterQuoteScraper is a command line tool with a purpose to help in scraping quotations from the desired Twitter accounts.
 
 Important: For the tweet to be considered as a quotation the following conditions must be satisfied:
 - tweet must not be a retweet or a reply
 - must not contain URL or media (image or video) and any emoji
 - must match the regular expression: `^[\"\']{0,1}(?P<phrase>[A-Z].*[\.!?])[\"\']{0,1}\s*?[-~]\s*(?P<author>.*)$`
-
-[![Maintainability](https://api.codeclimate.com/v1/badges/91583eca09bd1e2f163b/maintainability)](https://codeclimate.com/github/bertdida/TwitterQuoteScraper/maintainability)
-[![codebeat badge](https://codebeat.co/badges/24297975-d0d0-4185-8b41-ad84e53f241b)](https://codebeat.co/projects/github-com-bertdida-twitterquotescraper-master)
-[![License: MIT](https://img.shields.io/github/license/bertdida/TwitterQuoteScraper.svg)](https://github.com/bertdida/TwitterQuoteScraper/blob/master/LICENSE)
 
 ## Prerequisites
 
