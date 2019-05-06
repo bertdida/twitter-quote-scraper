@@ -123,3 +123,7 @@ commands: `google_sheet`
 - [emoji](https://github.com/carpedm20/emoji/)
 - [unidecode](https://github.com/avian2/unidecode)
 - [pymysql](https://github.com/PyMySQL/PyMySQL)
+
+## License
+
+Distributed under the MIT license. See [LICENSE](https://github.com/bertdida/TwitterQuoteScraper/blob/master/LICENSE) for more information.
