@@ -46,7 +46,7 @@ commands: `database`
 
 <br>
 
-**--service-account** Path to your Google service account's JSON file. Follow the [Acquiring and using an API key](https://developers.google.com/sheets/api/guides/authorizing) tutorial if you don't have yet.
+**--service-account** Path to your Google service account's JSON file. If you have not yet created, [this](https://www.fillup.io/post/read-and-write-google-sheets-from-php/) blog outlines how to get one.
 
 commands: `google_sheet`
 
