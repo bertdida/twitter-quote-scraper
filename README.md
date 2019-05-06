@@ -6,7 +6,7 @@
 
 TwitterQuoteScraper is a command line tool with a purpose to help in scraping quotations from the desired Twitter accounts.
 
-**Important:** For the tweet to be considered as a quotation the following conditions must be satisfied:
+**Note:** For the tweet to be considered as a quotation the following conditions must be satisfied:
 - tweet must not be a retweet or a reply
 - must not contain URL, media (image or video) or any emoji
 - must match the regular expression: `^[\"\']{0,1}(?P<phrase>[A-Z].*[\.!?])[\"\']{0,1}\s*?[-~]\s*(?P<author>.*)$`
