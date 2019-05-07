@@ -79,16 +79,16 @@ python -W ignore app.py --twitter-creds creds/twitter.json database --twitter-ha
 
 Before you run the command, you must set up your Google spreadsheet for the service account to programmatically insert and edit values.
 
-1. Log in to Google and make a copy of the [spreadsheet's template](https://docs.google.com/spreadsheets/d/1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk/edit?usp=sharing).
+1. Log in to Google and create a Google spreadsheet.
 2. Share the spreadsheet with the `client_email` you'll find inside the Google service account's JSON file.
 
 ```shell
 # Make sure to change --spreadsheet-id's value
 
-python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk
+python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk --twitter-handles @prog_quotes
 
 # Alphabetically sort the second column
-python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk --sort '{"order": "asc", "column": 1}'
+python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk --twitter-handles @prog_quotes --sort '{"order": "asc", "column": 1}'
 ```
 
 ## References
