@@ -30,6 +30,7 @@ class Sheet:
         request_body = {
             'requests': [
                 {
+                    # set font's family and size
                     'repeatCell': {
                         'range': {
                             'sheetId': worksheet_id
@@ -46,6 +47,7 @@ class Sheet:
                     }
                 },
                 {
+                    # freeze first row
                     'updateSheetProperties': {
                         'properties': {
                             'sheetId': worksheet_id,
@@ -57,6 +59,7 @@ class Sheet:
                     }
                 },
                 {
+                    # set Author column's width
                     'updateDimensionProperties': {
                         'range': {
                             'sheetId': worksheet_id,
@@ -70,6 +73,7 @@ class Sheet:
                     }
                 },
                 {
+                    # set Phrase column's width
                     'updateDimensionProperties': {
                         'range': {
                             'sheetId': worksheet_id,
@@ -84,6 +88,7 @@ class Sheet:
                     }
                 },
                 {
+                    # set URL column's width
                     'updateDimensionProperties': {
                         'range': {
                             'sheetId': worksheet_id,
@@ -98,6 +103,7 @@ class Sheet:
                     }
                 },
                 {
+                    # set last scraped id column's width
                     'updateDimensionProperties': {
                         'range': {
                             'sheetId': worksheet_id,
