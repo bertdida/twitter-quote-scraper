@@ -28,86 +28,86 @@ class Sheet:
         headers = ['Author', 'Phrase', 'Url']
 
         request_body = {
-            "requests": [
+            'requests': [
                 {
-                    "repeatCell": {
-                        "range": {
-                            "sheetId": worksheet_id
+                    'repeatCell': {
+                        'range': {
+                            'sheetId': worksheet_id
                         },
-                        "cell": {
-                            "userEnteredFormat": {
-                                "textFormat": {
-                                    "fontFamily": 'Calibri',
-                                    "fontSize": 10
+                        'cell': {
+                            'userEnteredFormat': {
+                                'textFormat': {
+                                    'fontFamily': 'Calibri',
+                                    'fontSize': 10
                                 }
                             }
                         },
-                        "fields": "userEnteredFormat.textFormat"
+                        'fields': 'userEnteredFormat.textFormat'
                     }
                 },
                 {
-                    "updateSheetProperties": {
-                        "properties": {
-                            "sheetId": worksheet_id,
-                            "gridProperties": {
-                                "frozenRowCount": 1
+                    'updateSheetProperties': {
+                        'properties': {
+                            'sheetId': worksheet_id,
+                            'gridProperties': {
+                                'frozenRowCount': 1
                             }
                         },
-                        "fields": "gridProperties.frozenRowCount"
+                        'fields': 'gridProperties.frozenRowCount'
                     }
                 },
                 {
-                    "updateDimensionProperties": {
-                        "range": {
-                            "sheetId": worksheet_id,
-                            "dimension": "COLUMNS",
-                            "endIndex": 1
+                    'updateDimensionProperties': {
+                        'range': {
+                            'sheetId': worksheet_id,
+                            'dimension': 'COLUMNS',
+                            'endIndex': 1
                         },
-                        "properties": {
-                            "pixelSize": 270
+                        'properties': {
+                            'pixelSize': 270
                         },
-                        "fields": "pixelSize"
+                        'fields': 'pixelSize'
                     }
                 },
                 {
-                    "updateDimensionProperties": {
-                        "range": {
-                            "sheetId": worksheet_id,
-                            "dimension": "COLUMNS",
-                            "startIndex": 1,
-                            "endIndex": 2
+                    'updateDimensionProperties': {
+                        'range': {
+                            'sheetId': worksheet_id,
+                            'dimension': 'COLUMNS',
+                            'startIndex': 1,
+                            'endIndex': 2
                         },
-                        "properties": {
-                            "pixelSize": 850
+                        'properties': {
+                            'pixelSize': 850
                         },
-                        "fields": "pixelSize"
+                        'fields': 'pixelSize'
                     }
                 },
                 {
-                    "updateDimensionProperties": {
-                        "range": {
-                            "sheetId": worksheet_id,
-                            "dimension": "COLUMNS",
-                            "startIndex": 2,
-                            "endIndex": 3
+                    'updateDimensionProperties': {
+                        'range': {
+                            'sheetId': worksheet_id,
+                            'dimension': 'COLUMNS',
+                            'startIndex': 2,
+                            'endIndex': 3
                         },
-                        "properties": {
-                            "pixelSize": 370
+                        'properties': {
+                            'pixelSize': 370
                         },
-                        "fields": "pixelSize"
+                        'fields': 'pixelSize'
                     }
                 },
                 {
-                    "updateDimensionProperties": {
-                        "range": {
-                            "sheetId": worksheet_id,
-                            "dimension": "COLUMNS",
-                            "startIndex": 3,
+                    'updateDimensionProperties': {
+                        'range': {
+                            'sheetId': worksheet_id,
+                            'dimension': 'COLUMNS',
+                            'startIndex': 3,
                         },
-                        "properties": {
-                            "pixelSize": 200
+                        'properties': {
+                            'pixelSize': 200
                         },
-                        "fields": "pixelSize"
+                        'fields': 'pixelSize'
                     }
                 }
             ]
