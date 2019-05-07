@@ -156,19 +156,21 @@ class Sheet:
 
         worksheet_id = self.spreadsheet.worksheet(worksheet_name).id
 
-        request_body = [{
-            'sortRange': {
-                'range': {
-                    'sheetId': worksheet_id,
-                    'startRowIndex': 1  # exclude headers
-                },
-                'sortSpecs': [
-                    {
-                        'dimensionIndex': column,
-                        'sortOrder': order
-                    }
-                ]
-            }
-        }]
+        request_body = {
+            'requests': [{
+                'sortRange': {
+                    'range': {
+                        'sheetId': worksheet_id,
+                        'startRowIndex': 1  # exclude headers
+                    },
+                    'sortSpecs': [
+                        {
+                            'dimensionIndex': column,
+                            'sortOrder': order
+                        }
+                    ]
+                }
+            }]
+        }
 
-        self.spreadsheet.batch_update(body={'requests': request_body})
+        self.spreadsheet.batch_update(body=request_body)
