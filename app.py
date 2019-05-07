@@ -145,9 +145,10 @@ def use_google_sheet(args):
             google_sheet.append(handle, quotes_unique)
 
             if sort_order:
-                google_sheet.sort(worksheet_name=handle,
-                                  column=sort_column,
-                                  order=sort_order)
+                google_sheet.sort(
+                    worksheet_name=handle,
+                    column=sort_column,
+                    order=sort_order)
 
 
 def use_local_file(args):
