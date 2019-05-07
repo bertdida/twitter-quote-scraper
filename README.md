@@ -109,7 +109,7 @@ usage: `python app.py --twitter-creds database --twitter-handles --database-conf
 
 **google_sheet** Save quotations to Google spreadsheet.
 
-usage: `python app.py --twitter-creds google_sheet --service-account --spreadsheet-id [--sort]`
+usage: `python app.py --twitter-creds google_sheet --service-account --spreadsheet-id --twitter-handles [--sort]`
 
 ### Arguments
 
