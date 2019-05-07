@@ -77,9 +77,9 @@ python -W ignore app.py --twitter-creds creds/twitter.json database --twitter-ha
 
 ### Saving to Google spreadsheet
 
-Before you run the command, you must set up your Google spreadsheet for the service account to programmatically insert and edit values.
+Before you run the command, you must set up a Google spreadsheet for the service account to programmatically insert and edit values.
 
-1. Log in to Google and create a Google spreadsheet.
+1. Log in to Google and create a spreadsheet.
 2. Share the spreadsheet with the `client_email` you'll find inside the Google service account's JSON file.
 
 ```shell
