@@ -119,7 +119,7 @@ usage: `python app.py --twitter-creds google_sheet --service-account --spreadshe
 
 **--twitter-handles** List of Twitter handles to scrape (may or may not start with @ character).
 
-commands: `local_file`, `database`
+commands: `local_file`, `database`, `google_sheet`
 
 <br>
 
