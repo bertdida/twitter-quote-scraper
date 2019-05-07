@@ -115,10 +115,12 @@ def use_google_sheet(args):
     google_sheet = google.Sheet(args.service_account.name, args.spreadsheet_id)
     scraper = twitter.QuoteScraper(json.load(args.twitter_creds))
 
+    worksheet_names = [w.title for w in google_sheet.worksheets]
+
     for handle in args.twitter_handles:
         handle = handle.lstrip('@')
 
-        if handle not in google_sheet.worksheets:
+        if handle not in worksheet_names:
             google_sheet.create_worksheet(handle)
 
         saved_phrases_range = '{}!B2:B'.format(handle)
