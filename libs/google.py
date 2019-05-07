@@ -21,6 +21,103 @@ class Sheet:
 
         return self.spreadsheet.worksheets()
 
+    def create_worksheet(self, name):
+
+        worksheet = self.spreadsheet.add_worksheet(name, rows=100, cols=4)
+        worksheet_id = worksheet.id
+        headers = ['Author', 'Phrase', 'Url']
+
+        request_body = {
+            "requests": [
+                {
+                    "repeatCell": {
+                        "range": {
+                            "sheetId": worksheet_id
+                        },
+                        "cell": {
+                            "userEnteredFormat": {
+                                "textFormat": {
+                                    "fontFamily": 'Calibri',
+                                    "fontSize": 10
+                                }
+                            }
+                        },
+                        "fields": "userEnteredFormat.textFormat"
+                    }
+                },
+                {
+                    "updateSheetProperties": {
+                        "properties": {
+                            "sheetId": worksheet_id,
+                            "gridProperties": {
+                                "frozenRowCount": 1
+                            }
+                        },
+                        "fields": "gridProperties.frozenRowCount"
+                    }
+                },
+                {
+                    "updateDimensionProperties": {
+                        "range": {
+                            "sheetId": worksheet_id,
+                            "dimension": "COLUMNS",
+                            "endIndex": 1
+                        },
+                        "properties": {
+                            "pixelSize": 270
+                        },
+                        "fields": "pixelSize"
+                    }
+                },
+                {
+                    "updateDimensionProperties": {
+                        "range": {
+                            "sheetId": worksheet_id,
+                            "dimension": "COLUMNS",
+                            "startIndex": 1,
+                            "endIndex": 2
+                        },
+                        "properties": {
+                            "pixelSize": 850
+                        },
+                        "fields": "pixelSize"
+                    }
+                },
+                {
+                    "updateDimensionProperties": {
+                        "range": {
+                            "sheetId": worksheet_id,
+                            "dimension": "COLUMNS",
+                            "startIndex": 2,
+                            "endIndex": 3
+                        },
+                        "properties": {
+                            "pixelSize": 370
+                        },
+                        "fields": "pixelSize"
+                    }
+                },
+                {
+                    "updateDimensionProperties": {
+                        "range": {
+                            "sheetId": worksheet_id,
+                            "dimension": "COLUMNS",
+                            "startIndex": 3,
+                        },
+                        "properties": {
+                            "pixelSize": 200
+                        },
+                        "fields": "pixelSize"
+                    }
+                }
+            ]
+        }
+
+        self.spreadsheet.batch_update(body=request_body)
+        self._call_func(self.spreadsheet.values_append, name, [headers])
+
+        return worksheet
+
     def get_values(self, range_):
 
         values = self.spreadsheet.values_get(range_).get('values')
