@@ -38,6 +38,12 @@ def main():
         parents=[common_parser],
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
+    parser_google_sheet = subparsers.add_parser(
+        'google_sheet',
+        help='Saves quotations to Google spreadsheet',
+        parents=[common_parser],
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
     parser_local_file.add_argument(
         '--output-folder',
         help='The folder where the files will be generated',
@@ -56,11 +62,6 @@ def main():
         help='Path to database configurations\' JSON file',
         required=True,
         type=argparse.FileType('r'))
-
-    parser_google_sheet = subparsers.add_parser(
-        'google_sheet',
-        help='Saves quotations to Google spreadsheet',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser_google_sheet.add_argument(
         '--service-account',
@@ -114,11 +115,14 @@ def use_google_sheet(args):
     google_sheet = google.Sheet(args.service_account.name, args.spreadsheet_id)
     scraper = twitter.QuoteScraper(json.load(args.twitter_creds))
 
-    for worksheet in google_sheet.worksheets:
-        worksheet_name = worksheet.title
+    for handle in args.twitter_handles:
+        handle = handle.lstrip('@')
 
-        saved_phrases_range = '{}!B2:B'.format(worksheet_name)
-        saved_id_range = '{}!D1'.format(worksheet_name)
+        if handle not in google_sheet.worksheets:
+            google_sheet.create_worksheet(handle)
+
+        saved_phrases_range = '{}!B2:B'.format(handle)
+        saved_id_range = '{}!D1'.format(handle)
 
         saved_phrases = google_sheet.get_values(saved_phrases_range)
         saved_phrases_alphanum = {
@@ -127,7 +131,7 @@ def use_google_sheet(args):
         saved_id = (list(google_sheet.get_values(saved_id_range)) + [None])[0]
 
         quotes_unique = []
-        for quote in scraper.get_quotes(worksheet_name, saved_id):
+        for quote in scraper.get_quotes(handle, saved_id):
             phrase_alphanum = to_lowercase_alphanum(quote.phrase)
 
             if phrase_alphanum not in saved_phrases_alphanum:
@@ -138,10 +142,10 @@ def use_google_sheet(args):
             *_, latest_id = quotes_unique[-1].url.split('/')
 
             google_sheet.update(saved_id_range, [[latest_id]])
-            google_sheet.append(worksheet_name, quotes_unique)
+            google_sheet.append(handle, quotes_unique)
 
             if sort_order:
-                google_sheet.sort(worksheet_name=worksheet_name,
+                google_sheet.sort(worksheet_name=handle,
                                   column=sort_column,
                                   order=sort_order)
 
