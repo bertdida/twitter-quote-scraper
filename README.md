@@ -31,7 +31,7 @@ TwitterQuoteScraper is a command line tool with a purpose to help in scraping qu
 
 ## Usage
 
-**Important:** Make sure to activate the virtual environment first, doing this will put the virtual environment-specific python and pip executables into pipenv shell’s `PATH`; this can be done using:
+Important, make sure to activate the virtual environment first, doing this will put the virtual environment-specific python and pip executables into pipenv shell’s `PATH`; this can be done using:
 
 ```shell
 pipenv shell
