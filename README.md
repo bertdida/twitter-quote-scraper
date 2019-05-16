@@ -92,7 +92,7 @@ python app.py --twitter-creds creds/twitter.json google_sheet --service-account 
 python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk --twitter-handles @prog_quotes --sort '{"order": "asc", "column": 1}'
 ```
 
-The command of [this spreadsheet](https://docs.google.com/spreadsheets/d/1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4/edit?usp=sharing) is set up to run every day via CRON job.
+The command of [this spreadsheet](https://docs.google.com/spreadsheets/d/1U41EhnxXkWSJhmSqkPLpdbdcWJcx1MS6zWV3wQPeKL4/edit?usp=sharing) is set up to run every midnight UTC time via CRON job.
 
 ## References
 
