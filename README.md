@@ -3,6 +3,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/91583eca09bd1e2f163b/maintainability)](https://codeclimate.com/github/bertdida/TwitterQuoteScraper/maintainability)
 [![codebeat badge](https://codebeat.co/badges/24297975-d0d0-4185-8b41-ad84e53f241b)](https://codebeat.co/projects/github-com-bertdida-twitterquotescraper-master)
 [![License: MIT](https://img.shields.io/github/license/bertdida/TwitterQuoteScraper.svg)](https://github.com/bertdida/TwitterQuoteScraper/blob/master/LICENSE)
+[![Known Vulnerabilities](https://snyk.io/test/github/bertdida/TwitterQuoteScraper/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/bertdida/TwitterQuoteScraper?targetFile=requirements.txt)
 
 _One day I was inspired to build a random quote generator that also provides a free to use API, something like [forismatic.com](https://forismatic.com/en/). I need some data, and I assume Twitter can help me with this!_
 
