@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/github/license/bertdida/TwitterQuoteScraper.svg)](https://github.com/bertdida/TwitterQuoteScraper/blob/master/LICENSE)
 [![Known Vulnerabilities](https://snyk.io/test/github/bertdida/TwitterQuoteScraper/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/bertdida/TwitterQuoteScraper?targetFile=requirements.txt)
 
-_I want to build a random quote generator, something like [forismatic.com](https://forismatic.com/en/). Thinking where to get some data, I remember a [Twitter account](https://twitter.com/CodeWisdom) I followed that posts curated computer programming quotes. And the rest was pythoning!_
+_I want to build a random quote generator, something like [forismatic.com](https://forismatic.com/en/). Thinking where to get some data, I remember a [Twitter account](https://twitter.com/CodeWisdom) I followed that posts curated computer programming quotes. And the rest... was pythoning._
 
 TwitterQuoteScraper is a command line tool with a purpose to help in scraping quotations from the desired Twitter accounts.
 
