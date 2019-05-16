@@ -7,9 +7,8 @@
 
 _I want to build a random quote generator, something like [forismatic.com](https://forismatic.com/en/). Thinking where to get some data, I remember a [Twitter account](https://twitter.com/CodeWisdom) I followed that posts curated computer programming quotes. And the rest... was pythoning._
 
-TwitterQuoteScraper is a command line tool with a purpose to help in scraping quotations from the desired Twitter accounts.
+TwitterQuoteScraper is a command line tool with a purpose to help in scraping quotations from the desired Twitter accounts. But for the tweet to be considered as a quotation the following conditions must be satisfied:
 
-**Note:** For the tweet to be considered as a quotation the following conditions must be satisfied:
 - tweet must not be a retweet or a reply
 - must not contain URL, media (image or video) or any emoji
 - must match the regular expression: `^[\"\']{0,1}(?P<phrase>[A-Z].*[\.!?])[\"\']{0,1}\s*?[-~]\s*(?P<author>.*)$`
