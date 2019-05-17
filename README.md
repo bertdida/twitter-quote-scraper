@@ -31,7 +31,7 @@ But for a tweet to be recognized as a quotation, the following must be satisfied
    pipenv install
    ```
 
-## Usage
+## Usage Examples
 
 Important. Don't forget to activate the virtual environment first, doing this will put the virtual environment-specific python and PIP executables into pipenv shell’s `PATH`. To activate, just run the following:
 
@@ -78,8 +78,6 @@ Before you run the command, you must set up a Google spreadsheet for the service
 2. Share the spreadsheet with the `client_email` you'll find inside the Google service account's JSON file.
 
 ```shell
-# Make sure to change --spreadsheet-id's value
-
 python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk --twitter-handles @prog_quotes
 
 # Alphabetically sort the second column
