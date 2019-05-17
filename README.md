@@ -39,13 +39,6 @@ Important. Don't forget to activate the virtual environment first, doing this wi
 pipenv shell
 ```
 
-To learn more about the command's usage and syntax, like which options are available and the command's structure run the following:
-
-- `python app.py -h`
-- `python app.py --twitter-creds creds/twitter.json local_file -h`
-- `python app.py --twitter-creds creds/twitter.json database -h`
-- `python app.py --twitter-creds creds/twitter.json google_sheet -h`
-
 ### Saving to a local file
 
 ```shell
