@@ -7,9 +7,9 @@
 
 _I want to build a random quote generator, something like [forismatic.com](https://forismatic.com/en/). Thinking where to get some data, I remember a [Twitter account](https://twitter.com/CodeWisdom) I followed that posts curated computer programming quotes. And the rest... was pythoning._
 
-TwitterQuoteScraper is a command line tool that parses tweets to scrape for quotations. Currently, it supports 3 ways of saving the data through Google sheet, local file, and Database.
+TwitterQuoteScraper is a command-line interface for scraping quotations on Twitter. You can either save the data through a local file, google sheet or database.
 
-For a tweet to be considered quotation, the following must be satisfied:
+But for a tweet to be considered quotation, the following must be satisfied:
 
 - tweet must not be a retweet or a reply
 - must not contain URL, media (image or video) or any emoji
