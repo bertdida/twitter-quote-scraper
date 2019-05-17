@@ -9,7 +9,7 @@ _I want to build a random quote generator, something like [forismatic.com](https
 
 TwitterQuoteScraper is a command-line interface for scraping quotations on Twitter. You can either save the data through a local file, google sheet or database.
 
-But for a tweet to be recognized as a quotation, the following must be satisfied:
+But for a tweet to be considered as a quotation, the following must be satisfied:
 
 - tweet must not be a retweet or a reply
 - must not contain URL, media (image or video) or any emoji
