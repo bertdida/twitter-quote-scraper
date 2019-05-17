@@ -33,7 +33,7 @@ But for a tweet to be recognized as a quotation, the following must be satisfied
 
 ## Usage
 
-Important, make sure to activate the virtual environment first, doing this will put the virtual environment-specific python and pip executables into pipenv shell’s `PATH`; this can be done using:
+Important. Don't forget to activate the virtual environment first, doing this will put the virtual environment-specific python and PIP executables into pipenv shell’s `PATH`. To do this, just run the following:
 
 ```shell
 pipenv shell
