@@ -80,7 +80,7 @@ Before you run the command, you must set up a Google spreadsheet for the service
 ```shell
 python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk --twitter-handles @prog_quotes
 
-# Alphabetically sort the second column
+# Alphabetically sort the second/phrase column
 python app.py --twitter-creds creds/twitter.json google_sheet --service-account creds/google.json --spreadsheet-id 1S8xsN8D6nD2KM5-oSZOIFnuw3zvP4_WRZLHMMfbsbPk --twitter-handles @prog_quotes --sort '{"order": "asc", "column": 1}'
 ```
 
