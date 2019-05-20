@@ -7,7 +7,7 @@
 
 TwitterQuoteScraper is a command-line interface for scraping quotations on Twitter. You can either save the data through a local file, Google Sheet or Database.
 
-The following must be met for a tweet to be a quotation:
+Note. The following must be met for a tweet to be a quotation:
 
 - tweet must not be a retweet or a reply
 - must not contain URL, media (image or video) or any emoji
