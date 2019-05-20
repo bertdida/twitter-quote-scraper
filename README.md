@@ -31,7 +31,7 @@ The following must be met for a tweet to be a quotation:
 
 ## Usage Examples
 
-Important. Don't forget to activate the virtual environment first, doing this will put the virtual environment-specific python and PIP executables into pipenv shell’s `PATH`. To activate, just run the following:
+Important. Don't forget to activate the virtual environment first, doing this will put the virtual environment-specific python and PIP executables into pipenv shell’s `PATH`. To activate, run:
 
 ```shell
 pipenv shell
