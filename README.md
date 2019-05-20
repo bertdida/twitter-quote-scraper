@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/github/license/bertdida/TwitterQuoteScraper.svg)](https://github.com/bertdida/TwitterQuoteScraper/blob/master/LICENSE)
 [![Known Vulnerabilities](https://snyk.io/test/github/bertdida/TwitterQuoteScraper/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/bertdida/TwitterQuoteScraper?targetFile=requirements.txt)
 
-TwitterQuoteScraper is a command-line interface for scraping quotations on Twitter. You can either save the data through a local file, google sheet or database.
+TwitterQuoteScraper is a command-line interface for scraping quotations on Twitter. You can either save the data through a local file, Google Sheet or Database.
 
 But for a tweet to be considered as a quotation, the following must be satisfied:
 
