@@ -5,11 +5,9 @@
 [![License: MIT](https://img.shields.io/github/license/bertdida/TwitterQuoteScraper.svg)](https://github.com/bertdida/TwitterQuoteScraper/blob/master/LICENSE)
 [![Known Vulnerabilities](https://snyk.io/test/github/bertdida/TwitterQuoteScraper/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/bertdida/TwitterQuoteScraper?targetFile=requirements.txt)
 
-_I want to build a random quote generator, something like [forismatic.com](https://forismatic.com/en/). Thinking where to get some data, I remember a [Twitter account](https://twitter.com/CodeWisdom) I followed that posts curated computer programming quotes. And the rest... was pythoning._
+TwitterQuoteScraper is a command-line interface for scraping quotations on Twitter. You can either save the data through a local file, Google Sheet or Database.
 
-TwitterQuoteScraper is a command-line interface for scraping quotations on Twitter. You can either save the data through a local file, google sheet or database.
-
-But for a tweet to be considered as a quotation, the following must be satisfied:
+Note. The following must be met for a tweet to be a quotation:
 
 - tweet must not be a retweet or a reply
 - must not contain URL, media (image or video) or any emoji
@@ -33,7 +31,7 @@ But for a tweet to be considered as a quotation, the following must be satisfied
 
 ## Usage Examples
 
-Important. Don't forget to activate the virtual environment first, doing this will put the virtual environment-specific python and PIP executables into pipenv shell’s `PATH`. To activate, just run the following:
+Important. Don't forget to activate the virtual environment first, doing this will put the virtual environment-specific python and PIP executables into pipenv shell’s `PATH`. To activate, run:
 
 ```shell
 pipenv shell
