@@ -72,6 +72,7 @@ class QuoteScraper:
         tweet = status.full_text
         tweet = cls.strip_hashtags(tweet, status.entities.get('hashtags'))
         tweet = cls.non_alphanum_chars_to_ascii(tweet)
+        tweet = tweet.strip()
 
         return tweet.replace('--', '-')
 
