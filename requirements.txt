@@ -17,4 +17,4 @@ rsa==4.1
 six==1.14.0
 tweepy==3.7.0
 unidecode==1.0.23
-urllib3==1.25.9
+urllib3==1.26.5
